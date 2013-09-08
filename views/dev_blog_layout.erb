@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html>
 <head>
   <meta charset="utf-8">
@@ -14,46 +14,14 @@
 </head>
 <body>
 
-  <div class="navbar navbar-default navbar-fixed-top">
-    <div class="container">
-      <div class="navbar-header dropdown">
-        <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target=".navbar-collapse">
-          <span class="icon-bar"></span>
-          <span class="icon-bar"></span>
-          <span class="icon-bar"></span>
-        </button>
-        <a href="javascript:;" class="dropdown-toggle navbar-brand" data-toggle="dropdown">赞美诗选编(1050首) <b class="caret"></b></a>
-        <ul class="dropdown-menu">
-          <li><a href="/">首页</a></li>
-          <li><a href="#">我的诗歌单</a></li>
-          <li class="divider"></li>
-          <li><a href="/dev-blog">网站开发博客</a></li>
-        </ul>
-      </div>
-      <div class="navbar-collapse collapse">
-        <ul class="nav navbar-nav">
-          <li><a href="#">颂赞</a></li>
-          <li><a href="#">纪念</a></li>
-          <li><a href="#">福音</a></li>
-          <li><a href="#">教会</a></li>
-          <li><a href="#">道路</a></li>
-          <li><a href="#">灵交</a></li>
-          <li><a href="#">其它</a></li>
-          <li><a href="#">短歌</a></li>
-        </ul>
-        <a href="#" class="notification-indicator">
-          <span class="mail-status unread"></span>
-        </a>
-      </div>
-    </div>
-  </div>
+<%= erb :'inc/head' %>
 
 <div class="wrap">
   <div class="container">
     <div class="page-header pull-left col-md-12">
     <div class="pull-left">
       <h3>网站开发博客</h3>
-      <h4>记录着关于1050从无到有的一切。</h4>
+      <h4>记录着关于1050从无到有的一切</h4>
     </div>
     <blockquote class="pull-right">
       <h3></h3>
@@ -69,13 +37,10 @@
   </div>
 </div>
 
-<div class="footer">
-  <div class="container">
-    <p class="text-muted credit">© 2013 | <a href="http://1050.14201420.com">http://1050.14201420.com</a></p>
-  </div>
-</div>
-  
-  <script src="js/jquery.js"></script>
-  <script src="js/bootstrap.min.js"></script>
+<%= erb :'inc/footer' %>
+
+<script src="js/jquery.js"></script>
+<script src="js/bootstrap.min.js"></script>
+
 </body>
 </html>
