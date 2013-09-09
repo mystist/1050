@@ -14,3 +14,7 @@ end
 get '/modification' do
   erb :modification
 end
+
+post '/modification' do
+  params[:index]
+end

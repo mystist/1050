@@ -15,18 +15,18 @@
 
 <div class="container">
   <div class="col-md-12">
-    <form role="form">
+    <form role="form" action="/modification" method="post">
       <div class="form-group">
         <h4><label>首数：<small><code>（示例：795）</code></small></label></h4>
-        <input type="text" class="form-control" placeholder="">
+        <input name="index" type="text" class="form-control" placeholder="">
       </div>
       <div class="form-group">
         <h4><label>歌名：<small><code>（示例：你是我唯一诗歌）</code></small></label></h4>
-        <input type="text" class="form-control" placeholder="">
+        <input name="name" type="text" class="form-control" placeholder="">
       </div>
       <div class="form-group">
         <h4><label>分类目录，大类：（详见诗歌本第二页）<small><code>（示例：灵交）</code></small></label></h4>
-        <select class="form-control">
+        <select name="category_big" class="form-control">
           <option></option>
           <option>颂赞</option>
           <option>纪念</option>
@@ -40,7 +40,7 @@
       </div>
       <div class="form-group">
         <h4><label>分类目录，小类：（详见诗歌本第二页）<small><code>（示例：培灵奋兴）</code></small></label></h4>
-        <select class="form-control">
+        <select name="category_small" class="form-control">
           <option></option>
           <option>--</option>
           <option>圣父</option>
@@ -99,7 +99,7 @@
       </div>
       <div class="form-group">
         <h4><label>歌词首句：<small><code>（示例：你是我心中）</code></small></label></h4>
-        <input type="text" class="form-control" placeholder="">
+        <input name="first_sentence" type="text" class="form-control" placeholder="">
       </div>
       <div class="form-group">
         <h4><label>上传歌谱：</label></h4>
