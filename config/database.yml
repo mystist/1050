@@ -1,15 +1,15 @@
-adapter: "mysql"
-database: "1050"
-host: "localhost"
-port: 3306
-username: "root"
-password: "123321"
-encoding: "utf8"
-
 # adapter: "mysql"
 # database: "1050"
-# host: "127.4.79.130"
+# host: "localhost"
 # port: 3306
-# username: "adminF469Nqg"
-# password: "nJWaDzrgnywB"
+# username: "root"
+# password: "123321"
 # encoding: "utf8"
+
+adapter: "mysql"
+database: "1050"
+host: "127.11.184.2"
+port: 3306
+username: "adminF469Nqg"
+password: "nJWaDzrgnywB"
+encoding: "utf8"
