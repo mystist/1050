@@ -25,3 +25,4 @@ production:
   username: "adminF469Nqg"
   password: "nJWaDzrgnywB"
   encoding: "utf8"
+  socket: "/var/lib/openshift/5229e82250044660bd00019b/mysql//socket/mysql.sock"
