@@ -1,10 +1,10 @@
 development:
   adapter: "mysql"
   database: "1050"
-  host: "127.11.184.2"
-  port: 3306
-  username: "adminF469Nqg"
-  password: "nJWaDzrgnywB"
+  host: <%= ENV['OPENSHIFT_MYSQL_DB_HOST'] %>
+  port: <%= ENV['OPENSHIFT_MYSQL_DB_PORT'] %>
+  username: <%= ENV['OPENSHIFT_MYSQL_DB_USERNAME'] %>
+  password: <%= ENV['OPENSHIFT_MYSQL_DB_PASSWORD'] %>
   encoding: "utf8"
 
 # production:
@@ -19,8 +19,8 @@ development:
 production:
   adapter: "mysql"
   database: "1050"
-  host: "127.11.184.2"
-  port: 3306
-  username: "adminF469Nqg"
-  password: "nJWaDzrgnywB"
+  host: <%= ENV['OPENSHIFT_MYSQL_DB_HOST'] %>
+  port: <%= ENV['OPENSHIFT_MYSQL_DB_PORT'] %>
+  username: <%= ENV['OPENSHIFT_MYSQL_DB_USERNAME'] %>
+  password: <%= ENV['OPENSHIFT_MYSQL_DB_PASSWORD'] %>
   encoding: "utf8"
