@@ -17,7 +17,7 @@ production:
   # socket: <%= ENV['OPENSHIFT_MYSQL_DB_SOCKET'] %>
   # encoding: "utf8"
   
-# production:
+production:
   adapter: "mysql"
   database: "1050"
   host: "127.11.184.2"
