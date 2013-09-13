@@ -23,4 +23,3 @@ production:
   port: 3306
   username: "adminF469Nqg"
   password: "nJWaDzrgnywB"
-  encoding: "utf8"
