@@ -1,10 +1,10 @@
 development:
   adapter: "mysql"
   database: "1050"
-  host: "localhost"
+  host: "127.11.184.2"
   port: 3306
-  username: "root"
-  password: "123321"
+  username: "adminF469Nqg"
+  password: "nJWaDzrgnywB"
   encoding: "utf8"
 
 # production:
