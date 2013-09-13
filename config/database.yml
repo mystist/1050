@@ -7,22 +7,20 @@ development:
   password: "123321"
   encoding: "utf8"
 
-# production:
-  # adapter: "mysql"
-  # database: "1050"
-  # host: <%= ENV['OPENSHIFT_MYSQL_DB_HOST'] %>
-  # port: <%= ENV['OPENSHIFT_MYSQL_DB_PORT'] %>
-  # username: <%= ENV['OPENSHIFT_MYSQL_DB_USERNAME'] %>
-  # password: <%= ENV['OPENSHIFT_MYSQL_DB_PASSWORD'] %>
-  # socket: <%= ENV['OPENSHIFT_MYSQL_DB_SOCKET'] %>
-  # encoding: "utf8"
-  
 production:
   adapter: "mysql"
   database: "1050"
-  host: "127.11.184.2"
-  port: 3306
-  username: "adminF469Nqg"
-  password: "nJWaDzrgnywB"
+  host: <%= ENV['OPENSHIFT_MYSQL_DB_HOST'] %>
+  port: <%= ENV['OPENSHIFT_MYSQL_DB_PORT'] %>
+  username: <%= ENV['OPENSHIFT_MYSQL_DB_USERNAME'] %>
+  password: <%= ENV['OPENSHIFT_MYSQL_DB_PASSWORD'] %>
   encoding: "utf8"
-  socket: "/var/lib/openshift/5229e82250044660bd00019b/mysql//socket/mysql.sock"
+  
+# production:
+  # adapter: "mysql"
+  # database: "1050"
+  # host: "127.11.184.2"
+  # port: 3306
+  # username: "adminF469Nqg"
+  # password: "nJWaDzrgnywB"
+  # encoding: "utf8"
