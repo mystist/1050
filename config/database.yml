@@ -7,7 +7,7 @@ development:
   password: "123321"
   encoding: "utf8"
 
-production:
+# production:
   # adapter: "mysql"
   # database: "1050"
   # host: <%= ENV['OPENSHIFT_MYSQL_DB_HOST'] %>
