@@ -18,3 +18,25 @@ git config --global core.autocrlf input # use `true` on Windows
 git config --global core.safecrlf true
 
 git update-index --chmod=+x .openshift/action_hooks/*
+
+
+  Jenkins created successfully.  Please make note of these credentials:
+   User: admin
+   Password: Vnq2JuW42hwx
+Note:  You can change your password at: https://jenkins-liber.rhcloud.com/me/con
+figure
+
+Waiting for your DNS name to be available ... done
+
+Cloning into 'jenkins'...
+The authenticity of host 'jenkins-liber.rhcloud.com (54.221.21.124)' can't be es
+tablished.
+RSA key fingerprint is cf:ee:77:cb:0e:fc:02:d7:72:7e:ae:80:c0:90:88:a7.
+Are you sure you want to continue connecting (yes/no)?
+Host key verification failed.
+fatal: Could not read from remote repository.
+
+jenkins-client-1 (Jenkins Client)
+---------------------------------
+  Gears:   Located with ruby-1.9, mysql-5.1
+  Job URL: https://jenkins-liber.rhcloud.com/job/1050-build/
