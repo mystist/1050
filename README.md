@@ -18,9 +18,3 @@ git config --global core.autocrlf input # use `true` on Windows
 git config --global core.safecrlf true
 
 git update-index --chmod=+x .openshift/action_hooks/*
-
-
-Please make note of these MySQL credentials again:
-  Root User: adminF469Nqg
-  Root Password: nJWaDzrgnywB
-URL: https://1050-liber.rhcloud.com/phpmyadmin/

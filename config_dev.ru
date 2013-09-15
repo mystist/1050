@@ -1,7 +1,7 @@
-ENV['RACK_ENV'] = 'development'
+ENV['RACK_ENV'] = 'production'
 
 require 'bundler'
-Bundler.setup(:default, :development)
+Bundler.setup(:default)
 
 require './app.rb'
 run Sinatra::Application
