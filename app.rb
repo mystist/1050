@@ -16,6 +16,11 @@ end
 
 get '/dev' do
   Song.count.to_s
+  if settings.development?
+    "development!"
+  else
+    "not development!"
+  end
 end
 
 STATUS = ''
