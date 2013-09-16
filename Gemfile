@@ -1,5 +1,6 @@
 source 'http://rubygems.org'
 
+gem 'bundler'
 gem 'rack'
 gem 'sinatra'
 gem 'sinatra-activerecord'
