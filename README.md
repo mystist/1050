@@ -12,13 +12,14 @@ Connection URL: mysql://$OPENSHIFT_MYSQL_DB_HOST:$OPENSHIFT_MYSQL_DB_PORT/
 You can manage your new MySQL database by also embedding phpmyadmin-3.
 The phpmyadmin username and password will be the same as the MySQL credentials above.
 
-
+#
 
 git config --global core.autocrlf input # use `true` on Windows
 git config --global core.safecrlf true
 
 git update-index --chmod=+x .openshift/action_hooks/*
 
+#
 
   Jenkins created successfully.  Please make note of these credentials:
    User: admin
@@ -36,7 +37,15 @@ Are you sure you want to continue connecting (yes/no)?
 Host key verification failed.
 fatal: Could not read from remote repository.
 
+#
+
 jenkins-client-1 (Jenkins Client)
 ---------------------------------
   Gears:   Located with ruby-1.9, mysql-5.1
   Job URL: https://jenkins-liber.rhcloud.com/job/1050-build/
+  
+#
+  
+bundle exec rake db:migrate RACK_ENV="production"
+
+#
