@@ -7,15 +7,6 @@
   # password: "nJWaDzrgnywB"
   # encoding: "utf8"
 
-development:
-  adapter: "mysql"
-  database: "1050"
-  host: "localhost"
-  port: 3306
-  username: "root"
-  password: "123321"
-  encoding: "utf8"
-
 production:
   adapter: "mysql"
   database: "1050"
