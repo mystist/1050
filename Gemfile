@@ -4,7 +4,7 @@ gem 'bundler'
 gem 'rack'
 gem 'sinatra'
 gem 'sinatra-activerecord'
-gem 'mysql2'
+gem 'mysql'
 gem 'redcarpet'
 gem 'rake'
 
