@@ -1,4 +1,5 @@
 require 'sinatra'
+require 'sinatra/reloader' if development?
 require 'sinatra/activerecord'
 require 'redcarpet'
 
@@ -15,11 +16,6 @@ end
 
 get '/dev' do
   Song.count.to_s
-  if settings.development?
-    "development!"
-  else
-    "not development!"
-  end
 end
 
 STATUS = ''

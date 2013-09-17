@@ -20,31 +20,6 @@ git config --global core.safecrlf true
 git update-index --chmod=+x .openshift/action_hooks/*
 
 #
-
-  Jenkins created successfully.  Please make note of these credentials:
-   User: admin
-   Password: Vnq2JuW42hwx
-Note:  You can change your password at: https://jenkins-liber.rhcloud.com/me/con
-figure
-
-Waiting for your DNS name to be available ... done
-
-Cloning into 'jenkins'...
-The authenticity of host 'jenkins-liber.rhcloud.com (54.221.21.124)' can't be es
-tablished.
-RSA key fingerprint is cf:ee:77:cb:0e:fc:02:d7:72:7e:ae:80:c0:90:88:a7.
-Are you sure you want to continue connecting (yes/no)?
-Host key verification failed.
-fatal: Could not read from remote repository.
-
-#
-
-jenkins-client-1 (Jenkins Client)
----------------------------------
-  Gears:   Located with ruby-1.9, mysql-5.1
-  Job URL: https://jenkins-liber.rhcloud.com/job/1050-build/
-  
-#
   
 bundle exec rake db:migrate RACK_ENV="production"
 
@@ -53,6 +28,38 @@ bundle exec rake db:migrate RACK_ENV="production"
 rhc cartridge remove -a {appName} -c jenkins-client-1.4
 
 #
+
+Jenkins created successfully.  Please make note of these credentials:
+   User: admin
+   Password: EUDZRunfAViG
+Note:  You can change your password at: https://jenkins-liber.rhcloud.com/me/configure
+
+Accessing your application
+Your application has one or more cartridges that expose a public URL. Click the link below to see your application:
+
+http://jenkins-liber.rhcloud.com/
+
+The application overview page provides a summary of your application and its cartridges.
+
+Making code changes
+OpenShift uses the Git version control system to manage the code of your application. Each cartridge has a single Git repository that you'll use to check in changes to your application. When you push a change to your Git repository we'll automatically deploy your code and restart your application if necessary.
+
+Install the Git client for your operating system, and from your command line run
+
+git clone ssh://5237e99ae0b8cd511b00000a@jenkins-liber.rhcloud.com/~/git/jenkins.git/
+cd jenkins/
+
+#
+
+Associated with job '1050-build' in Jenkins server.
+Your application is now building with Jenkins.
+Building your Application
+OpenShift is configured to build this application with Jenkins when you make changes through Git. You can track the progress of builds through the following Jenkins job:
+
+https://jenkins-liber.rhcloud.com/job/1050-build/
+
+If you no longer wish to run Jenkins builds, you can remove the Jenkins cartridge.
+https://openshift.redhat.com/app/console/application/1050/building/delete
 
 #
 
