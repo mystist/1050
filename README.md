@@ -14,6 +14,8 @@ The phpmyadmin username and password will be the same as the MySQL credentials a
 
 #
 
+rhc port-forward -a {appName}
+
 git config --global core.autocrlf input # use `true` on Windows
 git config --global core.safecrlf true
 
