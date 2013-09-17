@@ -18,6 +18,14 @@ get '/dev' do
   Song.count.to_s
 end
 
+get '/environment' do
+  if settings.development?
+    "development!"
+  else
+    "not development!"
+  end
+end
+
 STATUS = ''
 
 get '/modification' do
