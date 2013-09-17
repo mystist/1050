@@ -24,6 +24,7 @@ GEM
     minitest (4.7.5)
     multi_json (1.8.0)
     mysql (2.9.1)
+    mysql (2.9.1-x86-mingw32)
     rack (1.5.2)
     rack-protection (1.5.0)
       rack
@@ -52,6 +53,7 @@ GEM
 
 PLATFORMS
   ruby
+  x86-mingw32
 
 DEPENDENCIES
   bundler
