@@ -1,40 +1,28 @@
 require.config({
+  baseUrl: 'js/libs',
+  paths: {
+    'app': '../app',
+  },
   shim: {
-    'libs/backbone': {
-      deps: ['libs/jquery', 'libs/underscore']
+    'underscore': {
+      exports: '_'
     },
-    'libs/bootstrap': {
-      deps: ['libs/jquery']
-    }
+    'backbone': {
+      deps: ['jquery', 'underscore'],
+      exports: 'Backbone'
+    },
+    'bootstrap': ['jquery']
   }
 });
 
-
-define(['libs/jquery', 'libs/backbone'], function() {
+define(['jquery', 'bootstrap', 'backbone'], function($, Backbone) {
 
   var App = Backbone.View.extend({
     
     initialize: function() {
+      console.log("ss");
     }
     
   });
-  
-  var Router = Backbone.Router.extend({
-    routers: {
-      '': 'home'
-    },
-    initialize: function() {
-      console.log("yes");
-    },
-    home: function() {
-      console.log("sss");
-    }
-  });
-  
-      var router = new Router();
-  
-  //var app = new App();
-  
-  Backbone.history.start();
 
 });
