@@ -15,7 +15,7 @@ require.config({
   }
 });
 
-define(['jquery', 'bootstrap', 'backbone'], function($, Backbone) {
+define(['jquery', 'backbone', 'bootstrap'], function($, Backbone) {
 
   var App = Backbone.View.extend({
     
@@ -24,5 +24,29 @@ define(['jquery', 'bootstrap', 'backbone'], function($, Backbone) {
     }
     
   });
+  
+  var Router = Backbone.Router.extend({
+  
+    routes: {
+      '': 'index',
+      'help': 'help'
+    },
+    
+    index: function() {
+      console.log("index...");
+    },
+    
+    help: function() {
+      console.log("help...");
+    }
+    
+  });
+  
+  var router = new Router();
+  
+  Backbone.history.start();
 
 });
+
+
+

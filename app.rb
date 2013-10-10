@@ -7,7 +7,7 @@ class Song < ActiveRecord::Base
 end
 
 get '/' do
-  erb :index
+  erb :index, :layout => :app_layout
 end
 
 get '/dev-blog' do
