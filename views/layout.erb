@@ -14,18 +14,15 @@
 </head>
 <body>
 
-<%= erb :'inc/head' %>
+<%= erb :"inc/head" %>
 
 <div class="wrap">
-  <div class="container">
-    <%= yield %>
-  </div>
+  <%= yield %>
 </div>
 
-<%= erb :'inc/footer' %>
+<%= erb :"inc/footer" %>
 
-<script src="/js/jquery.js"></script>
-<script src="/js/bootstrap.min.js"></script>
+<script data-main="/js/app" src="/js/libs/require.js"></script>
 
 </body>
 </html>

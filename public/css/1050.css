@@ -11,6 +11,13 @@ h4 {
 .navbar .navbar-brand {
   font-size: 20px;
 }
+.page-header {
+  margin: 10px 0 10px;
+}
+.table th, .table td {
+  padding-left: 15px !important;
+}
+
 .wrap {
   min-height: 100%;
   height: auto !important;
@@ -25,12 +32,11 @@ h4 {
 .container .credit {
 margin: 20px 0;
 }
-
 .notification-indicator {
 	float:right;
 	width:50px;
 	height:50px;
-	margin:0 -15px;
+	margin:0 -37px;
 	text-align:center;
 	line-height:50px
 }
