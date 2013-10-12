@@ -15,7 +15,7 @@ require.config({
   }
 });
 
-define(['jquery', 'backbone', 'app/models/song-model', 'bootstrap'], function($, Backbone, SongModel) {
+define(['jquery', 'backbone', 'app/models/song-model', 'app/views/song-view', 'bootstrap'], function($, Backbone, SongModel, SongView) {
 
   var App = Backbone.View.extend({
     
@@ -32,7 +32,7 @@ define(['jquery', 'backbone', 'app/models/song-model', 'bootstrap'], function($,
     },
     
     showSongs: function() {
-      console.log(this.songs.toJSON());
+      var songListView = new SongView.SongListView({model: this.songs});
     }
     
   });

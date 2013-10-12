@@ -3,7 +3,6 @@ require 'sinatra/reloader' if development?
 require 'sinatra/activerecord'
 require 'redcarpet'
 require 'sinatra/json'
-require 'json'
 
 class Song < ActiveRecord::Base
 end
@@ -51,18 +50,14 @@ post '/modification' do
 end
 
 get '/songs' do
-
-  # t = '你哈'
-  # t.encoding
-  # JSON.generate :foo => @t
-  
-  json Song.all
-  # @songs.map! do |song|
-    # song.force_encoding("UTF-8")
-  # end
-
-  # Song.all.first.category_big
-  # JSON(Song.all.first)
-  # source_object = ["Just another Ruby Array", {"null value" => nil}]
-  # json({"sss" => Song.all.first.category_big.force_encoding("UTF-8")})
+  @songs = Song.all :order => '`index`'
+  @songs.each do |song|
+    song.attributes.each do |key, value|
+      if song[key].is_a? String
+        song[key].force_encoding("UTF-8")
+      end
+    end
+    song
+  end
+  json @songs
 end
