@@ -1,7 +1,10 @@
+﻿# encoding: utf-8
+
 require 'sinatra'
 require 'sinatra/reloader' if development?
 require 'sinatra/activerecord'
 require 'redcarpet'
+require 'json'
 
 class Song < ActiveRecord::Base
 end
@@ -46,4 +49,12 @@ post '/modification' do
   new_song.save
   STATUS = 'success'
   redirect '/modification'
+end
+
+get '/songs' do
+  # json :foo => Song.all.first.name
+  Song.all.first.name
+  # JSON(Song.all.first)
+  # source_object = ["Just another Ruby Array", {"null value" => nil}]
+  # JSON({"sss" => '你好'})
 end

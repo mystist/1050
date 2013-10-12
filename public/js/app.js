@@ -20,24 +20,26 @@ define(['jquery', 'backbone', 'bootstrap'], function($, Backbone) {
   var App = Backbone.View.extend({
     
     initialize: function() {
-      console.log("ss");
+      this.initSongs();
+    },
+    
+    initSongs: function() {
+      var songs = new Songs();
+      songs.fetch();
     }
     
   });
   
+  var app = null;
+  
   var Router = Backbone.Router.extend({
   
     routes: {
-      '': 'index',
-      'help': 'help'
+      '': 'index'
     },
     
     index: function() {
-      console.log("index...");
-    },
-    
-    help: function() {
-      console.log("help...");
+      app = new App();
     }
     
   });
