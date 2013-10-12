@@ -15,13 +15,14 @@ require.config({
   }
 });
 
-define(['jquery', 'backbone', 'app/models/song-model', 'app/views/song-view', 'bootstrap'], function($, Backbone, SongModel, SongView) {
+define(['jquery', 'backbone', 'app/models/song-model', 'app/views/song-view', 'nprogress/nprogress', 'bootstrap'], function($, Backbone, SongModel, SongView, NProgress) {
 
   var App = Backbone.View.extend({
     
     songs: null,
     
     initialize: function() {
+      NProgress.start();
       this.initSongs();
     },
     
@@ -33,6 +34,7 @@ define(['jquery', 'backbone', 'app/models/song-model', 'app/views/song-view', 'b
     
     showSongs: function() {
       var songListView = new SongView.SongListView({model: this.songs});
+      NProgress.done();
     }
     
   });

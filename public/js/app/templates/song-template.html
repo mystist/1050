@@ -2,10 +2,27 @@
 
 <script id="SongListTemplate" type="text/template">
 
+  <%
+    var list = model.toJSON();
+    var categoryBig = _.uniq(_.map(list, function(obj) {
+      return obj['category_big'];
+    }));
+  %>
+
+  <% _.each(categoryBig, function(item) { %>
   <div class="col-md-12">
-    <h4><strong>一、颂赞</strong></h4>
+    <h4><strong><%= item %></strong></h4>
+    <%
+      var curList = _.filter(list, function(obj) {
+        return obj["category_big"] == item;
+      });
+      var curCategorySmall = _.uniq(_.map(curList, function(obj) {
+        return obj['category_small'];
+      }));
+    %>
+    <% _.each(curCategorySmall, function(subItem) { %>
     <div class="panel panel-default">
-      <div class="panel-heading">圣父(1-41)</div>
+      <div class="panel-heading"><%= subItem %></div>
       <table class="table table-hover">
         <thead>
           <tr>
@@ -16,45 +33,12 @@
           </tr>
         </thead>
         <tbody>
-          <tr>
-            <td>圣哉三一</td>
-            <td>圣哉圣哉圣哉</td>
-            <td>1</td>
-            <td>
-              <a class="btn btn-success btn-xs" href="javascript:;">播放</a>
-              <a class="btn btn-primary btn-xs" href="javascript:;">编辑</a>
-            </td>
-          </tr>
-          <tr>
-            <td>亚伯拉罕之神</td>
-            <td>亚伯拉罕之神</td>
-            <td>2</td>
-            <td>
-              <a class="btn btn-success btn-xs" href="javascript:;">播放</a>
-              <a class="btn btn-primary btn-xs" href="javascript:;">编辑</a>
-            </td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
-  </div>
-  
-  <div class="col-md-12">
-    <h4><strong>一、颂赞</strong></h4>
-    <div class="panel panel-default">
-      <div class="panel-heading">圣父(1-41)</div>
-      <table class="table table-hover">
-        <thead>
-          <tr>
-            <th width="300px">歌名</th>
-            <th>歌词首句</th>
-            <th width="100px">首数</th>
-            <th width="200px">操作</th>
-          </tr>
-        </thead>
-        <tbody>
-          <% var list = model.toJSON(); %>
-          <% _.each(list, function(m) { %>
+          <%
+            var curCurList = _.filter(curList, function(obj) {
+              return obj["category_small"] == subItem;
+            });
+          %>
+          <% _.each(curCurList, function(m) { %>
             <tr>
               <td>《<%= m.name %>》</td>
               <td><%= m.first_sentence %></td>
@@ -68,7 +52,9 @@
         </tbody>
       </table>
     </div>
+    <% }); %>
   </div>
+  <% }); %>
 
 </script>
 
