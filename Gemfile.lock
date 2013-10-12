@@ -58,7 +58,7 @@ PLATFORMS
 
 DEPENDENCIES
   bundler
-  json (~> 1.8.0)
+  json
   mysql
   rack
   rake

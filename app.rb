@@ -1,9 +1,8 @@
-﻿# encoding: utf-8
-
-require 'sinatra'
+﻿require 'sinatra'
 require 'sinatra/reloader' if development?
 require 'sinatra/activerecord'
 require 'redcarpet'
+require 'sinatra/json'
 require 'json'
 
 class Song < ActiveRecord::Base
@@ -52,9 +51,18 @@ post '/modification' do
 end
 
 get '/songs' do
-  # json :foo => Song.all.first.name
-  Song.all.first.name
+
+  # t = '你哈'
+  # t.encoding
+  # JSON.generate :foo => @t
+  
+  json Song.all
+  # @songs.map! do |song|
+    # song.force_encoding("UTF-8")
+  # end
+
+  # Song.all.first.category_big
   # JSON(Song.all.first)
   # source_object = ["Just another Ruby Array", {"null value" => nil}]
-  # JSON({"sss" => '你好'})
+  # json({"sss" => Song.all.first.category_big.force_encoding("UTF-8")})
 end

@@ -15,17 +15,24 @@ require.config({
   }
 });
 
-define(['jquery', 'backbone', 'bootstrap'], function($, Backbone) {
+define(['jquery', 'backbone', 'app/models/song-model', 'bootstrap'], function($, Backbone, SongModel) {
 
   var App = Backbone.View.extend({
+    
+    songs: null,
     
     initialize: function() {
       this.initSongs();
     },
     
     initSongs: function() {
-      var songs = new Songs();
-      songs.fetch();
+      this.songs = new SongModel.Songs();
+      this.songs.on('reset', this.showSongs, this);
+      this.songs.fetch({reset: true});
+    },
+    
+    showSongs: function() {
+      console.log(this.songs.toJSON());
     }
     
   });
