@@ -1,4 +1,4 @@
-require.config({
+﻿require.config({
   baseUrl: 'js/libs',
   paths: {
     'app': '../app',
@@ -21,34 +21,59 @@ define(['jquery', 'backbone', 'app/models/song-model', 'app/views/song-view', 'n
     
     songs: null,
     
-    initialize: function() {
+    initSongs: function(url) {
       NProgress.start();
-      this.initSongs();
-    },
-    
-    initSongs: function() {
       this.songs = new SongModel.Songs();
+      this.songs.url = url;
       this.songs.on('reset', this.showSongs, this);
       this.songs.fetch({reset: true});
     },
     
     showSongs: function() {
+      var showSongView = new SongView.ShowSongView();
       var songListView = new SongView.SongListView({model: this.songs});
       NProgress.done();
     }
     
   });
   
-  var app = null;
+  var app = new App();
   
   var Router = Backbone.Router.extend({
   
     routes: {
-      '': 'index'
+      '': 'showSongs',
+      'songs/:categoryName': 'showSongs',
+      'modification': 'editSong',
+      'modification/:id': 'editSong'
     },
     
-    index: function() {
-      app = new App();
+    showSongs: function(categoryName) {
+      if(!categoryName) {
+        app.initSongs('/songs');
+      } else {
+        app.initSongs('/songs_category/'+encodeURIComponent(categoryName));
+      }
+    },
+    
+    editSong: function(id) {
+      NProgress.start();
+      var song = null;
+      var showSong = function() {
+        var editSongView = new SongView.EditSongView({model: song});
+        NProgress.done();
+      };
+      if(id) {
+        song = new SongModel.Song({id: id});
+        song.on('change', showSong);
+        if(app.songs) {
+          song.set(app.songs.get(id));
+        } else {
+          song.fetch();
+        }
+      } else {
+        showSong();
+      }
     }
     
   });
@@ -56,6 +81,8 @@ define(['jquery', 'backbone', 'app/models/song-model', 'app/views/song-view', 'n
   var router = new Router();
   
   Backbone.history.start();
+  
+  return app;
 
 });
 

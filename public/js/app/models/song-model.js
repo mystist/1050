@@ -1,10 +1,10 @@
 define(['backbone'], function(Backbone) {
 
 var Song = Backbone.Model.extend({
+  urlRoot: '/songs'
 });
 
 var Songs = Backbone.Collection.extend({
-  url: '/songs',
   model: Song
 });
 
