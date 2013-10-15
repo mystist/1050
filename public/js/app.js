@@ -11,6 +11,9 @@
       deps: ['jquery', 'underscore'],
       exports: 'Backbone'
     },
+    'helper': {
+      exports: 'helper'
+    },
     'bootstrap': ['jquery']
   }
 });
@@ -22,11 +25,13 @@ define(['jquery', 'backbone', 'app/models/song-model', 'app/views/song-view', 'n
     songs: null,
     
     initSongs: function(url) {
-      NProgress.start();
       this.songs = new SongModel.Songs();
       this.songs.url = url;
-      this.songs.on('reset', this.showSongs, this);
-      this.songs.fetch({reset: true});
+      NProgress.start();
+      this.songs.fetch({success: function() {
+        app.showSongs();
+        NProgress.done();
+      }});
     },
     
     showSongs: function() {
@@ -57,19 +62,22 @@ define(['jquery', 'backbone', 'app/models/song-model', 'app/views/song-view', 'n
     },
     
     editSong: function(id) {
-      NProgress.start();
-      var song = null;
+      var song = new SongModel.Song();
       var showSong = function() {
         var editSongView = new SongView.EditSongView({model: song});
-        NProgress.done();
       };
       if(id) {
         song = new SongModel.Song({id: id});
         song.on('change', showSong);
         if(app.songs) {
-          song.set(app.songs.get(id));
+          song.set(app.songs.get(id).toJSON());
         } else {
-          song.fetch();
+          NProgress.start();
+          song.fetch({
+            success: function() {
+              NProgress.done();
+            }
+          });
         }
       } else {
         showSong();

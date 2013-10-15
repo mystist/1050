@@ -1,4 +1,4 @@
-﻿define(['jquery', 'backbone', 'text!app/templates/song-template.html'], function($, Backbone, SongTemplate) {
+﻿define(['jquery', 'backbone', 'text!app/templates/song-template.html', 'helper', 'nprogress/nprogress'], function($, Backbone, SongTemplate, helper, NProgress) {
 
 var ShowSongView = Backbone.View.extend({
 
@@ -50,7 +50,21 @@ var EditSongView = Backbone.View.extend({
     'submit form': 'submit'
   },
   
-  submit: function() {
+  submit: function(e) {
+    var obj = helper.serializeObject($(e.currentTarget).serializeArray());
+    var song = this.model;
+    var tThis = this;
+    NProgress.start();
+    song.save(obj, {success: function() {
+      tThis.$(".alert-success").show();
+      NProgress.done();
+      return false;
+    }, error: function() {
+      tThis.$(".alert-danger").show();
+      NProgress.done();
+      return false;
+    }});
+    return false;
   }
 
 });
