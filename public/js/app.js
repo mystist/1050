@@ -29,8 +29,8 @@ define(['jquery', 'backbone', 'app/models/song-model', 'app/views/song-view', 'n
       this.songs.url = url;
       NProgress.start();
       this.songs.fetch({success: function() {
-        app.showSongs();
         NProgress.done();
+        app.showSongs();
       }});
     },
     

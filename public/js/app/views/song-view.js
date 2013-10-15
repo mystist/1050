@@ -51,18 +51,18 @@ var EditSongView = Backbone.View.extend({
   },
   
   submit: function(e) {
-    var obj = helper.serializeObject($(e.currentTarget).serializeArray());
+    var obj = helper.serializeObject(this.$("form").serializeArray());
+    // var obj = {};
     var song = this.model;
     var tThis = this;
-    NProgress.start();
-    song.save(obj, {success: function() {
-      tThis.$(".alert-success").show();
-      NProgress.done();
-      return false;
-    }, error: function() {
-      tThis.$(".alert-danger").show();
-      NProgress.done();
-      return false;
+    tThis.$("#test2").hide();
+    // NProgress.start();
+    song.save(obj, {error: function() {
+      // NProgress.done();
+      tThis.$("#test2").hide();
+      // setTimeout(function() {
+        // tThis.$(".alert-danger").hide();
+      // }, 3500);
     }});
     return false;
   }
