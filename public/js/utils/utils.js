@@ -1,20 +1,74 @@
-﻿// defind(function() {
+﻿define(['jquery', 'nprogress/nprogress'], function($, NProgress) {
 
-// var utils = {
+var utils = {
 
-  // bigCategory: ['颂赞', '纪念', '福音', '教会', '道路', '灵交', '其它', '附录'],
-  // smallCategory: ['圣父', '圣子', '圣灵', '耶稣降生', '耶稣受难', '复活升天', '再来审判', '宣召', '悔改相信', '平安喜乐', '笃信见证', '礼拜', '洗礼', '晚餐', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '']
+  setGlobalAjaxOptions: function() {
+  
+    var tThis = this;
+  
+    $.ajaxSetup({
+      global: true,
+      context: {some:'value'},
+      myObj: "sss1"
+    });
+    
+    $(document).ajaxSend(function() {
+      tThis.before();
+    });
+    
+    $(document).ajaxComplete(function() {
+      tThis.complete();
+    });
+    
+    $(document).ajaxSuccess(function() {
+      tThis.success();
+    });
+    
+    $(document).ajaxError(function() {
+      tThis.error();
+    });
 
-// }
+  },
+  
+  before: function() {
+  
+    NProgress.start();
+    
+    var $alert = $('.alert');
+    if($alert) $alert.hide();
+    
+    var $btn = $('.btn');
+    if($btn) $btn.attr("disabled", "disabled");
+    
+  },
+  
+  complete: function() {
+  
+    NProgress.done();
+    
+    var $btn = $('.btn');
+    if($btn) $btn.removeAttr("disabled");
+    
+  },
+  
+  success: function() {
+    var $alert = $('.alert-success');
+    if($alert) {
+      $alert.show();
+      setTimeout(function() {$alert.hide();}, 3500);
+    }
+  },
+  
+  error: function() {
+    var $alert = $('.alert-error');
+    if($alert) {
+      $alert.show();
+      setTimeout(function() {$alert.hide();}, 3500);
+    }
+  }
 
-// return utils;
+}
 
-// });
+return utils;
 
-
-
-
-
-
-
-
+});

@@ -2,6 +2,7 @@
   baseUrl: 'js/libs',
   paths: {
     'app': '../app',
+    'utils': '../utils'
   },
   shim: {
     'underscore': {
@@ -18,18 +19,20 @@
   }
 });
 
-define(['jquery', 'backbone', 'app/models/song-model', 'app/views/song-view', 'nprogress/nprogress', 'bootstrap'], function($, Backbone, SongModel, SongView, NProgress) {
+define(['jquery', 'backbone', 'utils/utils', 'app/models/song-model', 'app/views/song-view', 'bootstrap'], function($, Backbone, utils, SongModel, SongView) {
 
   var App = Backbone.View.extend({
     
     songs: null,
     
+    initialize: function() {
+      utils.setGlobalAjaxOptions();
+    },
+    
     initSongs: function(url) {
       this.songs = new SongModel.Songs();
       this.songs.url = url;
-      NProgress.start();
       this.songs.fetch({success: function() {
-        NProgress.done();
         app.showSongs();
       }});
     },
@@ -37,7 +40,6 @@ define(['jquery', 'backbone', 'app/models/song-model', 'app/views/song-view', 'n
     showSongs: function() {
       var showSongView = new SongView.ShowSongView();
       var songListView = new SongView.SongListView({model: this.songs});
-      NProgress.done();
     }
     
   });
@@ -72,12 +74,7 @@ define(['jquery', 'backbone', 'app/models/song-model', 'app/views/song-view', 'n
         if(app.songs) {
           song.set(app.songs.get(id).toJSON());
         } else {
-          NProgress.start();
-          song.fetch({
-            success: function() {
-              NProgress.done();
-            }
-          });
+          song.fetch();
         }
       } else {
         showSong();

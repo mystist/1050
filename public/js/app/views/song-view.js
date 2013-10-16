@@ -1,4 +1,4 @@
-﻿define(['jquery', 'backbone', 'text!app/templates/song-template.html', 'helper', 'nprogress/nprogress'], function($, Backbone, SongTemplate, helper, NProgress) {
+﻿define(['jquery', 'backbone', 'text!app/templates/song-template.html', 'helper'], function($, Backbone, SongTemplate, helper) {
 
 var ShowSongView = Backbone.View.extend({
 
@@ -47,24 +47,25 @@ var EditSongView = Backbone.View.extend({
   },
   
   events: {
-    'submit form': 'submit'
+    'click button[tag="submit"]': 'submit'
   },
   
   submit: function(e) {
-    var obj = helper.serializeObject(this.$("form").serializeArray());
-    // var obj = {};
+    var obj = helper.serializeObject(this.$('form').serializeArray());
     var song = this.model;
-    var tThis = this;
-    tThis.$("#test2").hide();
-    // NProgress.start();
-    song.save(obj, {error: function() {
-      // NProgress.done();
-      tThis.$("#test2").hide();
-      // setTimeout(function() {
-        // tThis.$(".alert-danger").hide();
-      // }, 3500);
-    }});
-    return false;
+    song.save(obj, {
+      silent: true,
+            myObj: "sss",
+      success: function() {
+        console.log("ss");
+      },
+      error: function() {
+        console.log("ss");
+      },
+      complete: function() {
+      
+      }
+    });
   }
 
 });
@@ -73,7 +74,7 @@ var SongView = {
   ShowSongView: ShowSongView,
   SongListView: SongListView,
   EditSongView: EditSongView
-}
+};
 
 return SongView;
 
