@@ -70,11 +70,14 @@ define(['jquery', 'backbone', 'utils/utils', 'app/models/song-model', 'app/views
       };
       if(id) {
         song = new SongModel.Song({id: id});
-        song.on('change', showSong);
+        song.on('change', function() {console.log("ss")});
         if(app.songs) {
           song.set(app.songs.get(id).toJSON());
+          showSong();
         } else {
-          song.fetch();
+          song.fetch({success: function() {
+            showSong();
+          }});
         }
       } else {
         showSong();

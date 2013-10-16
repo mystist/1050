@@ -1,4 +1,4 @@
-﻿define(['jquery', 'backbone', 'text!app/templates/song-template.html', 'helper'], function($, Backbone, SongTemplate, helper) {
+﻿define(['jquery', 'backbone', 'text!app/templates/song-template.html', 'helper', 'utils/utils'], function($, Backbone, SongTemplate, helper, utils) {
 
 var ShowSongView = Backbone.View.extend({
 
@@ -50,21 +50,12 @@ var EditSongView = Backbone.View.extend({
     'click button[tag="submit"]': 'submit'
   },
   
-  submit: function(e) {
-    var obj = helper.serializeObject(this.$('form').serializeArray());
+  submit: function() {
+    var obj = utils.getObjByForm(this);
     var song = this.model;
     song.save(obj, {
-      silent: true,
-            myObj: "sss",
-      success: function() {
-        console.log("ss");
-      },
-      error: function() {
-        console.log("ss");
-      },
-      complete: function() {
-      
-      }
+      wait: true,
+      isSubmit: true
     });
   }
 
