@@ -138,15 +138,15 @@
           <div class="form-group">
             <h4><label>分类目录，大类：（详见诗歌本第二页）<small><code>（示例：灵交）</code></small></label></h4>
             <select name="category_big" class="form-control">
-              <option></option>
-              <option <%= m&&(m.category_big=="颂赞") ? " selected='selected' " : "" %> >颂赞</option>
-              <option <%= m&&(m.category_big=="纪念") ? " selected='selected' " : "" %> >纪念</option>
-              <option <%= m&&(m.category_big=="福音") ? " selected='selected' " : "" %> >福音</option>
-              <option <%= m&&(m.category_big=="教会") ? " selected='selected' " : "" %> >教会</option>
-              <option <%= m&&(m.category_big=="道路") ? " selected='selected' " : "" %> >道路</option>
-              <option <%= m&&(m.category_big=="灵交") ? " selected='selected' " : "" %> >灵交</option>
-              <option <%= m&&(m.category_big=="其它") ? " selected='selected' " : "" %> >其它</option>
-              <option <%= m&&(m.category_big=="附录") ? " selected='selected' " : "" %> >附录</option>
+              <option value=""></option>
+              <option value="颂赞" <%= m&&(m.category_big=="颂赞") ? " selected='selected' " : "" %> >颂赞</option>
+              <option value="纪念" <%= m&&(m.category_big=="纪念") ? " selected='selected' " : "" %> >纪念</option>
+              <option value="福音" <%= m&&(m.category_big=="福音") ? " selected='selected' " : "" %> >福音</option>
+              <option value="教会" <%= m&&(m.category_big=="教会") ? " selected='selected' " : "" %> >教会</option>
+              <option value="道路" <%= m&&(m.category_big=="道路") ? " selected='selected' " : "" %> >道路</option>
+              <option value="灵交" <%= m&&(m.category_big=="灵交") ? " selected='selected' " : "" %> >灵交</option>
+              <option value="其它" <%= m&&(m.category_big=="其它") ? " selected='selected' " : "" %> >其它</option>
+              <option value="附录" <%= m&&(m.category_big=="附录") ? " selected='selected' " : "" %> >附录</option>
             </select>
           </div>
         </div>
@@ -163,60 +163,60 @@
           <div class="form-group">
             <h4><label>分类目录，小类：（详见诗歌本第二页）<small><code>（示例：培灵奋兴）</code></small></label></h4>
             <select name="category_small" class="form-control">
-              <option></option>
-              <option>---- 颂赞 ----</option>
-              <option <%= m&&(m.category_small=="圣父") ? " selected='selected' " : "" %> >圣父</option>
-              <option <%= m&&(m.category_small=="圣子") ? " selected='selected' " : "" %> >圣子</option>
-              <option <%= m&&(m.category_small=="圣灵") ? " selected='selected' " : "" %> >圣灵</option>
-              <option>---- 纪念 ----</option>
-              <option <%= m&&(m.category_small=="耶稣降生") ? " selected='selected' " : "" %> >耶稣降生</option>
-              <option <%= m&&(m.category_small=="耶稣受难") ? " selected='selected' " : "" %> >耶稣受难</option>
-              <option <%= m&&(m.category_small=="复活升天") ? " selected='selected' " : "" %> >复活升天</option>
-              <option <%= m&&(m.category_small=="再来审判") ? " selected='selected' " : "" %> >再来审判</option>
-              <option>---- 福音 ----</option>
-              <option <%= m&&(m.category_small=="宣召") ? " selected='selected' " : "" %> >宣召</option>
-              <option <%= m&&(m.category_small=="悔改相信") ? " selected='selected' " : "" %> >悔改相信</option>
-              <option <%= m&&(m.category_small=="平安喜乐") ? " selected='selected' " : "" %> >平安喜乐</option>
-              <option <%= m&&(m.category_small=="笃信见证") ? " selected='selected' " : "" %> >笃信见证</option>
-              <option>---- 教会 ----</option>
-              <option <%= m&&(m.category_small=="礼拜") ? " selected='selected' " : "" %> >礼拜</option>
-              <option <%= m&&(m.category_small=="洗礼") ? " selected='selected' " : "" %> >洗礼</option>
-              <option <%= m&&(m.category_small=="晚餐") ? " selected='selected' " : "" %> >晚餐</option>
-              <option <%= m&&(m.category_small=="《圣经》") ? " selected='selected' " : "" %> >《圣经》</option>
-              <option <%= m&&(m.category_small=="祈祷") ? " selected='selected' " : "" %> >祈祷</option>
-              <option <%= m&&(m.category_small=="团契") ? " selected='selected' " : "" %> >团契</option>
-              <option <%= m&&(m.category_small=="步道") ? " selected='selected' " : "" %> >步道</option>
-              <option <%= m&&(m.category_small=="灵战") ? " selected='selected' " : "" %> >灵战</option>
-              <option <%= m&&(m.category_small=="青年") ? " selected='selected' " : "" %> >青年</option>
-              <option <%= m&&(m.category_small=="儿童") ? " selected='selected' " : "" %> >儿童</option>
-              <option>---- 道路 ----</option>
-              <option <%= m&&(m.category_small=="信心") ? " selected='selected' " : "" %> >信心</option>
-              <option <%= m&&(m.category_small=="引导") ? " selected='selected' " : "" %> >引导</option>
-              <option <%= m&&(m.category_small=="顺服") ? " selected='selected' " : "" %> >顺服</option>
-              <option <%= m&&(m.category_small=="奉献") ? " selected='selected' " : "" %> >奉献</option>
-              <option <%= m&&(m.category_small=="忠心") ? " selected='selected' " : "" %> >忠心</option>
-              <option <%= m&&(m.category_small=="受苦") ? " selected='selected' " : "" %> >受苦</option>
-              <option <%= m&&(m.category_small=="安慰") ? " selected='selected' " : "" %> >安慰</option>
-              <option <%= m&&(m.category_small=="事奉") ? " selected='selected' " : "" %> >事奉</option>
-              <option <%= m&&(m.category_small=="指望") ? " selected='selected' " : "" %> >指望</option>
-              <option <%= m&&(m.category_small=="天家") ? " selected='selected' " : "" %> >天家</option>
-              <option>---- 灵交 ----</option>
-              <option <%= m&&(m.category_small=="追求圣洁") ? " selected='selected' " : "" %> >追求圣洁</option>
-              <option <%= m&&(m.category_small=="与神合一") ? " selected='selected' " : "" %> >与神合一</option>
-              <option <%= m&&(m.category_small=="培灵奋兴") ? " selected='selected' " : "" %> >培灵奋兴</option>
-              <option <%= m&&(m.category_small=="敬虔感谢") ? " selected='selected' " : "" %> >敬虔感谢</option>
-              <option>---- 其它 ----</option>
-              <option <%= m&&(m.category_small=="诗篇") ? " selected='selected' " : "" %> >诗篇</option>
-              <option <%= m&&(m.category_small=="家庭") ? " selected='selected' " : "" %> >家庭</option>
-              <option <%= m&&(m.category_small=="婚礼") ? " selected='selected' " : "" %> >婚礼</option>
-              <option <%= m&&(m.category_small=="丧礼") ? " selected='selected' " : "" %> >丧礼</option>
-              <option <%= m&&(m.category_small=="病中") ? " selected='selected' " : "" %> >病中</option>
-              <option <%= m&&(m.category_small=="落成") ? " selected='selected' " : "" %> >落成</option>
-              <option <%= m&&(m.category_small=="国家") ? " selected='selected' " : "" %> >国家</option>
-              <option <%= m&&(m.category_small=="时序") ? " selected='selected' " : "" %> >时序</option>
-              <option <%= m&&(m.category_small=="离别") ? " selected='selected' " : "" %> >离别</option>
-              <option>---- 附录 ----</option>
-              <option <%= m&&(m.category_small=="短歌") ? " selected='selected' " : "" %> >短歌</option>
+              <option value=""></option>
+              <option value="">---- 颂赞 ----</option>
+              <option value="圣父" <%= m&&(m.category_small=="圣父") ? " selected='selected' " : "" %> >圣父</option>
+              <option value="圣子" <%= m&&(m.category_small=="圣子") ? " selected='selected' " : "" %> >圣子</option>
+              <option value="圣灵" <%= m&&(m.category_small=="圣灵") ? " selected='selected' " : "" %> >圣灵</option>
+              <option value="">---- 纪念 ----</option>
+              <option value="耶稣降生" <%= m&&(m.category_small=="耶稣降生") ? " selected='selected' " : "" %> >耶稣降生</option>
+              <option value="耶稣受难" <%= m&&(m.category_small=="耶稣受难") ? " selected='selected' " : "" %> >耶稣受难</option>
+              <option value="复活升天" <%= m&&(m.category_small=="复活升天") ? " selected='selected' " : "" %> >复活升天</option>
+              <option value="再来审判" <%= m&&(m.category_small=="再来审判") ? " selected='selected' " : "" %> >再来审判</option>
+              <option value="">---- 福音 ----</option>
+              <option value="宣召" <%= m&&(m.category_small=="宣召") ? " selected='selected' " : "" %> >宣召</option>
+              <option value="悔改相信" <%= m&&(m.category_small=="悔改相信") ? " selected='selected' " : "" %> >悔改相信</option>
+              <option value="平安喜乐" <%= m&&(m.category_small=="平安喜乐") ? " selected='selected' " : "" %> >平安喜乐</option>
+              <option value="笃信见证" <%= m&&(m.category_small=="笃信见证") ? " selected='selected' " : "" %> >笃信见证</option>
+              <option value="">---- 教会 ----</option>
+              <option value="礼拜" <%= m&&(m.category_small=="礼拜") ? " selected='selected' " : "" %> >礼拜</option>
+              <option value="洗礼" <%= m&&(m.category_small=="洗礼") ? " selected='selected' " : "" %> >洗礼</option>
+              <option value="晚餐" <%= m&&(m.category_small=="晚餐") ? " selected='selected' " : "" %> >晚餐</option>
+              <option value="《圣经》" <%= m&&(m.category_small=="《圣经》") ? " selected='selected' " : "" %> >《圣经》</option>
+              <option value="祈祷" <%= m&&(m.category_small=="祈祷") ? " selected='selected' " : "" %> >祈祷</option>
+              <option value="团契" <%= m&&(m.category_small=="团契") ? " selected='selected' " : "" %> >团契</option>
+              <option value="步道" <%= m&&(m.category_small=="步道") ? " selected='selected' " : "" %> >步道</option>
+              <option value="灵战" <%= m&&(m.category_small=="灵战") ? " selected='selected' " : "" %> >灵战</option>
+              <option value="青年" <%= m&&(m.category_small=="青年") ? " selected='selected' " : "" %> >青年</option>
+              <option value="儿童" <%= m&&(m.category_small=="儿童") ? " selected='selected' " : "" %> >儿童</option>
+              <option value="">---- 道路 ----</option>
+              <option value="信心" <%= m&&(m.category_small=="信心") ? " selected='selected' " : "" %> >信心</option>
+              <option value="引导" <%= m&&(m.category_small=="引导") ? " selected='selected' " : "" %> >引导</option>
+              <option value="顺服" <%= m&&(m.category_small=="顺服") ? " selected='selected' " : "" %> >顺服</option>
+              <option value="奉献" <%= m&&(m.category_small=="奉献") ? " selected='selected' " : "" %> >奉献</option>
+              <option value="忠心" <%= m&&(m.category_small=="忠心") ? " selected='selected' " : "" %> >忠心</option>
+              <option value="受苦" <%= m&&(m.category_small=="受苦") ? " selected='selected' " : "" %> >受苦</option>
+              <option value="安慰" <%= m&&(m.category_small=="安慰") ? " selected='selected' " : "" %> >安慰</option>
+              <option value="事奉" <%= m&&(m.category_small=="事奉") ? " selected='selected' " : "" %> >事奉</option>
+              <option value="指望" <%= m&&(m.category_small=="指望") ? " selected='selected' " : "" %> >指望</option>
+              <option value="天家" <%= m&&(m.category_small=="天家") ? " selected='selected' " : "" %> >天家</option>
+              <option value="">---- 灵交 ----</option>
+              <option value="追求圣洁" <%= m&&(m.category_small=="追求圣洁") ? " selected='selected' " : "" %> >追求圣洁</option>
+              <option value="与神合一" <%= m&&(m.category_small=="与神合一") ? " selected='selected' " : "" %> >与神合一</option>
+              <option value="培灵奋兴" <%= m&&(m.category_small=="培灵奋兴") ? " selected='selected' " : "" %> >培灵奋兴</option>
+              <option value="敬虔感谢" <%= m&&(m.category_small=="敬虔感谢") ? " selected='selected' " : "" %> >敬虔感谢</option>
+              <option value="">---- 其它 ----</option>
+              <option value="诗篇" <%= m&&(m.category_small=="诗篇") ? " selected='selected' " : "" %> >诗篇</option>
+              <option value="家庭" <%= m&&(m.category_small=="家庭") ? " selected='selected' " : "" %> >家庭</option>
+              <option value="婚礼" <%= m&&(m.category_small=="婚礼") ? " selected='selected' " : "" %> >婚礼</option>
+              <option value="丧礼" <%= m&&(m.category_small=="丧礼") ? " selected='selected' " : "" %> >丧礼</option>
+              <option value="病中" <%= m&&(m.category_small=="病中") ? " selected='selected' " : "" %> >病中</option>
+              <option value="落成" <%= m&&(m.category_small=="落成") ? " selected='selected' " : "" %> >落成</option>
+              <option value="国家" <%= m&&(m.category_small=="国家") ? " selected='selected' " : "" %> >国家</option>
+              <option value="时序" <%= m&&(m.category_small=="时序") ? " selected='selected' " : "" %> >时序</option>
+              <option value="离别" <%= m&&(m.category_small=="离别") ? " selected='selected' " : "" %> >离别</option>
+              <option value="">---- 附录 ----</option>
+              <option value="短歌" <%= m&&(m.category_small=="短歌") ? " selected='selected' " : "" %> >短歌</option>
             </select>
           </div>
         </div>

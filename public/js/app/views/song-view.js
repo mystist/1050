@@ -58,10 +58,9 @@ var EditSongView = Backbone.View.extend({
       wait: true,
       $btn: $(e.currentTarget)
     });
-    if(isValid) {
-      var $target = this.$('select, input').closest('.row').find('*[tag="alert"]').children();
-      $target.remove();
-    } else if(!isValid) {
+    var $target = this.$('select, input').closest('.row').find('*[tag="alert"]').children();
+    $target.remove();
+    if(!isValid) {
       var i = 0;
       _.each(song.validationError, function(value, key) {
         var $target = this.$('*[name="'+key+'"]').closest('.row').find('*[tag="alert"]');
