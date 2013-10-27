@@ -26,7 +26,7 @@ define(['jquery', 'backbone', 'utils/utils', 'app/models/song-model', 'app/views
     songs: null,
     
     initialize: function() {
-      utils.setGlobalAjaxOptions();
+      utils.setGlobalAjaxSettings();
     },
     
     initSongs: function(url) {
@@ -38,7 +38,7 @@ define(['jquery', 'backbone', 'utils/utils', 'app/models/song-model', 'app/views
     },
     
     showSongs: function() {
-      var showSongView = new SongView.ShowSongView();
+      var showSongView = new SongView.ShowSongView({model: this.songs});
       var songListView = new SongView.SongListView({model: this.songs});
     }
     
@@ -70,7 +70,6 @@ define(['jquery', 'backbone', 'utils/utils', 'app/models/song-model', 'app/views
       };
       if(id) {
         song = new SongModel.Song({id: id});
-        song.on('change', function() {console.log("ss")});
         if(app.songs) {
           song.set(app.songs.get(id).toJSON());
           showSong();

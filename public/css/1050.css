@@ -17,6 +17,10 @@ h4 {
 .table th, .table td {
   padding-left: 15px !important;
 }
+.alert {
+  padding: 6px 15px;
+  margin-bottom: 0;
+}
 
 .wrap {
   min-height: 100%;

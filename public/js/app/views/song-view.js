@@ -10,7 +10,7 @@ var ShowSongView = Backbone.View.extend({
   
   render: function() {
     var template = _.template($(SongTemplate).find(this.template).html());
-    this.$el.html(template);
+    this.$el.html(template(this));
     $("#indexContainer").html(this.el);
   }
 
@@ -47,15 +47,39 @@ var EditSongView = Backbone.View.extend({
   },
   
   events: {
-    'click button[tag="submit"]': 'submit'
+    'click *[tag="submit"]': 'submit',
+    'dblclick *[tag="del"]': 'del'
   },
   
-  submit: function() {
-    var obj = utils.getObjByForm(this);
+  submit: function(e) {
+    var obj = utils.getObjFromForm(this);
     var song = this.model;
-    song.save(obj, {
+    var isValid = song.save(obj, {
       wait: true,
-      isSubmit: true
+      $btn: $(e.currentTarget)
+    });
+    if(isValid) {
+      var $target = this.$('select, input').closest('.row').find('*[tag="alert"]').children();
+      $target.remove();
+    } else if(!isValid) {
+      var i = 0;
+      _.each(song.validationError, function(value, key) {
+        var $target = this.$('*[name="'+key+'"]').closest('.row').find('*[tag="alert"]');
+        var $alert = $(utils.getAlertHtml('alert-danger', value));
+        utils.renderAlert($target, $alert, 1000*60);
+        if(i==0) {
+         this.$('*[name="'+key+'"]').focus();
+        }
+        i++;
+      }, this);
+    }
+  },
+  
+  del: function(e) {
+    var song = this.model;
+    song.destroy({
+      wait: true,
+      $btn: $(e.currentTarget)
     });
   }
 

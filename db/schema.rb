@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20130912125719) do
+ActiveRecord::Schema.define(version: 20131019050344) do
 
   create_table "songs", force: true do |t|
     t.integer  "index"
@@ -20,6 +20,8 @@ ActiveRecord::Schema.define(version: 20130912125719) do
     t.string   "first_sentence"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.string   "uploaded_song"
+    t.string   "uploaded_pic"
   end
 
 end
