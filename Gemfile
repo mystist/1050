@@ -8,8 +8,6 @@ gem 'mysql'
 gem 'redcarpet'
 gem 'sinatra-contrib'
 
-gem 'rake'
-
 group :development do
   gem 'rake'
 end
