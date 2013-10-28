@@ -8,7 +8,7 @@ var utils = {
   
     var tThis = this;
   
-    $.ajaxSetup({global: true});
+    $.ajaxSetup({global: true, cache: false});
     
     $(document).ajaxSend(function(event, jqxhr, settings) {
       tThis.before(event, jqxhr, settings);
