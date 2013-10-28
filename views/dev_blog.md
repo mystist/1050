@@ -8,7 +8,7 @@
 数据库：`mysql`, 由`OpenShift`作为组件提供。  
 开发语言：`ruby`  
 框架：`sinatra` + `activerecord` + `Backbone`  
-涉及到的关键词：`OpenShift`, `sinatra`, `ruby`, `RESTful`, `activerecord`, `mysql`, `Backbone`, `requireJS`, `Bootstrap`, `git`, `github`, `markdown`, `requirejs`
+涉及到的关键词：`OpenShift`, `sinatra`, `ruby`, `RESTful`, `activerecord`, `mysql`, `Backbone`, `requireJS`, `Bootstrap`, `git`, `github`, `markdown`  
 
 ====
 
