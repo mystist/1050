@@ -2,8 +2,6 @@
 
 var utils = {
 
-  timeout: null,
-
   setGlobalAjaxSettings: function() {
   
     var tThis = this;
