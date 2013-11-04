@@ -126,8 +126,8 @@ var utils = {
       
       set: function(n) {
         n = this.clamp(n, this.settings.minimum, 1);
-        this.status = n; // this.status = (n === 1 ? null : n);
-        this.settings.render(this.settings.$target, (this.status * 100).toFixed(2));
+        this.status = (n === 1 ? null : n);
+        this.settings.render(this.settings.$target, parseFloat((n * 100).toFixed(2), 10));
       },
       
       start: function() {

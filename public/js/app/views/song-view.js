@@ -102,20 +102,22 @@ var EditSongView = Backbone.View.extend({
         $target.find('*[tag="upload"]').bind('click', function() {
           $(this).attr('disabled', 'disabled');
           var progress = utils.Progress();
+          data.progress = progress;
           progress.init(data.context.find('.progress-bar'), tThis.progressing);
           progress.start();
           //Need check if exist
-          //data.submit();
+          data.submit();
         });
       },
       done: function(e, data) {
         if(data.result&&data.result.hash) {
-          data.context.find('*[tag="upload_result"]').html('成功');
-          data.context.find('*[tag="upload"]').removeClass('btn-primary').addClass('btn-danger')
-            .html('删除').attr('tag', 'upload_del').removeAttr('disabled');
+          tThis.success(data);
         } else {
-          
+          tThis.error(data);
         }
+      },
+      fail: function(e, data) {
+        tThis.error(data);
       }
     });
   },
@@ -123,6 +125,22 @@ var EditSongView = Backbone.View.extend({
   progressing: function($target, progress) {
     $target.css('width', progress +'%').attr('aria-valuenow', progress)
       .find('span').html(progress +'%');
+  },
+  
+  success: function(data) {
+    data.progress.done();
+    var $target = data.progress.settings.$target.find('span');
+    $target.html($target.html()+' 上传成功');
+    data.context.find('*[tag="upload"]').removeClass('btn-primary').addClass('btn-danger')
+      .html('删除').attr('tag', 'upload_del').removeAttr('disabled');
+  },
+  
+  error: function(data) {
+    data.progress.done();
+    var $target = data.progress.settings.$target.find('span');
+    $target.html($target.html()+' 上传失败');
+    data.context.find('*[tag="upload"]').removeClass('btn-primary').addClass('btn-default')
+      .html('取消').attr('tag', 'upload_cancel').removeAttr('disabled');
   }
 
 });
