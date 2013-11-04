@@ -72,7 +72,7 @@ var utils = {
   
   getObjFromForm: function($selector) {
     var obj = {};
-    $selector.$('select, input').each(function() {
+    $selector.find('select, input').each(function() {
       obj[this.name] = this.value;
     });
     return obj;

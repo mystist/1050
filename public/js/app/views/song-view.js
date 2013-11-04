@@ -52,7 +52,7 @@ var EditSongView = Backbone.View.extend({
   },
   
   submit: function(e) {
-    var obj = utils.getObjFromForm(this);
+    var obj = utils.getObjFromForm(this.$el);
     var song = this.model;
     var isValid = song.save(obj, {
       wait: true,

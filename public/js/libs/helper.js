@@ -108,7 +108,7 @@
     }
   },
   
-  // Provide by vendor, Copyright unknown. Did some modification.
+  // Provide by vendor, Copyright unknown. Did a few modification.
   serializeObject : function(serializedArr) {
     var o = {};
     var a = serializedArr;
@@ -123,6 +123,23 @@
       }
     }
     return o;
+  },
+  
+  // http://stackoverflow.com/questions/133925/javascript-post-request-like-a-form-submit. Did a few modification.
+  postToUrl : function(attrObj, paramObj) {
+    var form = document.createElement("form");
+    for(var key in attrObj) {
+      form.setAttribute(key, attrObj[key]);
+    }
+    for(var key in paramObj) {
+      var hiddenField = document.createElement("input");
+      hiddenField.setAttribute("type", key=="file"?"file":"hidden");
+      hiddenField.setAttribute("name", key);
+      hiddenField.setAttribute("value", paramObj[key]);
+      form.appendChild(hiddenField);
+    }
+    document.body.appendChild(form);
+    form.submit();
   }
   
 }
