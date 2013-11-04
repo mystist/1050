@@ -3,6 +3,10 @@ require 'sinatra/reloader' if development?
 require 'sinatra/activerecord'
 require 'redcarpet'
 require 'sinatra/json'
+require 'qiniu-rs'
+
+Qiniu::RS.establish_connection! :access_key => '4drJ2mqHlMuy1sXSfd7W9KYQj3Z9iBAWUZ5kC-9g',
+                                :secret_key => '75lbFP5RQIjkZAlcnAGdKIOyxJlPuxVCsAoBLEXj'
 
 class Song < ActiveRecord::Base
 end
@@ -27,6 +31,7 @@ def encode_list(list)
 end
 
 get '/' do
+  @token = Qiniu::RS.generate_upload_token :scope => 'liber-1050'
   erb :index, :layout => :app_layout
 end
 

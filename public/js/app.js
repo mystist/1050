@@ -15,6 +15,10 @@
     'helper': {
       exports: 'helper'
     },
+    'jquery.fileupload': {
+      deps: ['jquery', 'jquery.ui.widget', 'jquery.iframe-transport'],
+      exports: 'jQuery.fn.fileupload'
+    },
     'bootstrap': ['jquery']
   }
 });

@@ -32,7 +32,11 @@ var utils = {
   
   before: function(event, jqxhr, settings) {
   
-    NProgress.set(0.6);
+    if(settings.isShowNProgress!=false) {
+      NProgress.start();
+      NProgress.set(0.6);
+      NProgress.inc();
+    }
     
     if(settings.$btn) {
       settings.$btn.attr("disabled", "disabled");
@@ -42,7 +46,9 @@ var utils = {
   
   complete: function(event, jqxhr, settings) {
   
-    NProgress.done();
+    if(settings.isShowNProgress!=false) {
+      NProgress.done();
+    }
     
     if(settings.$btn) {
       settings.$btn.removeAttr("disabled");

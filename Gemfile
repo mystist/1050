@@ -7,6 +7,7 @@ gem 'sinatra-activerecord'
 gem 'mysql'
 gem 'redcarpet'
 gem 'sinatra-contrib'
+gem 'qiniu-rs'
 
 group :development do
   gem 'rake'
