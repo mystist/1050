@@ -33,9 +33,8 @@ var utils = {
   before: function(event, jqxhr, settings) {
   
     if(settings.isShowNProgress!=false) {
-      NProgress.start();
       NProgress.set(0.6);
-      NProgress.inc();
+      NProgress.start();
     }
     
     if(settings.$btn) {
@@ -98,6 +97,84 @@ var utils = {
     setTimeout(function() {
       $alert.remove();
     }, time);
+  },
+  
+  // Copyright NProgress. For custom use. Simulate uploading progress cause IE 8 has no `loaded` object.
+  Progress: function() {
+  
+    var Progress = function() {
+      this.settings = {
+        minimum: 0.08,
+        trickleRate: 0.02,
+        trickleSpeed: 800,
+        trickle: true,
+        $target: null,
+        render: null
+      }
+    };
+    
+    Progress.prototype = {
+    
+      constructor: Progress,
+      
+      init: function($target, render) {
+        this.settings.$target = $target;
+        this.settings.render = render;
+      },
+    
+      status: null,
+      
+      set: function(n) {
+        n = this.clamp(n, this.settings.minimum, 1);
+        this.status = n; // this.status = (n === 1 ? null : n);
+        this.settings.render(this.settings.$target, (this.status * 100).toFixed(2));
+      },
+      
+      start: function() {
+        var tThis = this;
+        if (!this.status) this.set(0);
+        var work = function() {
+          setTimeout(function() {
+            if (!tThis.status) return;
+            tThis.trickle();
+            work();
+          }, tThis.settings.trickleSpeed);
+        };
+        if (this.settings.trickle) work();
+      },
+      
+      inc: function(amount) {
+        var n = this.status;
+        if (!n) {
+          this.start(amount);
+        } else {
+          if (typeof amount !== 'number') {
+            amount = (1 - n) * this.clamp(Math.random() * n, 0.1, 0.95);
+          }
+          n = this.clamp(n + amount, 0, 0.994);
+          this.set(n);
+        }
+      },
+      
+      trickle: function() {
+        this.inc(Math.random() * this.settings.trickleRate);
+      },
+      
+      done: function() {
+        this.inc(0.3 + 0.5 * Math.random());
+        this.set(1);
+      },
+      
+      clamp: function(n, min, max) {
+        if (n < min) return min;
+        if (n > max) return max;
+        return n;
+      }
+    
+    }
+    
+    return new Progress();
+  
   }
 
 }

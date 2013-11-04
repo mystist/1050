@@ -101,17 +101,15 @@ var EditSongView = Backbone.View.extend({
         }];
         $target.find('*[tag="upload"]').bind('click', function() {
           $(this).attr('disabled', 'disabled');
+          var progress = utils.Progress();
+          progress.init(data.context.find('.progress-bar'), tThis.progressing);
+          progress.start();
           //Need check if exist
-          data.submit();
+          //data.submit();
         });
       },
-      progress: function(e, data) {
-        var progress = parseInt(data.loaded / data.total * 100, 10);
-        data.context.find('.progress-bar').css('width', progress +'%').attr('aria-valuenow', progress)
-          .find('span').html(progress +'%');
-      },
       done: function(e, data) {
-        if(data.result.hash) {
+        if(data.result&&data.result.hash) {
           data.context.find('*[tag="upload_result"]').html('成功');
           data.context.find('*[tag="upload"]').removeClass('btn-primary').addClass('btn-danger')
             .html('删除').attr('tag', 'upload_del').removeAttr('disabled');
@@ -120,6 +118,11 @@ var EditSongView = Backbone.View.extend({
         }
       }
     });
+  },
+  
+  progressing: function($target, progress) {
+    $target.css('width', progress +'%').attr('aria-valuenow', progress)
+      .find('span').html(progress +'%');
   }
 
 });
