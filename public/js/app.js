@@ -19,6 +19,9 @@
       deps: ['jquery', 'jquery.ui.widget', 'jquery.iframe-transport'],
       exports: 'jQuery.fn.fileupload'
     },
+    'plupload/plupload': {
+      exports: 'plupload'
+    }
     'bootstrap': ['jquery']
   }
 });

@@ -1,4 +1,4 @@
-﻿define(['jquery', 'backbone', 'text!app/templates/song-template.html', 'helper', 'utils/utils', 'jquery.fileupload'], function($, Backbone, SongTemplate, helper, utils) {
+﻿define(['jquery', 'backbone', 'text!app/templates/song-template.html', 'helper', 'utils/utils', 'plupload/plupload', 'jquery.fileupload'], function($, Backbone, SongTemplate, helper, utils, plupload) {
 
 var ShowSongView = Backbone.View.extend({
 
@@ -83,46 +83,13 @@ var EditSongView = Backbone.View.extend({
     });
   },
   
-  // uploadSong: function(e) {
-    // var tThis = this;
-    // $(e.currentTarget).fileupload({
-      // isShowNProgress: false,
-      // dataType: 'json',
-      // url: 'http://up.qiniu.com/',
-      // add: function (e, data) {
-        // var template = _.template($(SongTemplate).find('#UploadTemplate').html());
-        // var $target = $(template({data: data}));
-        // tThis.$('*[tag="upload_song_container"] tbody').append($target);
-        // data.context = $target;
-        // data.formData = [{
-          // name: 'token', value: $('#IndexContainer').attr('token')
-        // }, {
-          // name: 'key', value: data.files[0].name
-        // }];
-        // $target.find('*[tag="upload"]').bind('click', function() {
-          // $(this).attr('disabled', 'disabled');
-          // var progress = utils.Progress();
-          // data.progress = progress;
-          // progress.init(data.context.find('.progress-bar'), tThis.progressing);
-          // progress.start();
-          // // Need check if exist
-          // data.submit();
-        // });
-      // },
-      // done: function(e, data) {
-        // if(data.result&&data.result.hash) {
-          // tThis.success(data);
-        // } else {
-          // tThis.error(data);
-        // }
-      // },
-      // fail: function(e, data) {
-        // tThis.error(data);
-      // }
-    // });
-  // },
-  
   uploadSong: function(e) {
+  
+    // var uploader
+  
+  },
+  
+  uploadSong1: function(e) {
     var tThis = this;
     var url = 'https://c.pcs.baidu.com/rest/2.0/pcs/file' + '?method=upload&path=/apps/1050/test1.png&access_token=3.f562ec8dee4b5e0071c1d0e5cec72543.2592000.1386400060.2282023345-1673314';
     $(e.currentTarget).fileupload({
