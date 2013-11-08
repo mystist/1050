@@ -92,7 +92,7 @@ var utils = {
   },
   
   renderAlert: function($target, $alert, time) {
-    var time = time || 2500;
+    var time = time || 4500;
     $target.html($alert);
     setTimeout(function() {
       $alert.remove();

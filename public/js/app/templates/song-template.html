@@ -278,9 +278,16 @@
               </tbody>
             </table>
           </div>
-          <div class="btn btn-success fileinput-button">
-            <span class="glyphicon glyphicon-upload"></span> 上传歌曲
-            <input tag="upload_song" type="file" name="file" multiple />
+          <div class="row">
+            <div class="col-md-12">
+              <div class="btn btn-success">
+                <span class="glyphicon glyphicon-upload"></span> 上传歌曲
+                <input id="upload_song" tag="upload_song" type="file" name="file" multiple="true" />
+              </div>
+              <label>&nbsp;&nbsp;&nbsp;&nbsp;</label>
+              <span tag="alert">
+              </span>
+            </div>
           </div>
         </div>
       </div>
@@ -390,7 +397,7 @@
 
 <script type="text/template" id="UploadTemplate">
 
-<% var m = data.files[0]; %>
+<% var m = file; %>
 <tr>
   <td ><%= m.name %></td>
   <td class="col-md-1"><%= (m.size/1000000).toFixed(2) %>MB</td>

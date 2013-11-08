@@ -1,4 +1,4 @@
-﻿define(['jquery', 'backbone', 'text!app/templates/song-template.html', 'helper', 'utils/utils', 'plupload/plupload', 'jquery.fileupload'], function($, Backbone, SongTemplate, helper, utils, plupload) {
+﻿define(['jquery', 'backbone', 'text!app/templates/song-template.html', 'helper', 'utils/utils', 'plupload/zh_CN', 'jquery.fileupload', 'jquery.uploadify'], function($, Backbone, SongTemplate, helper, utils, plupload) {
 
 var ShowSongView = Backbone.View.extend({
 
@@ -38,6 +38,7 @@ var EditSongView = Backbone.View.extend({
   
   initialize: function() {
     this.render();
+    this.initUploader();
   },
   
   render: function() {
@@ -49,7 +50,7 @@ var EditSongView = Backbone.View.extend({
   events: {
     'click *[tag="submit"]': 'submit',
     'dblclick *[tag="del"]': 'del',
-    'click *[tag="upload_song"]': 'uploadSong'
+    'click *[tag="upload_song1"]': 'uploadSong1'
   },
   
   submit: function(e) {
@@ -83,9 +84,68 @@ var EditSongView = Backbone.View.extend({
     });
   },
   
-  uploadSong: function(e) {
+  initUploader: function() {
   
-    // var uploader
+    var tThis = this;
+    var url = 'http://c.pcs.baidu.com:80/rest/2.0/pcs/file';
+    url += '?method=upload&path=/apps/1050/test3.png&access_token=3.f562ec8dee4b5e0071c1d0e5cec72543.2592000.1386400060.2282023345-1673314';
+    
+    this.$('#upload_song').uploadify({
+      'swf'      : 'http://demoapi.duapp.com/wiki/js/uploadify/uploadify.swf',
+      'uploader' : url
+    });
+    
+  },
+  
+  initUploader1: function() {
+  
+    var tThis = this;
+    var $btnTarget = tThis.$('*[tag="upload_song"]');
+    var url = 'http://c.pcs.baidu.com:80/rest/2.0/pcs/file';
+    // url += '?method=upload&path=/apps/1050/test3.png&access_token=3.f562ec8dee4b5e0071c1d0e5cec72543.2592000.1386400060.2282023345-1673314';
+  
+    var uploader = new plupload.Uploader({
+      flash_swf_url : 'http://pan.baidu.com/res/static/images/swfupload.swf',
+      runtimes : 'flash',
+      filters : {
+        max_file_size : '10mb',
+        mime_types: [
+          {title : "Audio files", extensions : "mp3,mid,wma,wav,ogg"}
+        ]
+      },
+      container: tThis.el,
+      browse_button: $btnTarget[0],
+      url: url,
+      urlstream_upload: true
+      // url: url
+    });
+    
+    uploader.init();
+    
+    uploader.bind('FilesAdded', function(up, files) {
+      plupload.each(files, function(file) {
+        var template = _.template($(SongTemplate).find('#UploadTemplate').html());
+        var $target = $(template({file: file}));
+        tThis.$('*[tag="upload_song_container"] tbody').append($target);
+        file.$target = $target;
+        $target.find('*[tag="upload"]').bind('click', function() {
+          // $(this).attr('disabled', 'disabled');
+          uploader.start();
+        });
+      });
+    });
+    
+    uploader.bind('Error', function(up, err) {
+      var $alert = $(utils.getAlertHtml('alert-danger', err.message));
+      var $target = $btnTarget.closest('.row').find('*[tag="alert"]');
+      if($target) {
+        utils.renderAlert($target, $alert);
+      }
+    });
+    
+    uploader.bind('UploadProgress', function(up, file) {
+      tThis.progressing(file.$target, file.percent);
+    });
   
   },
   
