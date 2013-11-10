@@ -15,15 +15,10 @@
     'helper': {
       exports: 'helper'
     },
-    'jquery.fileupload': {
-      deps: ['jquery', 'jquery.ui.widget', 'jquery.iframe-transport'],
-      exports: 'jQuery.fn.fileupload'
-    },
     'plupload/zh_CN': {
       deps: ['plupload/plupload'],
       exports: 'plupload'
     },
-    'jquery.uploadify': ['jquery'],
     'bootstrap': ['jquery']
   }
 });

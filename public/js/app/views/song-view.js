@@ -1,4 +1,4 @@
-﻿define(['jquery', 'backbone', 'text!app/templates/song-template.html', 'helper', 'utils/utils', 'plupload/zh_CN', 'jquery.fileupload', 'jquery.uploadify'], function($, Backbone, SongTemplate, helper, utils, plupload) {
+﻿define(['jquery', 'backbone', 'text!app/templates/song-template.html', 'helper', 'utils/utils', 'plupload/zh_CN'], function($, Backbone, SongTemplate, helper, utils, plupload) {
 
 var ShowSongView = Backbone.View.extend({
 
@@ -49,8 +49,7 @@ var EditSongView = Backbone.View.extend({
   
   events: {
     'click *[tag="submit"]': 'submit',
-    'dblclick *[tag="del"]': 'del',
-    'click *[tag="upload_song1"]': 'uploadSong1'
+    'dblclick *[tag="del"]': 'del'
   },
   
   submit: function(e) {
@@ -87,101 +86,47 @@ var EditSongView = Backbone.View.extend({
   initUploader: function() {
   
     var tThis = this;
-    var url = 'http://c.pcs.baidu.com:80/rest/2.0/pcs/file';
-    url += '?method=upload&path=/apps/1050/test3.png&access_token=3.f562ec8dee4b5e0071c1d0e5cec72543.2592000.1386400060.2282023345-1673314';
-    
-    this.$('#upload_song').uploadify({
-      'swf'      : 'http://demoapi.duapp.com/wiki/js/uploadify/uploadify.swf',
-      'uploader' : url
-    });
-    
-  },
-  
-  initUploader1: function() {
-  
-    var tThis = this;
-    var $btnTarget = tThis.$('*[tag="upload_song"]');
-    var url = 'http://c.pcs.baidu.com:80/rest/2.0/pcs/file';
-    // url += '?method=upload&path=/apps/1050/test3.png&access_token=3.f562ec8dee4b5e0071c1d0e5cec72543.2592000.1386400060.2282023345-1673314';
   
     var uploader = new plupload.Uploader({
-      flash_swf_url : 'http://pan.baidu.com/res/static/images/swfupload.swf',
+      flash_swf_url : 'js/libs/plupload/Moxie.swf',
       runtimes : 'flash',
+      container: tThis.el,
+      browse_button: tThis.$('*[tag="upload_song"]')[0],
+      url: 'http://up.qiniu.com:80/',
       filters : {
         max_file_size : '10mb',
         mime_types: [
-          {title : "Audio files", extensions : "mp3,mid,wma,wav,ogg"}
+          {title : "Audio files", extensions : "mp3, mid, wma, wav, ogg"}
         ]
       },
-      container: tThis.el,
-      browse_button: $btnTarget[0],
-      url: url,
-      urlstream_upload: true
-      // url: url
+      init: {
+        FilesAdded: function(up, files) {
+          plupload.each(files, function(file) {
+            var template = _.template($(SongTemplate).find('#UploadTemplate').html());
+            var $target = $(template({file: file}));
+            tThis.$('*[tag="upload_song_container"] tbody').append($target);
+            file.$target = $target;
+            $target.find('*[tag="upload"]').bind('click', function() {
+              $(this).attr('disabled', 'disabled');
+              uploader.start();
+            });
+          });
+        },
+        UploadProgress: function(up, file) {
+          tThis.progressing(file.$target.find('.progress-bar'), file.percent);
+        },
+        Error: function(up, err) {
+          var $alert = $(utils.getAlertHtml('alert-danger', err.message));
+          var $target = $btnTarget.closest('.row').find('*[tag="alert"]');
+          if($target) {
+            utils.renderAlert($target, $alert);
+          }
+        }
+      }
     });
     
     uploader.init();
     
-    uploader.bind('FilesAdded', function(up, files) {
-      plupload.each(files, function(file) {
-        var template = _.template($(SongTemplate).find('#UploadTemplate').html());
-        var $target = $(template({file: file}));
-        tThis.$('*[tag="upload_song_container"] tbody').append($target);
-        file.$target = $target;
-        $target.find('*[tag="upload"]').bind('click', function() {
-          // $(this).attr('disabled', 'disabled');
-          uploader.start();
-        });
-      });
-    });
-    
-    uploader.bind('Error', function(up, err) {
-      var $alert = $(utils.getAlertHtml('alert-danger', err.message));
-      var $target = $btnTarget.closest('.row').find('*[tag="alert"]');
-      if($target) {
-        utils.renderAlert($target, $alert);
-      }
-    });
-    
-    uploader.bind('UploadProgress', function(up, file) {
-      tThis.progressing(file.$target, file.percent);
-    });
-  
-  },
-  
-  uploadSong1: function(e) {
-    var tThis = this;
-    var url = 'https://c.pcs.baidu.com/rest/2.0/pcs/file' + '?method=upload&path=/apps/1050/test1.png&access_token=3.f562ec8dee4b5e0071c1d0e5cec72543.2592000.1386400060.2282023345-1673314';
-    $(e.currentTarget).fileupload({
-      isShowNProgress: false,
-      url: url,
-      add: function (e, data) {
-        var template = _.template($(SongTemplate).find('#UploadTemplate').html());
-        var $target = $(template({data: data}));
-        tThis.$('*[tag="upload_song_container"] tbody').append($target);
-        data.context = $target;
-        data.formData = [];
-        $target.find('*[tag="upload"]').bind('click', function() {
-          $(this).attr('disabled', 'disabled');
-          var progress = utils.Progress();
-          data.progress = progress;
-          progress.init(data.context.find('.progress-bar'), tThis.progressing);
-          progress.start();
-          // Need check if exist
-          data.submit();
-        });
-      },
-      done: function(e, data) {
-        if(data.result&&data.result.hash) {
-          tThis.success(data);
-        } else {
-          tThis.error(data);
-        }
-      },
-      fail: function(e, data) {
-        tThis.error(data);
-      }
-    });
   },
   
   progressing: function($target, progress) {
