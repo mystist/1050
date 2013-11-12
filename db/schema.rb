@@ -10,7 +10,20 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20130912125719) do
+ActiveRecord::Schema.define(version: 20131112143436) do
+
+  create_table "resources", force: true do |t|
+    t.integer  "song_id"
+    t.string   "file_name"
+    t.integer  "file_size"
+    t.date     "uploaded_time"
+    t.string   "file_type"
+    t.integer  "stars"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "resources", ["song_id"], name: "fk_resources_songs", using: :btree
 
   create_table "songs", force: true do |t|
     t.integer  "index"

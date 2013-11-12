@@ -22,7 +22,8 @@ git config --global core.safecrlf true
 git update-index --chmod=+x .openshift/action_hooks/*
 
 #
-  
+
+rhc ssh {appName} 
 bundle exec rake db:migrate RACK_ENV="production"
 
 #
@@ -66,8 +67,6 @@ https://openshift.redhat.com/app/console/application/1050/building/delete
 #
 
 http://openapi.baidu.com/oauth/2.0/login_success#expires_in=2592000&access_token=3.f562ec8dee4b5e0071c1d0e5cec72543.2592000.1386400060.2282023345-1673314&session_secret=f2fe6ff82994a9900c3ffb7e2acba1e8&session_key=94q1SVX1MXD4ZUEB1ARXS6afj1md4rZPj6EycnAUPxww033l4feXhfV3M8q3NX21peSbaLR2g%2FgBNuB3nqN0pzMYdxUmSvMG&scope=basic+netdisk
-
-
 
 #
 
