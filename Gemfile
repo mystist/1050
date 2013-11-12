@@ -8,7 +8,6 @@ gem 'mysql'
 gem 'redcarpet'
 gem 'sinatra-contrib'
 gem 'qiniu-rs'
-gem 'rake'
 
 group :development do
   gem 'rake'
