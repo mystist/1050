@@ -6,7 +6,7 @@
 <div class="container">
   <div class="page-header pull-left col-md-12">
     <div class="pull-left">
-      <h3>诗歌列表<label><h5>（<%= list?list.length:0 %>首）</h5></label></h3>
+      <h3>诗歌列表<small>（<%= list?list.length:0 %>首）</small></h3>
       <h4>向天父献上我们的赞美</h4>
     </div>
     <blockquote class="pull-right">
@@ -212,6 +212,8 @@
         </div>
       </div>
       
+      <div tag="song">
+      
       <div class="row">
         <div class="col-md-12">
           <h4><label>歌曲文件：</label></h4>
@@ -243,44 +245,12 @@
                       <button type="button" class="btn btn-danger btn-xs">删除</button>
                   </td>
                 </tr>
-                <tr>
-                  <td>11123.mp3</td>
-                  <td>4.53MB</td>
-                  <td>2012-11-01 23:33</td>
-                  <td>1</td>
-                  <td>
-                    <div class="btn-group">
-                      <button type="button" class="btn btn-info btn-xs">顶</button>
-                      <button type="button" class="btn btn-default btn-xs">踩</button>
-                    </div>
-                    <label>&nbsp;&nbsp;&nbsp;&nbsp;</label>
-                      <button type="button" class="btn btn-success btn-xs">播放</button>
-                      <button type="button" class="btn btn-primary btn-xs">下载</button>
-                      <button type="button" class="btn btn-danger btn-xs">删除</button>
-                  </td>
-                </tr>
-                <tr>
-                  <td>11123.mp3</td>
-                  <td>4.53MB</td>
-                  <td>2012-11-01 23:33</td>
-                  <td>1</td>
-                  <td>
-                    <div class="btn-group">
-                      <button type="button" class="btn btn-info btn-xs">顶</button>
-                      <button type="button" class="btn btn-default btn-xs">踩</button>
-                    </div>
-                    <label>&nbsp;&nbsp;&nbsp;&nbsp;</label>
-                      <button type="button" class="btn btn-success btn-xs">播放</button>
-                      <button type="button" class="btn btn-primary btn-xs">下载</button>
-                      <button type="button" class="btn btn-danger btn-xs">删除</button>
-                  </td>
-                </tr>
               </tbody>
             </table>
           </div>
           <div class="row">
             <div class="col-md-12">
-              <div class="btn btn-success" tag="upload_song">
+              <div class="btn btn-success" tag="upload">
                 <span class="glyphicon glyphicon-upload"></span> 上传歌曲
               </div>
               <label>&nbsp;&nbsp;&nbsp;&nbsp;</label>
@@ -294,7 +264,7 @@
       <div class="row">
         <div class="col-md-12">
           <h2></h2>
-          <table class="table" tag="upload_song_container">
+          <table class="table" tag="upload_container">
             <tbody>
             </tbody>
           </table>
@@ -302,14 +272,16 @@
       </div>
       
       <div class="row">
-        <div class="col-md-11">
-        </div>
-        <div class="col-md-1">
-          <button type="button" class="btn btn-primary" tag="start_upload">开始上传</button>
+        <div class="col-md-12">
+          <button type="button" class="btn btn-primary" tag="start_upload" style="display: none;">开始上传</button>
         </div>
       </div>
       
+      </div>
+      
       <hr />
+      
+      <div tag="pic">
       
       <div class="row">
         <div class="col-md-12">
@@ -342,45 +314,38 @@
                       <button type="button" class="btn btn-danger btn-xs">删除</button>
                   </td>
                 </tr>
-                <tr>
-                  <td>11123.mp3</td>
-                  <td>4.53MB</td>
-                  <td>2012-11-01 23:33</td>
-                  <td>1</td>
-                  <td>
-                    <div class="btn-group">
-                      <button type="button" class="btn btn-info btn-xs">顶</button>
-                      <button type="button" class="btn btn-default btn-xs">踩</button>
-                    </div>
-                    <label>&nbsp;&nbsp;&nbsp;&nbsp;</label>
-                      <button type="button" class="btn btn-warning btn-xs">查看</button>
-                      <button type="button" class="btn btn-primary btn-xs">下载</button>
-                      <button type="button" class="btn btn-danger btn-xs">删除</button>
-                  </td>
-                </tr>
-                <tr>
-                  <td>11123.mp3</td>
-                  <td>4.53MB</td>
-                  <td>2012-11-01 23:33</td>
-                  <td>1</td>
-                  <td>
-                    <div class="btn-group">
-                      <button type="button" class="btn btn-info btn-xs">顶</button>
-                      <button type="button" class="btn btn-default btn-xs">踩</button>
-                    </div>
-                    <label>&nbsp;&nbsp;&nbsp;&nbsp;</label>
-                      <button type="button" class="btn btn-warning btn-xs">查看</button>
-                      <button type="button" class="btn btn-primary btn-xs">下载</button>
-                      <button type="button" class="btn btn-danger btn-xs">删除</button>
-                  </td>
-                </tr>
               </tbody>
             </table>
           </div>
-          <div class="btn btn-warning">
-            <span class="glyphicon glyphicon-upload"></span> 上传歌谱
+          <div class="row">
+            <div class="col-md-12">
+              <div class="btn btn-warning" tag="upload">
+                <span class="glyphicon glyphicon-upload"></span> 上传歌谱
+              </div>
+              <label>&nbsp;&nbsp;&nbsp;&nbsp;</label>
+              <span tag="alert">
+              </span>
+            </div>
           </div>
         </div>
+      </div>
+      
+      <div class="row">
+        <div class="col-md-12">
+          <h2></h2>
+          <table class="table" tag="upload_container">
+            <tbody>
+            </tbody>
+          </table>
+        </div>
+      </div>
+      
+      <div class="row">
+        <div class="col-md-12">
+          <button type="button" class="btn btn-primary" tag="start_upload" style="display: none;">开始上传</button>
+        </div>
+      </div>
+      
       </div>
       
       <hr />
@@ -412,13 +377,13 @@
   <td class="col-md-1"><%= (m.size/1000000).toFixed(2) %>MB</td>
   <td class="col-md-4">
     <div class="progress">
-      <div class="progress-bar" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100">
+      <div class="progress-bar progress-bar-info" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100">
         <span></span>
       </div>
     </div>
   </td>
   <td class="col-md-1">
-    <button tag="upload" type="button" class="btn btn-primary btn-xs">上传</button>
+    <button tag="cancel_upload" type="button" class="btn btn-default btn-xs">取消</button>
   </td>
 </tr>
 

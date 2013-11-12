@@ -59,9 +59,7 @@ var utils = {
     if(settings.$btn) {
       var $alert = $(this.getAlertHtml('alert-success', '操作成功'));
       var $target = settings.$btn.closest('.row').find('*[tag="alert"]');
-      if($target) {
-        this.renderAlert($target, $alert);
-      }
+      this.renderAlert($target, $alert);
     }
   },
   
@@ -69,9 +67,7 @@ var utils = {
     if(settings.$btn) {
       var $alert = $(this.getAlertHtml('alert-danger', '操作失败，请稍后重试'));
       var $target = settings.$btn.closest('.row').find('*[tag="alert"]');
-      if($target) {
-        this.renderAlert($target, $alert);
-      }
+      this.renderAlert($target, $alert);
     }
   },
   
@@ -83,9 +79,9 @@ var utils = {
     return obj;
   },
   
-  getAlertHtml: function(className, msg) {
+  getAlertHtml: function(cssName, msg) {
     var sb = '';
-    sb += '<label class="alert '+className+'">' +
+    sb += '<label class="alert '+cssName+'">' +
           '<strong>'+msg+'</strong>' +
           '</label>';
     return sb;
@@ -93,10 +89,12 @@ var utils = {
   
   renderAlert: function($target, $alert, time) {
     var time = time || 4500;
-    $target.html($alert);
-    setTimeout(function() {
-      $alert.remove();
-    }, time);
+    if($target) {
+      $target.html($alert);
+      setTimeout(function() {
+        $alert.remove();
+      }, time);
+    }
   },
   
   // Copyright NProgress. For custom use. Simulate uploading progress cause IE 8 has no `loaded` object.

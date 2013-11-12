@@ -34,11 +34,16 @@ var SongListView = Backbone.View.extend({
 
 var EditSongView = Backbone.View.extend({
 
+  options: {
+    uploadedList: []
+  },
+
   template: "#EditSongTemplate",
   
   initialize: function() {
     this.render();
-    this.initUploader();
+    this.initUploader('song');
+    this.initUploader('pic');
   },
   
   render: function() {
@@ -54,6 +59,7 @@ var EditSongView = Backbone.View.extend({
   
   submit: function(e) {
     var obj = utils.getObjFromForm(this.$el);
+    obj.uploadedList = this.options.uploadedList;
     var song = this.model;
     var isValid = song.save(obj, {
       wait: true,
@@ -83,71 +89,110 @@ var EditSongView = Backbone.View.extend({
     });
   },
   
-  initUploader: function() {
+  initUploader: function(type) {
   
     var tThis = this;
+    var $container = '', $btnTarget = '', $startTarget = '';
+    var filters = {};
+    if(type=='song') {
+      $container = tThis.$('*[tag="song"]');
+      filters = {
+        max_file_size : '10mb',
+        mime_types: [
+          {title : "Audio files", extensions : "mp3,mid,wma,wav,ogg"}
+        ]
+      };
+    }
+    if(type=="pic") {
+      $container = tThis.$('*[tag="pic"]');
+      filters = {
+        max_file_size : '10mb',
+        mime_types: [
+          {title : "Image files", extensions : "gif,jpg,jpeg,png"}
+        ]
+      };
+    }
+    if($container) {
+      $btnTarget = $container.find('*[tag="upload"]');
+      $startTarget = $container.find('*[tag="start_upload"]');
+    } else {
+      return ;
+    }
   
     var uploader = new plupload.Uploader({
       flash_swf_url : 'js/libs/plupload/Moxie.swf',
       runtimes : 'flash',
-      container: tThis.el,
-      browse_button: tThis.$('*[tag="upload_song"]')[0],
+      container: $container[0],
+      browse_button: $btnTarget[0],
       url: 'http://up.qiniu.com:80/',
-      filters : {
-        max_file_size : '10mb',
-        mime_types: [
-          {title : "Audio files", extensions : "mp3, mid, wma, wav, ogg"}
-        ]
+      filters : filters,
+      multipart_params: {
+        'token': $("#IndexContainer").attr('token')
       },
       init: {
+        PostInit: function() {
+          $startTarget.bind('click', function() {
+            $(this).attr('disabled', 'disabled');
+            uploader.start();
+            return false;
+          });
+        },
         FilesAdded: function(up, files) {
           plupload.each(files, function(file) {
             var template = _.template($(SongTemplate).find('#UploadTemplate').html());
             var $target = $(template({file: file}));
-            tThis.$('*[tag="upload_song_container"] tbody').append($target);
-            file.$target = $target;
-            $target.find('*[tag="upload"]').bind('click', function() {
-              $(this).attr('disabled', 'disabled');
-              uploader.start();
+            $container.find('*[tag="upload_container"] tbody').append($target);
+            $target.find('*[tag="cancel_upload"]').bind('click', function() {
+              uploader.removeFile(file);
+              $target.remove();
             });
+            file.$target = $target;
           });
+          $startTarget.show();
         },
         UploadProgress: function(up, file) {
-          tThis.progressing(file.$target.find('.progress-bar'), file.percent);
+          var $target = file.$target.find('.progress-bar');
+          var progress = file.percent;
+          $target.css('width', progress +'%').attr('aria-valuenow', progress).find('span').html(progress +'%');
+          file.$target.find('*[tag="cancel_upload"]').attr('disabled', 'disabled');
         },
         Error: function(up, err) {
           var $alert = $(utils.getAlertHtml('alert-danger', err.message));
           var $target = $btnTarget.closest('.row').find('*[tag="alert"]');
-          if($target) {
-            utils.renderAlert($target, $alert);
+          utils.renderAlert($target, $alert, 6500);
+          var errObj = {
+            '614': '文件名已存在'
+          };
+          var errStr = errObj[err.status]?'（'+errObj[err.status]+'）':'（错误代码'+err.status+'）';
+          err.file.$target.find('.progress-bar').find('span').html('上传失败'+errStr);
+          err.file.$target.addClass('danger');
+          err.file.$target.find('*[tag="cancel_upload"]').removeAttr('disabled');
+        },
+        BeforeUpload: function(up, file) {
+          up.settings.multipart_params['key'] = file.name;
+        },
+        FileUploaded: function(up, file) {
+          file.$target.find('.progress-bar').find('span').html('上传成功');
+          file.$target.addClass('success');
+          file.$target.find('*[tag="cancel_upload"]').remove();
+          var obj = {
+            fileName: file.name,
+            fileSize: file.size,
+            uploadedTime: helper.formatDateTime(new Date(), 'second'),
+            fileType: type
+          };
+          if(_.indexOf(_.pluck(tThis.options.uploadedList, 'fileName'), obj.fileName)==-1) {
+            tThis.options.uploadedList.push(obj);
           }
+        },
+        UploadComplete: function(up, files) {
+          $startTarget.removeAttr('disabled');
         }
       }
     });
     
     uploader.init();
     
-  },
-  
-  progressing: function($target, progress) {
-    $target.css('width', progress +'%').attr('aria-valuenow', progress)
-      .find('span').html(progress +'%');
-  },
-  
-  success: function(data) {
-    data.progress.done();
-    var $target = data.progress.settings.$target.find('span');
-    $target.html($target.html()+' 上传成功');
-    data.context.find('*[tag="upload"]').removeClass('btn-primary').addClass('btn-danger')
-      .html('删除').attr('tag', 'upload_del').removeAttr('disabled');
-  },
-  
-  error: function(data) {
-    data.progress.done();
-    var $target = data.progress.settings.$target.find('span');
-    $target.html($target.html()+' 上传失败');
-    data.context.find('*[tag="upload"]').removeClass('btn-primary').addClass('btn-default')
-      .html('取消').attr('tag', 'upload_cancel').removeAttr('disabled');
   }
 
 });
