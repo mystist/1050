@@ -65,7 +65,11 @@ var utils = {
   
   error: function(event, jqxhr, settings) {
     if(settings.$btn) {
-      var $alert = $(this.getAlertHtml('alert-danger', '操作失败，请稍后重试'));
+      var msg = '操作失败，请稍后重试';
+      if(jqxhr.responseJSON&&jqxhr.responseJSON.error) {
+        msg = jqxhr.responseJSON.error;
+      }
+      var $alert = $(this.getAlertHtml('alert-danger', msg));
       var $target = settings.$btn.closest('.row').find('*[tag="alert"]');
       this.renderAlert($target, $alert);
     }

@@ -74,7 +74,7 @@ define(['jquery', 'backbone', 'utils/utils', 'app/models/song-model', 'app/views
       };
       if(id) {
         song = new SongModel.Song({id: id});
-        if(app.songs) {
+        if(app.songs&&app.songs.get(id)) {
           song.set(app.songs.get(id).toJSON());
           showSong();
         } else {
@@ -93,7 +93,12 @@ define(['jquery', 'backbone', 'utils/utils', 'app/models/song-model', 'app/views
   
   Backbone.history.start();
   
-  return app;
+  var Main = {
+    app: app,
+    router: router
+  };
+  
+  return Main;
 
 });
 

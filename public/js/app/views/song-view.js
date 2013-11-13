@@ -35,7 +35,7 @@ var SongListView = Backbone.View.extend({
 var EditSongView = Backbone.View.extend({
 
   options: {
-    uploadedList: []
+    resources: []
   },
 
   template: "#EditSongTemplate",
@@ -59,11 +59,17 @@ var EditSongView = Backbone.View.extend({
   
   submit: function(e) {
     var obj = utils.getObjFromForm(this.$el);
-    obj.uploadedList = this.options.uploadedList;
+    obj.resources = this.options.resources;
     var song = this.model;
     var isValid = song.save(obj, {
       wait: true,
-      $btn: $(e.currentTarget)
+      $btn: $(e.currentTarget),
+      success: function(model) {
+        require(['app'], function(Main) {
+          Main.router.navigate('#modification/'+model.id);
+        });
+        // to be continue...
+      }
     });
     var $target = this.$('select, input').closest('.form-group').find('*[tag="alert"]').children();
     $target.remove();
@@ -85,7 +91,12 @@ var EditSongView = Backbone.View.extend({
     var song = this.model;
     song.destroy({
       wait: true,
-      $btn: $(e.currentTarget)
+      $btn: $(e.currentTarget),
+      success: function() {
+        require(['app'], function(Main) {
+          Main.router.navigate('', {trigger: true, replace: true});
+        });
+      }
     });
   },
   
@@ -176,13 +187,13 @@ var EditSongView = Backbone.View.extend({
           file.$target.addClass('success');
           file.$target.find('*[tag="cancel_upload"]').remove();
           var obj = {
-            fileName: file.name,
-            fileSize: file.size,
-            uploadedTime: helper.formatDateTime(new Date(), 'second'),
-            fileType: type
+            file_name: file.name,
+            file_size: file.size,
+            uploaded_time: helper.formatDateTime(new Date(), 'second'),
+            file_type: type
           };
-          if(_.indexOf(_.pluck(tThis.options.uploadedList, 'fileName'), obj.fileName)==-1) {
-            tThis.options.uploadedList.push(obj);
+          if(_.indexOf(_.pluck(tThis.options.resources, 'file_name'), obj.file_name)==-1) {
+            tThis.options.resources.push(obj);
           }
         },
         UploadComplete: function(up, files) {

@@ -5,7 +5,7 @@ var Song = Backbone.Model.extend({
   validate: function(attrs) {
     var errorObj = {};
     var publicMsg = '该项填写有误';
-    var mustNot = ['uploadedList', 'uploaded_song', 'uploaded_pic'];
+    var mustNot = ['resources', 'error'];
     _.each(attrs, function(value, key) {
       if(_.indexOf(mustNot, key)==-1) {
         if(key=="index") {

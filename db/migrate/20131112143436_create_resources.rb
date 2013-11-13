@@ -4,7 +4,7 @@ class CreateResources < ActiveRecord::Migration
       t.references :song
       t.string :file_name
       t.integer :file_size
-      t.date :uploaded_time
+      t.datetime :uploaded_time
       t.string :file_type
       t.integer :stars
       t.timestamps      
@@ -20,7 +20,7 @@ class CreateResources < ActiveRecord::Migration
 
   def down
     execute <<-SQL
-      ALTER TABLE products
+      ALTER TABLE resources
         DROP FOREIGN KEY fk_resources_songs
     SQL
     drop_table :resources

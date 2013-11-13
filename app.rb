@@ -11,6 +11,9 @@ Qiniu::RS.establish_connection! :access_key => '4drJ2mqHlMuy1sXSfd7W9KYQj3Z9iBAW
 class Song < ActiveRecord::Base
 end
 
+class Resource < ActiveRecord::Base
+end
+
 def encode_object(obj)
   if obj
     obj.attributes.each do |key, value|
@@ -47,76 +50,70 @@ get '/environment' do
   end
 end
 
-# STATUS = ''
-
-# get '/modification' do
-  # @status = STATUS
-  # STATUS = ''
-  # erb :modification
-# end
-
-# post '/modification' do
-  # new_song = Song.new
-  # new_song.index = params[:index]
-  # new_song.name = params[:name]
-  # new_song.category_big = params[:category_big]
-  # new_song.category_small = params[:category_small]
-  # new_song.first_sentence = params[:first_sentence]
-  # new_song.created_at = Time.now
-  # new_song.updated_at = Time.now
-  # new_song.save
-  # STATUS = 'success'
-  # redirect '/modification'
-# end
-
 get '/songs' do
-  @songs = Song.all.order('`index`')
-  json encode_list(@songs)
+  songs = Song.all.order('`index`')
+  json encode_list(songs)
 end
 
 get '/songs/:id' do
-  @song = Song.find_by_id(params[:id])
-  json encode_object(@song)
+  song = Song.find_by_id(params[:id].to_i)
+  resources = getResources(params[:id].to_i)
+  re = encode_object(song).attributes
+  re['resources'] = encode_list(resources)
+  json re
 end
 
 get '/songs_category/:category_name' do
-  @songs = Song.where(" category_big = '#{params[:category_name]}' ").order('`index`')
-  json encode_list(@songs)
+  songs = Song.where(" category_big = '#{params[:category_name]}' ").order('`index`')
+  json encode_list(songs)
 end
 
-# put '/songs/:id' do
-  # re = {
-    # :result => 'success',
-    # :error => nil
-  # }
-  # request.body.rewind  # in case someone already read it
-  # data = JSON.parse request.body.read
-  # song = Song.find_by_id(params[:id])
-  # song.attributes.each do |key, value|
-    # if key != 'id'
-      # song[key] = data[key]
-    # end
-  # end
-  # if(!song.save)
-    # re = {
-      # :result => nil,
-      # :error => 'failure'
-    # }    
-  # end
-  # json re
-# end
+def saveSong(song, obj)
+  song.attributes.each do |key, value|
+    if key != 'id'
+      if obj[key]
+        song[key] = obj[key]
+      end
+    end
+  end
+  song.save
+end
+
+def addResources(list, song_id)
+  if(list.length>0)
+    list.each do |obj|
+      current_resource = Resource.where( {'song_id' => song_id, 'file_name' => obj['file_name']} )
+      if(current_resource.count==0) 
+        new_resource = Resource.new
+        new_resource.attributes.each do |key, value|
+          if key != 'id'
+            if obj[key]
+              new_resource[key] = obj[key]
+            end
+          end
+        end
+        new_resource['song_id'] = song_id
+        new_resource['stars'] = 0
+        new_resource.save
+      end
+    end
+  end
+  getResources(song_id)
+end
+
+def getResources(song_id)
+  Resource.where('song_id' => song_id)
+end
 
 put '/songs/:id' do
   request.body.rewind  # in case someone already read it
   data = JSON.parse request.body.read
   song = Song.find_by_id(params[:id].to_i)
-  song.attributes.each do |key, value|
-    if key != 'id'
-      song[key] = data[key]
-    end
-  end
-  if(song.save)
-    json song
+  if(saveSong(song, data))
+    resources = addResources(data['resources'], song.id)
+    re = encode_object(song).attributes
+    re['resources'] = encode_list(resources)
+    json re
   else
     re = { :error => true }
     json re
@@ -127,13 +124,11 @@ post '/songs' do
   request.body.rewind  # in case someone already read it
   data = JSON.parse request.body.read
   song = Song.new
-  data.each do |key, value|
-    if key != 'id'
-      song[key] = data[key]
-    end
-  end
-  if(song.save)
-    json song
+  if(saveSong(song, data))
+    resources = addResources(data['resources'], song.id)
+    re = encode_object(song).attributes
+    re['resources'] = encode_list(resources)
+    json re
   else
     re = { :error => true }
     json re
@@ -142,6 +137,8 @@ end
 
 delete '/songs/:id' do
   param = (params[:id]).to_i
+  resources = getResources(param)
+  resources.delete_all
   json Song.delete(param)
 end
 
