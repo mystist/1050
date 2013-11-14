@@ -142,7 +142,10 @@ delete '/songs/:id' do
   json Song.delete(param)
 end
 
-
+delete '/resources/:id' do
+  param = (params[:id]).to_i
+  json Resource.delete(param)
+end
 
 
 

@@ -2,60 +2,63 @@
 
 <script id="ShowSongTemplate" type="text/template">
 
-<% var list = model.toJSON(); %>
+<% var list = collection.toJSON(); %>
 <div class="container">
-  <div class="page-header pull-left col-md-12">
-    <div class="pull-left">
-      <h3>诗歌列表<small>（<%= list?list.length:0 %>首）</small></h3>
-      <h4>向天父献上我们的赞美</h4>
+  <div class="row">
+    <div class="page-header pull-left col-md-12">
+      <div class="pull-left">
+        <h3>诗歌列表<small>（<%= list?list.length:0 %>首）</small></h3>
+        <h4>向天父献上我们的赞美</h4>
+      </div>
+      <blockquote class="pull-right">
+        <h3></h3>
+        <h5>“ 来啊，我们要向耶和华歌唱，向拯救我们的磐石欢呼。”</h5>
+        <small>诗篇95:1</small>
+      </blockquote>
     </div>
-    <blockquote class="pull-right">
-      <h3></h3>
-      <h5>“ 来啊，我们要向耶和华歌唱，向拯救我们的磐石欢呼。”</h5>
-      <small>诗篇95:1</small>
-    </blockquote>
   </div>
 </div>
 
 <div class="container">
-  <div id="SongListContainer"></div>
+  <div id="SongsContainer"></div>
 </div>
 
 </script>
 
-<script id="SongListTemplate" type="text/template">
+<script id="SongsTemplate" type="text/template">
 
   <%
-    var list = model.toJSON();
+    var list = collection.toJSON();
     var categoryBig = _.uniq(_.map(list, function(obj) {
       return obj['category_big'];
     }));
   %>
 
   <% _.each(categoryBig, function(item) { %>
-  <div class="col-md-12">
-    <h4><strong><%= item %></strong></h4>
-    <%
-      var curList = _.filter(list, function(obj) {
-        return obj["category_big"] == item;
-      });
-      var curCategorySmall = _.uniq(_.map(curList, function(obj) {
-        return obj['category_small'];
-      }));
-    %>
-    <% _.each(curCategorySmall, function(subItem) { %>
-    <div class="panel panel-default">
-      <div class="panel-heading"><%= subItem %></div>
-      <table class="table table-condensed">
-        <thead>
-          <tr>
-            <th class="col-md-4">歌名</th>
-            <th>歌词首句</th>
-            <th class="col-md-1">首数</th>
-            <th class="col-md-2">操作</th>
-          </tr>
-        </thead>
-        <tbody>
+  <div class="row">
+    <div class="col-md-12">
+      <h4><strong><%= item %></strong></h4>
+      <%
+        var curList = _.filter(list, function(obj) {
+          return obj["category_big"] == item;
+        });
+        var curCategorySmall = _.uniq(_.map(curList, function(obj) {
+          return obj['category_small'];
+        }));
+      %>
+      <% _.each(curCategorySmall, function(subItem) { %>
+      <div class="panel panel-default">
+        <div class="panel-heading"><%= subItem %></div>
+        <table class="table table-condensed">
+          <thead>
+            <tr>
+              <th class="col-md-4">歌名</th>
+              <th>歌词首句</th>
+              <th class="col-md-1">首数</th>
+              <th class="col-md-2">操作</th>
+            </tr>
+          </thead>
+          <tbody>
           <%
             var curCurList = _.filter(curList, function(obj) {
               return obj["category_small"] == subItem;
@@ -72,10 +75,11 @@
               </td>
             </tr>
           <% }); %>
-        </tbody>
-      </table>
+          </tbody>
+        </table>
+      </div>
+      <% }); %>
     </div>
-    <% }); %>
   </div>
   <% }); %>
 
@@ -86,21 +90,23 @@
 <% var m = model.id?model.toJSON():null; %>
 
 <div class="container">
-  <div class="page-header pull-left col-md-12">
-    <div class="pull-left">
-      <h3><%= m ? "修改诗歌" : "添加诗歌" %></h3>
-      <h4>为福音贡献我们的力量</h4>
+  <div class="row">
+    <div class="page-header pull-left col-md-12">
+      <div class="pull-left">
+        <h3><%= m ? "修改诗歌" : "添加诗歌" %></h3>
+        <h4>为福音贡献我们的力量</h4>
+      </div>
+      <blockquote class="pull-right">
+        <h3></h3>
+        <h5>“ 你们要赞美耶和华！在神的圣所赞美他，在他显能力的穹苍赞美他。”</h5>
+        <small>诗篇150:1</small>
+      </blockquote>
     </div>
-    <blockquote class="pull-right">
-      <h3></h3>
-      <h5>“ 你们要赞美耶和华！在神的圣所赞美他，在他显能力的穹苍赞美他。”</h5>
-      <small>诗篇150:1</small>
-    </blockquote>
   </div>
 </div>
 
 <div class="container">
-  <div class="col-md-12">
+
     <form role="form">
 
       <div class="row">
@@ -228,22 +234,9 @@
                   <th class="col-md-3">操作</th>
                 </tr>
               </thead>
-              <tbody>
+              <tbody id="SongResourcesContainer">
                 <tr>
-                  <td>11123.mp3</td>
-                  <td>4.53MB</td>
-                  <td>2012-11-01 23:33</td>
-                  <td>1</td>
-                  <td>
-                    <div class="btn-group">
-                      <button type="button" class="btn btn-info btn-xs">顶</button>
-                      <button type="button" class="btn btn-default btn-xs">踩</button>
-                    </div>
-                    <label>&nbsp;&nbsp;</label>
-                      <button type="button" class="btn btn-success btn-xs">播放</button>
-                      <button type="button" class="btn btn-primary btn-xs">下载</button>
-                      <button type="button" class="btn btn-danger btn-xs">删除</button>
-                  </td>
+                  <td colspan="20">暂无歌曲，请上传。</td>
                 </tr>
               </tbody>
             </table>
@@ -263,7 +256,6 @@
       
       <div class="row">
         <div class="col-md-12">
-          <h2></h2>
           <table class="table" tag="upload_container">
             <tbody>
             </tbody>
@@ -297,22 +289,9 @@
                   <th class="col-md-3">操作</th>
                 </tr>
               </thead>
-              <tbody>
+              <tbody id="PicResourcesContainer">
                 <tr>
-                  <td>11123.jpg</td>
-                  <td>453KB</td>
-                  <td>2012-11-01 23:33</td>
-                  <td>32</td>
-                  <td>
-                    <div class="btn-group">
-                      <button type="button" class="btn btn-info btn-xs">顶</button>
-                      <button type="button" class="btn btn-default btn-xs">踩</button>
-                    </div>
-                    <label>&nbsp;&nbsp;</label>
-                      <button type="button" class="btn btn-warning btn-xs">查看</button>
-                      <button type="button" class="btn btn-primary btn-xs">下载</button>
-                      <button type="button" class="btn btn-danger btn-xs">删除</button>
-                  </td>
+                  <td colspan="20">暂无歌谱，请上传。</td>
                 </tr>
               </tbody>
             </table>
@@ -332,7 +311,6 @@
       
       <div class="row">
         <div class="col-md-12">
-          <h2></h2>
           <table class="table" tag="upload_container">
             <tbody>
             </tbody>
@@ -364,7 +342,7 @@
       <hr />
       
     </form>
-  </div>
+    
 </div>
 
 </script>

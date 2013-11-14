@@ -1,5 +1,9 @@
 ﻿define(['jquery', 'nprogress/nprogress'], function($, NProgress) {
 
+NProgress.configure({
+  showSpinner: false
+});
+
 var utils = {
 
   setGlobalAjaxSettings: function() {

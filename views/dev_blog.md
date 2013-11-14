@@ -6,6 +6,7 @@
 ### 架构：
 服务器：[OpenShift][0] 云服务。  
 数据库：`mysql`, 由`OpenShift`作为组件提供。  
+数据存储：`Qiniu`云存储  
 开发语言：`ruby`  
 框架：`sinatra` + `activerecord` + `Backbone`  
 涉及到的关键词：`OpenShift`, `sinatra`, `ruby`, `RESTful`, `activerecord`, `mysql`, `Backbone`, `requireJS`, `Bootstrap`, `git`, `github`, `markdown`  
@@ -13,6 +14,12 @@
 ====
 
 ### 更新日志：
+
+#### 2013-11-12 - 2013-11-13
+    实现文件的上传。  
+    实现诗歌保存时，同时保存文件。  
+    实现编辑诗歌时，文件列表的显示。  
+    实现操作完成之后逻辑的处理：删除诗歌后跳转至首页；保存诗歌后跳转到编辑诗歌页面。
 
 #### 2013-10-28 - 2013-11-11
     研究文件上传的方案，最终确定为：Qiniu + plupload的方案实现。  

@@ -6,8 +6,9 @@
     if(time == null || time == "") {
       return "";
     }
-    if(typeof time === "string") {			
-      time = new Date( Date.parse(time.replace(/-/g, "/")) );
+    if(typeof time === "string") {
+      var theTime = time.slice(0, 10) + " " + time.slice(11, 19);
+      time = new Date( Date.parse(theTime.replace(/-/g, "/")) );
     }
     switch(type) {
       case "year" :

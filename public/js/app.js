@@ -42,8 +42,8 @@ define(['jquery', 'backbone', 'utils/utils', 'app/models/song-model', 'app/views
     },
     
     showSongs: function() {
-      var showSongView = new SongView.ShowSongView({model: this.songs});
-      var songListView = new SongView.SongListView({model: this.songs});
+      var showSongView = new SongView.ShowSongView({collection: this.songs});
+      var songsView = new SongView.SongsView({collection: this.songs});
     }
     
   });
@@ -74,14 +74,17 @@ define(['jquery', 'backbone', 'utils/utils', 'app/models/song-model', 'app/views
       };
       if(id) {
         song = new SongModel.Song({id: id});
-        if(app.songs&&app.songs.get(id)) {
-          song.set(app.songs.get(id).toJSON());
+        song.fetch({success: function() {
           showSong();
-        } else {
-          song.fetch({success: function() {
-            showSong();
-          }});
-        }
+        }});
+        // if(app.songs&&app.songs.get(id)) {
+          // song.set(app.songs.get(id).toJSON());
+          // showSong();
+        // } else {
+          // song.fetch({success: function() {
+            // showSong();
+          // }});
+        // }
       } else {
         showSong();
       }
