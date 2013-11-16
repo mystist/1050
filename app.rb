@@ -58,9 +58,14 @@ end
 get '/songs/:id' do
   song = Song.find_by_id(params[:id].to_i)
   resources = getResources(params[:id].to_i)
-  re = encode_object(song).attributes
-  re['resources'] = encode_list(resources)
-  json re
+  if song
+    re = encode_object(song).attributes
+    re['resources'] = encode_list(resources)
+    json re
+  else
+    re = { :error => true }
+    json re
+  end
 end
 
 get '/songs_category/:category_name' do
@@ -69,14 +74,16 @@ get '/songs_category/:category_name' do
 end
 
 def saveSong(song, obj)
-  song.attributes.each do |key, value|
-    if key != 'id'
-      if obj[key]
-        song[key] = obj[key]
+  if song
+    song.attributes.each do |key, value|
+      if key != 'id'
+        if obj[key]
+          song[key] = obj[key]
+        end
       end
     end
+    song.save
   end
-  song.save
 end
 
 def addResources(list, song_id)
@@ -109,7 +116,7 @@ put '/songs/:id' do
   request.body.rewind  # in case someone already read it
   data = JSON.parse request.body.read
   song = Song.find_by_id(params[:id].to_i)
-  if(saveSong(song, data))
+  if(song&&saveSong(song, data))
     resources = addResources(data['resources'], song.id)
     re = encode_object(song).attributes
     re['resources'] = encode_list(resources)
@@ -124,7 +131,7 @@ post '/songs' do
   request.body.rewind  # in case someone already read it
   data = JSON.parse request.body.read
   song = Song.new
-  if(saveSong(song, data))
+  if(song&&saveSong(song, data))
     resources = addResources(data['resources'], song.id)
     re = encode_object(song).attributes
     re['resources'] = encode_list(resources)
@@ -147,6 +154,30 @@ delete '/resources/:id' do
   json Resource.delete(param)
 end
 
+patch '/resources/:id' do
+  request.body.rewind  # in case someone already read it
+  data = JSON.parse request.body.read
+  obj = data
+  resource = Resource.find_by_id(params[:id].to_i)
+  if resource
+    resource.attributes.each do |key, value|
+      if key != 'id'
+        if obj[key]
+          resource[key] = obj[key]
+        end
+      end
+    end
+    if obj['plus']
+      resource['stars'] += obj['plus'].to_i
+    end
+    resource.save
+    re = encode_object(resource).attributes
+    json re
+  else
+    re = { :error => true }
+    json re
+  end
+end
 
 
 

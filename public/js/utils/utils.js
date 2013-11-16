@@ -62,19 +62,19 @@ var utils = {
   success: function(event, jqxhr, settings) {
     if(settings.$btn) {
       var $alert = $(this.getAlertHtml('alert-success', '操作成功'));
-      var $target = settings.$btn.closest('.row').find('*[tag="alert"]');
+      var $target = settings.$btn.closest('.row').find('*[tag="alert"]').first();
       this.renderAlert($target, $alert);
     }
   },
   
   error: function(event, jqxhr, settings) {
     if(settings.$btn) {
-      var msg = '操作失败，请稍后重试';
-      if(jqxhr.responseJSON&&jqxhr.responseJSON.error) {
+      var msg = '操作失败，请刷新页面重试';
+      if(jqxhr.responseJSON&&jqxhr.responseJSON.error&&(typeof jqxhr.responseJSON.error == 'string')) {
         msg = jqxhr.responseJSON.error;
       }
       var $alert = $(this.getAlertHtml('alert-danger', msg));
-      var $target = settings.$btn.closest('.row').find('*[tag="alert"]');
+      var $target = settings.$btn.closest('.row').find('*[tag="alert"]').first();
       this.renderAlert($target, $alert);
     }
   },

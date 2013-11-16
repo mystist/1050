@@ -67,11 +67,13 @@ var EditSongView = Backbone.View.extend({
     var isValid = song.save(obj, {
       wait: true,
       $btn: $(e.currentTarget),
-      success: function() {
-        require(['app'], function(Main) {
-          Main.router.navigate('#modification/'+song.id);
-        });
-        var editSongView = new SongView.EditSongView({model: song});
+      success: function(model, response) {
+        if(response&&!response.error) {
+          require(['app'], function(Main) {
+            Main.router.navigate('#modification/'+song.id);
+          });
+          var editSongView = new SongView.EditSongView({model: song});
+        }
       }
     });
     var $target = this.$('select, input').closest('.form-group').find('*[tag="alert"]').children();
@@ -79,7 +81,7 @@ var EditSongView = Backbone.View.extend({
     if(!isValid) {
       var i = 0;
       _.each(song.validationError, function(value, key) {
-        var $target = this.$('*[name="'+key+'"]').closest('.form-group').find('*[tag="alert"]');
+        var $target = this.$('*[name="'+key+'"]').closest('.form-group').find('*[tag="alert"]').first();
         var $alert = $(utils.getAlertHtml('alert-danger', value));
         utils.renderAlert($target, $alert, 1000*60);
         if(i==0) {
@@ -94,10 +96,12 @@ var EditSongView = Backbone.View.extend({
     this.model.destroy({
       wait: true,
       $btn: $(e.currentTarget),
-      success: function() {
-        require(['app'], function(Main) {
-          Main.router.navigate('', {trigger: true, replace: true});
-        });
+      success: function(model, response) {
+        if(response&&!response.error) {
+          require(['app'], function(Main) {
+            Main.router.navigate('', {trigger: true, replace: true});
+          });
+        }
       }
     });
   },
@@ -171,15 +175,17 @@ var EditSongView = Backbone.View.extend({
         },
         Error: function(up, err) {
           var $alert = $(utils.getAlertHtml('alert-danger', err.message));
-          var $target = $btnTarget.closest('.row').find('*[tag="alert"]');
+          var $target = $btnTarget.closest('.row').find('*[tag="alert"]').first();
           utils.renderAlert($target, $alert, 6500);
-          var errObj = {
-            '614': '文件名已存在'
-          };
-          var errStr = errObj[err.status]?'（'+errObj[err.status]+'）':'（错误代码'+err.status+'）';
-          err.file.$target.find('.progress-bar').find('span').html('上传失败'+errStr);
-          err.file.$target.addClass('danger');
-          err.file.$target.find('*[tag="cancel_upload"]').removeAttr('disabled');
+          if(err.file) {
+            var errObj = {
+              '614': '文件名已存在'
+            };
+            var errStr = errObj[err.status]?'（'+errObj[err.status]+'）':'（错误代码'+err.status+'）';
+            err.file.$target.find('.progress-bar').find('span').html('上传失败'+errStr);
+            err.file.$target.addClass('danger');
+            err.file.$target.find('*[tag="cancel_upload"]').removeAttr('disabled');
+          }
         },
         BeforeUpload: function(up, file) {
           up.settings.multipart_params['key'] = file.name;

@@ -6,11 +6,9 @@
 <td><%= m.file_name %></td>
 <td><%= (m.file_size/1000000).toFixed(2) %>MB</td>
 <td><%= helper.formatDateTime(m.uploaded_time, "second") %></td>
-<td><%= m.stars %></td>
+<td tag="stars"></td>
 <td>
-  <div class="btn-group">
-    <button type="button" class="btn btn-info btn-xs">顶</button>
-    <button type="button" class="btn btn-default btn-xs">踩</button>
+  <div class="btn-group" tag="resource_star_container">
   </div>
   <label>&nbsp;&nbsp;</label>
     <% if(m.file_type == "song") { %>
@@ -23,6 +21,12 @@
     <button type="button" class="btn btn-danger btn-xs" tag="delete_resource">删除</button>
 </td>
 
+</script>
+
+<script id="ResourceStarTemplate" type="text/template">
+  <% var m = model?model.toJSON():null; %>
+  <button type="button" class="btn btn-xs <%= (m&&m.current==1)?"btn-info":"btn-default" %>" tag="up">顶</button>
+  <button type="button" class="btn btn-xs <%= (m&&m.current==-1)?"btn-info":"btn-default" %>" tag="down">踩</button>
 </script>
 
 </div>

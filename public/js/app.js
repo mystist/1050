@@ -19,6 +19,7 @@
       deps: ['plupload/plupload'],
       exports: 'plupload'
     },
+    'backbone.localstorage': ['backbone'],
     'bootstrap': ['jquery']
   }
 });
@@ -36,8 +37,10 @@ define(['jquery', 'backbone', 'utils/utils', 'app/models/song-model', 'app/views
     initSongs: function(url) {
       this.songs = new SongModel.Songs();
       this.songs.url = url;
-      this.songs.fetch({success: function() {
-        app.showSongs();
+      this.songs.fetch({success: function(collection, response) {
+        if(response&&!response.error) {
+          app.showSongs();
+        }
       }});
     },
     
@@ -68,25 +71,17 @@ define(['jquery', 'backbone', 'utils/utils', 'app/models/song-model', 'app/views
     },
     
     editSong: function(id) {
-      var song = new SongModel.Song();
-      var showSong = function() {
-        var editSongView = new SongView.EditSongView({model: song});
-      };
       if(id) {
-        song = new SongModel.Song({id: id});
-        song.fetch({success: function() {
-          showSong();
+        var song = new SongModel.Song({id: id});
+        song.fetch({success: function(model, response) {
+          if(response&&!response.error) {
+            var editSongView = new SongView.EditSongView({model: song});
+          } else {
+            var editSongView = new SongView.EditSongView({model: new SongModel.Song()});
+          }
         }});
-        // if(app.songs&&app.songs.get(id)) {
-          // song.set(app.songs.get(id).toJSON());
-          // showSong();
-        // } else {
-          // song.fetch({success: function() {
-            // showSong();
-          // }});
-        // }
       } else {
-        showSong();
+        var editSongView = new SongView.EditSongView({model: new SongModel.Song()});
       }
     }
     
