@@ -1,14 +1,13 @@
 ﻿
-[0]: http://www.openshift.com
-
 ====
 
 ### 架构：
-服务器：[OpenShift][0] 云服务。  
+服务器：`OpenShift`云服务。  
 数据库：`mysql`, 由`OpenShift`作为组件提供。  
 数据存储：`Qiniu`云存储  
 开发语言：`ruby`  
 框架：`sinatra` + `activerecord` + `Backbone`  
+源码：[https://github.com/Mystist/1050](https://github.com/Mystist/1050)  
 涉及到的关键词：`OpenShift`, `sinatra`, `ruby`, `RESTful`, `activerecord`, `mysql`, `Backbone`, `requireJS`, `Bootstrap`, `git`, `github`, `markdown`  
 
 ====
