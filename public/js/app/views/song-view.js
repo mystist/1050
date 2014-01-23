@@ -42,6 +42,10 @@ var EditSongView = Backbone.View.extend({
   
   initialize: function() {
     this.render();
+    this.$el.tooltip({
+      selector: '*[data-toggle="tooltip"]',
+      placement: 'right'
+    });
     if(this.model.id) {
       this.initResources();
     }
