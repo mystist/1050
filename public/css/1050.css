@@ -27,7 +27,7 @@ h4 {
 
 .player {
   position: fixed;
-  bottom: 10px;
+  bottom: 0;
   right: 0;
   z-index: 1;
 }

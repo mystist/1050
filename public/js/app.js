@@ -19,6 +19,9 @@
       deps: ['plupload/plupload'],
       exports: 'plupload'
     },
+    'audiojs/audio': {
+      exports: 'audiojs'
+    },
     'backbone.localstorage': ['backbone'],
     'bootstrap': ['jquery']
   }

@@ -1,6 +1,6 @@
-﻿define(['jquery', 'backbone', 'text!app/templates/song-template.html', 'helper', 'utils/utils', 'plupload/zh_CN', 'app/models/resource-model', 'app/views/resource-view', 'jplayer/jplayer'],
+﻿define(['jquery', 'backbone', 'text!app/templates/song-template.html', 'helper', 'utils/utils', 'plupload/zh_CN', 'app/models/resource-model', 'app/views/resource-view', 'audiojs/audio'],
 
-function($, Backbone, SongTemplate, helper, utils, plupload, ResourceModel, ResourceView) {
+function($, Backbone, SongTemplate, helper, utils, plupload, ResourceModel, ResourceView, audiojs) {
 
 var ShowSongView = Backbone.View.extend({
 
@@ -58,15 +58,8 @@ var PlayerView = Backbone.View.extend({
   },
   
   initPlayer: function() {
-    this.$("#jquery_jplayer_1").jPlayer({
-      ready: function () {
-        $(this).jPlayer("setMedia", {
-          m4a: "http://www.jplayer.org/audio/m4a/Miaow-07-Bubble.m4a",
-          oga: "http://www.jplayer.org/audio/ogg/Miaow-07-Bubble.ogg"
-        });
-      },
-      swfPath: "js/libs/jplayer",
-      supplied: "m4a, oga"
+    audiojs.events.ready(function() {
+      var as = audiojs.createAll();
     });
   }
 
