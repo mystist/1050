@@ -10,15 +10,16 @@
 <td>
   <div class="btn-group" tag="resource_star_container">
   </div>
-  <label>&nbsp;&nbsp;</label>
-    <% if(m.file_type == "song") { %>
-      <button type="button" class="btn btn-success btn-xs">播放</button>
-    <% } %>
-    <% if(m.file_type == "pic") { %>
-      <button type="button" class="btn btn-warning btn-xs">查看</button>
-    <% } %>
-    <button type="button" class="btn btn-primary btn-xs">下载</button>
-    <button type="button" class="btn btn-danger btn-xs" tag="delete_resource" data-toggle="tooltip" title="双击">删除</button>
+</td>
+<td>
+  <% if(m.file_type == "song") { %>
+    <button type="button" class="btn btn-success btn-xs">播放</button>
+  <% } %>
+  <% if(m.file_type == "pic") { %>
+    <button type="button" class="btn btn-warning btn-xs">查看</button>
+  <% } %>
+  <button type="button" class="btn btn-primary btn-xs">下载</button>
+  <button type="button" class="btn btn-default btn-xs" tag="delete_resource" data-toggle="tooltip" title="双击">删除</button>
 </td>
 
 </script>

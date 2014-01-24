@@ -1,4 +1,6 @@
-﻿define(['jquery', 'backbone', 'text!app/templates/resource-template.html', 'app/models/resource-model'], function($, Backbone, ResourceTemplate, ResourceModel) {
+﻿define(['jquery', 'backbone', 'text!app/templates/resource-template.html', 'app/models/resource-model'],
+
+function($, Backbone, ResourceTemplate, ResourceModel) {
 
 var ResourcesView = Backbone.View.extend({
 

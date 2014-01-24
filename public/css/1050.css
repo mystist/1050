@@ -25,6 +25,12 @@ h4 {
   margin-bottom: 0;
 }
 
+.player {
+  position: fixed;
+  bottom: 10px;
+  right: 0;
+  z-index: 1;
+}
 
 .fileinput-button {
   position: relative;

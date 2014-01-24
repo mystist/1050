@@ -1,4 +1,6 @@
-﻿define(['jquery', 'backbone', 'text!app/templates/song-template.html', 'helper', 'utils/utils', 'plupload/zh_CN', 'app/models/resource-model', 'app/views/resource-view'], function($, Backbone, SongTemplate, helper, utils, plupload, ResourceModel, ResourceView) {
+﻿define(['jquery', 'backbone', 'text!app/templates/song-template.html', 'helper', 'utils/utils', 'plupload/zh_CN', 'app/models/resource-model', 'app/views/resource-view', 'jplayer/jplayer'],
+
+function($, Backbone, SongTemplate, helper, utils, plupload, ResourceModel, ResourceView) {
 
 var ShowSongView = Backbone.View.extend({
 
@@ -28,6 +30,44 @@ var SongsView = Backbone.View.extend({
     var template = _.template($(SongTemplate).find(this.template).html());
     this.$el.html(template(this));
     $("#SongsContainer").empty().html(this.el);
+  },
+  
+  events: {
+    'click *[tag="play"]': 'play'
+  },
+  
+  play: function() {
+    var playerView = new PlayerView();
+  }
+
+});
+
+var PlayerView = Backbone.View.extend({
+
+  template: "#PlayerTemplate",
+  
+  initialize: function() {
+    this.render();
+    this.initPlayer();
+  },
+  
+  render: function() {
+    var template = _.template($(SongTemplate).find(this.template).html());
+    this.$el.html(template(this));
+    $("#PlayerContainer").empty().html(this.el);
+  },
+  
+  initPlayer: function() {
+    this.$("#jquery_jplayer_1").jPlayer({
+      ready: function () {
+        $(this).jPlayer("setMedia", {
+          m4a: "http://www.jplayer.org/audio/m4a/Miaow-07-Bubble.m4a",
+          oga: "http://www.jplayer.org/audio/ogg/Miaow-07-Bubble.ogg"
+        });
+      },
+      swfPath: "js/libs/jplayer",
+      supplied: "m4a, oga"
+    });
   }
 
 });
@@ -243,7 +283,8 @@ var EditSongView = Backbone.View.extend({
 var SongView = {
   ShowSongView: ShowSongView,
   SongsView: SongsView,
-  EditSongView: EditSongView
+  EditSongView: EditSongView,
+  PlayerView: PlayerView
 };
 
 return SongView;

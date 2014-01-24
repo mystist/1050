@@ -24,7 +24,9 @@
   }
 });
 
-define(['jquery', 'backbone', 'utils/utils', 'app/models/song-model', 'app/views/song-view', 'bootstrap'], function($, Backbone, utils, SongModel, SongView) {
+define(['jquery', 'backbone', 'utils/utils', 'app/models/song-model', 'app/views/song-view', 'bootstrap'],
+
+function($, Backbone, utils, SongModel, SongView) {
 
   var App = Backbone.View.extend({
     
