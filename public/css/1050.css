@@ -24,14 +24,6 @@ h4 {
 .progress {
   margin-bottom: 0;
 }
-
-.player {
-  position: fixed;
-  bottom: 0;
-  right: 0;
-  z-index: 1;
-}
-
 .fileinput-button {
   position: relative;
   overflow: hidden;
