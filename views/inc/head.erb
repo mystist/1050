@@ -1,11 +1,19 @@
-<div class="navbar navbar-default navbar-fixed-top">
+<div class="navbar-fixed-top player-container">
   <div class="container">
     <div class="row">
-      <div class="col-md-12">
-        <a class="logo-container" href="/">
-          <span class="logo"></span>
-        </a>
+      <div class="col-md-12" id="PlayerContainer"></div>
+    </div>
+  </div>
+</div>
+
+<div class="navbar navbar-default navbar-fixed-top">
+  <div class="container">
         <div class="navbar-header dropdown">
+          <!--
+          <a class="logo-container" href="/">
+            <span class="logo"></span>
+          </a>
+          -->
           <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target=".navbar-collapse">
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
@@ -31,19 +39,9 @@
             <li><a href="/#songs/其它">其它</a></li>
             <li><a href="/#songs/附录">附录</a></li>
           </ul>
-          <a href="#" class="notification-indicator">
-            <span class="mail-status unread"></span>
-          </a>
+          <ul class="nav navbar-nav navbar-right">
+            <li><a class="notification-indicator" href="javascript:;"><span class="mail-status unread">&nbsp;</span></a></li>
+          </ul>
         </div>
-      </div>
-    </div>
-  </div>
-</div>
-
-<div class="navbar-fixed-top player-container">
-  <div class="container">
-    <div class="row">
-      <div class="col-md-12" id="PlayerContainer"></div>
-    </div>
   </div>
 </div>

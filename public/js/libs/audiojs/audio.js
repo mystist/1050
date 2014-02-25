@@ -31,7 +31,7 @@
     // ### The main settings object
     // Where all the default settings are stored. Each of these variables and methods can be overwritten by the user-provided `options` object.
     settings: {
-      autoplay: false,
+      autoplay: true,
       loop: false,
       preload: true,
       imageLocation: path + 'player-graphics.gif',
@@ -67,12 +67,12 @@
             <div class="col-md-1"> \
               <div class="play-pause"> \
                 <p class="play"><span class="glyphicon glyphicon-play"></span></p> \
-                <p class="pause"><span class="glyphicon glyphicon-play"></span></p> \
-                <p class="loading"></p> \
-                <p class="error"></p> \
+                <p class="pause"><span class="glyphicon glyphicon-pause"></span></p> \
+                <p class="loading"><span class="glyphicon glyphicon-time"></span></p> \
+                <p class="error"><span class="glyphicon glyphicon-remove"></span></p> \
               </div> \
             </div> \
-            <div class="col-md-9"> \
+            <div class="col-md-6"> \
               <div class="scrubber"> \
                 <div class="progress"></div> \
                 <div class="loaded"></div> \
@@ -83,7 +83,15 @@
                 <em class="played">00:00</em>/<strong class="duration">00:00</strong> \
               </div> \
             </div> \
-            <div class="col-md-9"> \
+            <div class="col-md-2"> \
+              <div class="play-info"> \
+                <p class="oper"> \
+                  <a class="btn btn-warning btn-xs" href="javascript:;">歌谱</a> \
+                  <a class="btn btn-default btn-xs" href="javascript:;">关闭</a> \
+                </p> \
+              </div> \
+            </div> \
+            <div class="col-md-6"> \
               <div class="error-message"></div> \
             </div> \
           </div>',
@@ -104,13 +112,13 @@
         .audiojs audio { position: absolute; left: -1px; } \
         .audiojs { height: 36px; overflow: hidden; } \
         .audiojs .play-info { width: 100%; height: 40px; padding: 7px 6px; position: relative; } \
-        .audiojs .play-pause { width: 38px; height: 40px; padding: 7px 12px; border-left: 1px solid #ddd; border-right: 1px solid #ddd; } \
-        .audiojs p { display: none; height: 40px; margin: 0px; cursor: pointer; } \
+        .audiojs .play-pause { width: 38px; height: 40px; padding: 7px 12px; border-left: 1px solid #ddd; border-right: 1px solid #ddd; cursor: pointer; } \
+        .audiojs p { display: none; height: 40px; margin: 0px; } \
         .audiojs .play { display: block; } \
-        .audiojs .scrubber { position: relative; float: left; background: #e6e6e6; height: 14px; margin: 10px 0; border-radius: 4px; } \
+        .audiojs .scrubber { position: relative; width: 100%; left: -30px; background: #e6e6e6; height: 14px; margin: 10px 0; border-radius: 4px; } \
         .audiojs .progress { position: absolute; top: 0px; left: 0px; height: 14px; width: 0; background: #428bca; z-index: 1; } \
         .audiojs .loaded { position: absolute; top: 0px; left: 0px; height: 14px; width: 0; background: #ddd; border-radius: 4px; } \
-        .audiojs .time { float: left; height: 36px; line-height: 36px; margin: 0; padding: 0; border-left: 1px solid #ddd; color: #000; }  \
+        .audiojs .time { height: 36px; line-height: 36px; padding: 0 6px; border-left: 1px solid #ddd; border-right: 1px solid #ddd; color: #000; position: absolute; right: -45px; }  \
         .audiojs .time em { padding: 0px 2px 0px 0px; color: #000; font-style: normal; } \
         .audiojs .time strong { padding: 0px 0px 0px 2px; font-weight: normal; } \
         .audiojs .error-message { float: left; display: none; margin: 0px 10px; height: 36px; line-height: 36px; white-space: nowrap; color: #000; } \
@@ -121,6 +129,7 @@
         .audiojs .pause { } \
         .audiojs .play-info .icon { display: block; height: 40px; padding: 0 0 0 6px; position: absolute; } \
         .audiojs .play-info .text { display: block; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; position: absolute; right: -24px; left: 38px;} \
+        .audiojs .play-info .oper { display: block; height: 40px; padding: 0 6px; text-align: right; } \
         .playing .play, .playing .loading, .playing .error { display: none; } \
         .playing .pause { display: block; } \
         .loading .play, .loading .pause, .loading .error { display: none; } \
@@ -145,7 +154,7 @@
             errorMessage = getByClass(player.errorMessageClass, this.wrapper);
         container[audiojs].helpers.removeClass(this.wrapper, player.loadingClass);
         container[audiojs].helpers.addClass(this.wrapper, player.errorClass);
-        errorMessage.innerHTML = 'Error loading: "'+this.mp3+'"';
+        errorMessage.innerHTML = '加载出错："'+this.mp3+'"';
       },
       init: function() {
         var player = this.settings.createPlayer;
