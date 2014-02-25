@@ -1,4 +1,4 @@
-// A cross-browser javascript shim for html5 audio
+﻿// A cross-browser javascript shim for html5 audio
 (function(audiojs, audiojsInstance, container) {
   // Use the path to the audio.js file to create relative paths to the swf and player graphics
   // Remember that some systems (e.g. ruby on rails) append strings like '?1301478336' to asset paths
@@ -57,20 +57,33 @@
       // The default markup and classes for creating the player:
       createPlayer: {
         markup: '\
-          <div class="play-pause"> \
-            <p class="glyphicon glyphicon-play"></p> \
-            <p class="glyphicon glyphicon-pause"></p> \
-            <p class="loading"></p> \
-            <p class="error"></p> \
-          </div> \
-          <div class="scrubber"> \
-            <div class="progress"></div> \
-            <div class="loaded"></div> \
-          </div> \
-          <div class="time"> \
-            <em class="played">00:00</em>/<strong class="duration">00:00</strong> \
-          </div> \
-          <div class="error-message"></div>',
+          <div class="row"> \
+            <div class="col-md-1"> \
+              正在播放： \
+            </div> \
+            <div class="col-md-1"> \
+              <div class="play-pause"> \
+                <p class="play"><span class="glyphicon glyphicon-play"></span></p> \
+                <p class="pause"></p> \
+                <p class="loading">加载中...</p> \
+                <p class="error"></p> \
+              </div> \
+            </div> \
+            <div class="col-md-9"> \
+              <div class="scrubber"> \
+                <div class="progress"></div> \
+                <div class="loaded"></div> \
+              </div> \
+            </div> \
+            <div class="col-md-1"> \
+              <div class="time"> \
+                <em class="played">00:00</em>/<strong class="duration">00:00</strong> \
+              </div> \
+            </div> \
+            <div class="col-md-9"> \
+              <div class="error-message"></div> \
+            </div> \
+          </div>',
         playPauseClass: 'play-pause',
         scrubberClass: 'scrubber',
         progressClass: 'progress',
@@ -86,32 +99,22 @@
       // The css used by the default player. This is is dynamically injected into a `<style>` tag in the top of the head.
       css: '\
         .audiojs audio { position: absolute; left: -1px; } \
-        .audiojs { width: 100%; height: 36px; /* background: #404040; */ overflow: hidden; font-family: monospace; font-size: 12px; \
-          /* background-image: -webkit-gradient(linear, left top, left bottom, color-stop(0, #444), color-stop(0.5, #555), color-stop(0.51, #444), color-stop(1, #444)); \
-          background-image: -moz-linear-gradient(center top, #444 0%, #555 50%, #444 51%, #444 100%); \
-          -webkit-box-shadow: 1px 1px 8px rgba(0, 0, 0, 0.3); -moz-box-shadow: 1px 1px 8px rgba(0, 0, 0, 0.3); \
-          -o-box-shadow: 1px 1px 8px rgba(0, 0, 0, 0.3); box-shadow: 1px 1px 8px rgba(0, 0, 0, 0.3); */ } \
-        .audiojs .play-pause { width: 38px; height: 40px; padding: 4px 6px; margin: 0px; float: left; overflow: hidden; border-right: 1px solid #ddd; } \
-        .audiojs p { display: none; width: 25px; height: 40px; margin: 0px; cursor: pointer; } \
+        .audiojs { height: 36px; overflow: hidden; font-size: 12px; } \
+        .audiojs .play-pause { height: 40px; padding: 4px 6px; margin: 0px; float: left; border-right: 1px solid #ddd; } \
+        .audiojs p { display: none; height: 40px; margin: 0px; cursor: pointer; } \
         .audiojs .play { display: block; } \
-        .audiojs .scrubber { position: relative; float: left; width: 280px; background: #e6e6e6; height: 14px; margin: 10px; /* border-top: 1px solid #3f3f3f; border-left: 0px; border-bottom: 0px; */ overflow: hidden; border-radius: 4px; } \
-        .audiojs .progress { position: absolute; top: 0px; left: 0px; height: 14px; width: 0px; background: #428bca; z-index: 1; \
-          /* background-image: -webkit-gradient(linear, left top, left bottom, color-stop(0, #ccc), color-stop(0.5, #ddd), color-stop(0.51, #ccc), color-stop(1, #ccc)); \
-          background-image: -moz-linear-gradient(center top, #ccc 0%, #ddd 50%, #ccc 51%, #ccc 100%); */ } \
-        .audiojs .loaded { position: absolute; top: 0px; left: 0px; height: 14px; width: 0px; background: #ddd; border-radius: 4px; \
-          /* background-image: -webkit-gradient(linear, left top, left bottom, color-stop(0, #222), color-stop(0.5, #333), color-stop(0.51, #222), color-stop(1, #222)); \
-          background-image: -moz-linear-gradient(center top, #222 0%, #333 50%, #222 51%, #222 100%); */ } \
-        .audiojs .time { float: left; height: 36px; line-height: 36px; margin: 0px 0px 0px 6px; padding: 0px 6px 0px 12px; border-left: 1px solid #ddd; color: #000; /* text-shadow: 1px 1px 0px rgba(0, 0, 0, 0.5); */ }  \
+        .audiojs .scrubber { position: relative; float: left; background: #e6e6e6; height: 14px; margin: 10px 0; border-radius: 4px; } \
+        .audiojs .progress { position: absolute; top: 0px; left: 0px; height: 14px; width: 0; background: #428bca; z-index: 1; } \
+        .audiojs .loaded { position: absolute; top: 0px; left: 0px; height: 14px; width: 0; background: #ddd; border-radius: 4px; } \
+        .audiojs .time { float: left; height: 36px; line-height: 36px; margin: 0; padding: 0; border-left: 1px solid #ddd; color: #000; }  \
         .audiojs .time em { padding: 0px 2px 0px 0px; color: #000; font-style: normal; } \
         .audiojs .time strong { padding: 0px 0px 0px 2px; font-weight: normal; } \
-        .audiojs .error-message { float: left; display: none; margin: 0px 10px; height: 36px; width: 400px; overflow: hidden; line-height: 36px; white-space: nowrap; color: #fff; \
-          text-overflow: ellipsis; -o-text-overflow: ellipsis; -icab-text-overflow: ellipsis; -khtml-text-overflow: ellipsis; -moz-text-overflow: ellipsis; -webkit-text-overflow: ellipsis; } \
+        .audiojs .error-message { float: left; display: none; margin: 0px 10px; height: 36px; line-height: 36px; white-space: nowrap; color: #000; } \
         .audiojs .error-message a { color: #eee; text-decoration: none; padding-bottom: 1px; border-bottom: 1px solid #999; white-space: wrap; } \
-        \
-        .audiojs .play { background: url("$1") -2px -1px no-repeat; } \
-        .audiojs .loading { background: url("$1") -2px -31px no-repeat; } \
-        .audiojs .error { background: url("$1") -2px -61px no-repeat; } \
-        .audiojs .pause { background: url("$1") -2px -91px no-repeat; } \
+        .audiojs .play { } \
+        .audiojs .loading { } \
+        .audiojs .error { } \
+        .audiojs .pause { } \
         \
         .playing .play, .playing .loading, .playing .error { display: none; } \
         .playing .pause { display: block; } \
@@ -258,7 +261,7 @@
     createPlayer: function(element, player, id) {
       var wrapper = document.createElement('div'),
           newElement = element.cloneNode(true);
-      wrapper.setAttribute('class', 'audiojs panel panel-default');
+      wrapper.setAttribute('class', 'audiojs panel panel-default player');
       wrapper.setAttribute('className', 'audiojs');
       wrapper.setAttribute('id', id);
 
