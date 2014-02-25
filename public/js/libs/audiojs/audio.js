@@ -58,14 +58,17 @@
       createPlayer: {
         markup: '\
           <div class="row"> \
-            <div class="col-md-1"> \
-              正在播放： \
+            <div class="col-md-2"> \
+              <div class="play-info"> \
+                <p class="icon"><span class="glyphicon glyphicon-music"></span></p> \
+                <p class="text">你是我唯一诗歌</p> \
+              </div> \
             </div> \
             <div class="col-md-1"> \
               <div class="play-pause"> \
                 <p class="play"><span class="glyphicon glyphicon-play"></span></p> \
-                <p class="pause"></p> \
-                <p class="loading">加载中...</p> \
+                <p class="pause"><span class="glyphicon glyphicon-play"></span></p> \
+                <p class="loading"></p> \
                 <p class="error"></p> \
               </div> \
             </div> \
@@ -99,8 +102,9 @@
       // The css used by the default player. This is is dynamically injected into a `<style>` tag in the top of the head.
       css: '\
         .audiojs audio { position: absolute; left: -1px; } \
-        .audiojs { height: 36px; overflow: hidden; font-size: 12px; } \
-        .audiojs .play-pause { height: 40px; padding: 4px 6px; margin: 0px; float: left; border-right: 1px solid #ddd; } \
+        .audiojs { height: 36px; overflow: hidden; } \
+        .audiojs .play-info { width: 100%; height: 40px; padding: 7px 6px; position: relative; } \
+        .audiojs .play-pause { width: 38px; height: 40px; padding: 7px 12px; border-left: 1px solid #ddd; border-right: 1px solid #ddd; } \
         .audiojs p { display: none; height: 40px; margin: 0px; cursor: pointer; } \
         .audiojs .play { display: block; } \
         .audiojs .scrubber { position: relative; float: left; background: #e6e6e6; height: 14px; margin: 10px 0; border-radius: 4px; } \
@@ -115,13 +119,12 @@
         .audiojs .loading { } \
         .audiojs .error { } \
         .audiojs .pause { } \
-        \
+        .audiojs .play-info .icon { display: block; height: 40px; padding: 0 0 0 6px; position: absolute; } \
+        .audiojs .play-info .text { display: block; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; position: absolute; right: -24px; left: 38px;} \
         .playing .play, .playing .loading, .playing .error { display: none; } \
         .playing .pause { display: block; } \
-        \
         .loading .play, .loading .pause, .loading .error { display: none; } \
         .loading .loading { display: block; } \
-        \
         .error .time, .error .play, .error .pause, .error .scrubber, .error .loading { display: none; } \
         .error .error { display: block; } \
         .error .play-pause p { cursor: auto; } \
