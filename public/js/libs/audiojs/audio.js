@@ -58,13 +58,13 @@
       createPlayer: {
         markup: '\
           <div class="row"> \
-            <div class="col-md-2"> \
+            <div class="col-md-2 col-ms-2 col-xs-2"> \
               <div class="play-info"> \
                 <p class="icon"><span class="glyphicon glyphicon-music"></span></p> \
-                <p class="text">你是我唯一诗歌</p> \
+                <p class="text" title="你是我唯一诗歌">你是我唯一诗歌</p> \
               </div> \
             </div> \
-            <div class="col-md-1"> \
+            <div class="col-md-1 col-sm-1 col-xs-1"> \
               <div class="play-pause"> \
                 <p class="play"><span class="glyphicon glyphicon-play"></span></p> \
                 <p class="pause"><span class="glyphicon glyphicon-pause"></span></p> \
@@ -72,18 +72,18 @@
                 <p class="error"><span class="glyphicon glyphicon-remove"></span></p> \
               </div> \
             </div> \
-            <div class="col-md-6"> \
+            <div class="col-md-6 col-sm-6 col-xs-5"> \
               <div class="scrubber"> \
                 <div class="progress"></div> \
                 <div class="loaded"></div> \
               </div> \
             </div> \
-            <div class="col-md-1"> \
+            <div class="col-md-1 col-xs-1"> \
               <div class="time"> \
                 <em class="played">00:00</em>/<strong class="duration">00:00</strong> \
               </div> \
             </div> \
-            <div class="col-md-2"> \
+            <div class="col-md-2 col-sm-3 col-xs-3"> \
               <div class="play-info"> \
                 <p class="oper"> \
                   <a class="btn btn-warning btn-xs" href="javascript:;">歌谱</a> \
@@ -115,10 +115,10 @@
         .audiojs .play-pause { width: 38px; height: 40px; padding: 7px 12px; border-left: 1px solid #ddd; border-right: 1px solid #ddd; cursor: pointer; } \
         .audiojs p { display: none; height: 40px; margin: 0px; } \
         .audiojs .play { display: block; } \
-        .audiojs .scrubber { position: relative; width: 100%; left: -30px; background: #e6e6e6; height: 14px; margin: 10px 0; border-radius: 4px; } \
+        .audiojs .scrubber { position: relative; width: 100%; left: -10px; background: #e6e6e6; height: 14px; margin: 10px 0; border-radius: 4px; } \
         .audiojs .progress { position: absolute; top: 0px; left: 0px; height: 14px; width: 0; background: #428bca; z-index: 1; } \
         .audiojs .loaded { position: absolute; top: 0px; left: 0px; height: 14px; width: 0; background: #ddd; border-radius: 4px; } \
-        .audiojs .time { height: 36px; line-height: 36px; padding: 0 6px; border-left: 1px solid #ddd; border-right: 1px solid #ddd; color: #000; position: absolute; right: -45px; }  \
+        .audiojs .time { height: 36px; line-height: 36px; padding: 0 6px; border-left: 1px solid #ddd; border-right: 1px solid #ddd; color: #000; position: absolute; right: -20px; }  \
         .audiojs .time em { padding: 0px 2px 0px 0px; color: #000; font-style: normal; } \
         .audiojs .time strong { padding: 0px 0px 0px 2px; font-weight: normal; } \
         .audiojs .error-message { float: left; display: none; margin: 0px 10px; height: 36px; line-height: 36px; white-space: nowrap; color: #000; } \
