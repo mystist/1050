@@ -77,6 +77,7 @@
                 <div class="progress"></div> \
                 <div class="loaded"></div> \
               </div> \
+              <div class="error-message"></div> \
             </div> \
             <div class="col-md-1 col-xs-1"> \
               <div class="time"> \
@@ -90,9 +91,6 @@
                   <a class="btn btn-default btn-xs" href="javascript:;">关闭</a> \
                 </p> \
               </div> \
-            </div> \
-            <div class="col-md-6"> \
-              <div class="error-message"></div> \
             </div> \
           </div>',
         playPauseClass: 'play-pause',

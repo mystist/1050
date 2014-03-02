@@ -36,15 +36,18 @@ var SongsView = Backbone.View.extend({
     'click *[tag="play"]': 'play'
   },
   
-  play: function() {
-    var playerView = new PlayerView();
+  play: function(e) {
+    var songId = $(e.currentTarget).closest('tr').attr('song_id');
+    var song = this.collection.get(songId);
+    var playerView = new PlayerView({model: song});
   }
 
 });
 
 var PlayerView = Backbone.View.extend({
 
-  template: "#PlayerTemplate",
+  template: '#PlayerTemplate',
+  renderedTemplate: '',
   
   initialize: function() {
     this.render();
@@ -53,13 +56,22 @@ var PlayerView = Backbone.View.extend({
   
   render: function() {
     var template = _.template($(SongTemplate).find(this.template).html());
-    this.$el.html(template(this));
-    $("#PlayerContainer").empty().html(this.el);
+    this.renderedTemplate = template(this);
+    this.$el.html(this.renderedTemplate);
+    $('#PlayerContainer').empty().html(this.el);
   },
   
   initPlayer: function() {
+    var audioDom = $(this.renderedTemplate).find('audio:eq(0)')[0];
+    var markup = $(this.renderedTemplate).find('*[tag="markup"]:eq(0)').html();
     audiojs.events.ready(function() {
-      var as = audiojs.createAll();
+      var as = audiojs.create(audioDom, {
+        autoplay: true,
+        css: false,
+        createPlayer: {
+          markup: markup
+        }
+      });
     });
   }
 

@@ -65,7 +65,7 @@
             });
           %>
           <% _.each(curCurList, function(m) { %>
-            <tr>
+            <tr song_id="<%= m.id %>" >
               <td>《<%= m.name %>》</td>
               <td><%= m.first_sentence %></td>
               <td><%= m.index %></td>
@@ -370,7 +370,52 @@
 
 <script id="PlayerTemplate" type="text/template">
 
-  <audio src="http://kolber.github.io/audiojs/demos/mp3/01-dead-wrong-intro.mp3" preload="auto" />
+  <% var m = model.toJSON(); %>
+  
+  <div>
+
+  <audio src="http://kolber.github.io/audiojs/demos/mp3/01-dead-wrong-intro.mp13" preload="auto" />
+  
+  <div tag="markup" style="display: none;">
+    <div class="row">
+      <div class="col-md-2 col-ms-2 col-xs-2">
+        <div class="play-info">
+          <p class="icon"><span class="glyphicon glyphicon-music"></span></p>
+          <p class="text" title="<%= m.name %>" ><%= m.name %></p>
+        </div>
+      </div>
+      <div class="col-md-1 col-sm-1 col-xs-1">
+        <div class="play-pause">
+          <p class="play"><span class="glyphicon glyphicon-play"></span></p>
+          <p class="pause"><span class="glyphicon glyphicon-pause"></span></p>
+          <p class="loading"><span class="glyphicon glyphicon-time"></span></p>
+          <p class="error"><span class="glyphicon glyphicon-remove"></span></p>
+        </div>
+      </div>
+      <div class="col-md-6 col-sm-6 col-xs-5">
+        <div class="scrubber">
+          <div class="progress"></div>
+          <div class="loaded"></div>
+        </div>
+        <div class="error-message"></div>
+      </div>
+      <div class="col-md-1 col-xs-1">
+        <div class="time">
+          <em class="played">00:00</em>/<strong class="duration">00:00</strong>
+        </div>
+      </div>
+      <div class="col-md-2 col-sm-3 col-xs-3">
+        <div class="play-info">
+          <p class="oper">
+            <a class="btn btn-warning btn-xs" href="javascript:;">歌谱</a>
+            <a class="btn btn-default btn-xs" href="javascript:;">关闭</a>
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  </div>
 
 </script>
 
