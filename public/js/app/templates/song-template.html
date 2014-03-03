@@ -372,11 +372,8 @@
 
   <% var m = model.toJSON(); %>
   
-  <div>
-
-  <audio src="http://kolber.github.io/audiojs/demos/mp3/01-dead-wrong-intro.mp13" preload="auto" />
-  
-  <div tag="markup" style="display: none;">
+  <div class="audiojs panel panel-default player">
+    <audio src="http://kolber.github.io/audiojs/demos/mp3/01-dead-wrong-intro.mp3" preload="auto" />
     <div class="row">
       <div class="col-md-2 col-ms-2 col-xs-2">
         <div class="play-info">
@@ -408,13 +405,11 @@
         <div class="play-info">
           <p class="oper">
             <a class="btn btn-warning btn-xs" href="javascript:;">歌谱</a>
-            <a class="btn btn-default btn-xs" href="javascript:;">关闭</a>
+            <a class="btn btn-default btn-xs" href="javascript:;" tag="close">关闭</a>
           </p>
         </div>
       </div>
     </div>
-  </div>
-  
   </div>
 
 </script>

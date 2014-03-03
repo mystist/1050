@@ -47,7 +47,6 @@ var SongsView = Backbone.View.extend({
 var PlayerView = Backbone.View.extend({
 
   template: '#PlayerTemplate',
-  renderedTemplate: '',
   
   initialize: function() {
     this.render();
@@ -56,23 +55,40 @@ var PlayerView = Backbone.View.extend({
   
   render: function() {
     var template = _.template($(SongTemplate).find(this.template).html());
-    this.renderedTemplate = template(this);
-    this.$el.html(this.renderedTemplate);
+    this.$el.html(template(this));
     $('#PlayerContainer').empty().html(this.el);
   },
   
   initPlayer: function() {
-    var audioDom = $(this.renderedTemplate).find('audio:eq(0)')[0];
-    var markup = $(this.renderedTemplate).find('*[tag="markup"]:eq(0)').html();
+    var audioDom = this.$('audio:eq(0)')[0];
     audiojs.events.ready(function() {
       var as = audiojs.create(audioDom, {
         autoplay: true,
         css: false,
         createPlayer: {
-          markup: markup
+          markup: false,
+          playPauseClass: 'play-pause',
+          scrubberClass: 'scrubber',
+          progressClass: 'progress',
+          loaderClass: 'loaded',
+          timeClass: 'time',
+          durationClass: 'duration',
+          playedClass: 'played',
+          errorMessageClass: 'error-message',
+          playingClass: 'playing',
+          loadingClass: 'loading',
+          errorClass: 'error'
         }
       });
     });
+  },
+  
+  events: {
+    'click *[tag="close"]': 'close'
+  },
+  
+  close: function() {
+    this.remove();
   }
 
 });
