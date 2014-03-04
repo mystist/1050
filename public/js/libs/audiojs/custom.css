@@ -5,8 +5,8 @@
 .audiojs p { display: none; height: 40px; margin: 0px; }
 .audiojs .play { display: block; }
 .audiojs .scrubber { position: relative; width: 100%; left: -10px; background: #e6e6e6; height: 14px; margin: 10px 0; border-radius: 4px; }
-.audiojs .progress { position: absolute; top: 0px; left: 0px; height: 14px; width: 0; background: #428bca; z-index: 1; }
-.audiojs .loaded { position: absolute; top: 0px; left: 0px; height: 14px; width: 0; background: #ddd; border-radius: 4px; }
+.audiojs .progress { position: absolute; top: 0px; left: 0px; height: 14px; width: 0px; background: #428bca; z-index: 1; }
+.audiojs .loaded { position: absolute; top: 0px; left: 0px; height: 14px; width: 0px; background: #ddd; border-radius: 4px; }
 .audiojs .time { height: 36px; line-height: 36px; padding: 0 6px; border-left: 1px solid #ddd; border-right: 1px solid #ddd; color: #000; position: absolute; right: -20px; } 
 .audiojs .time em { padding: 0px 2px 0px 0px; color: #000; font-style: normal; }
 .audiojs .time strong { padding: 0px 0px 0px 2px; font-weight: normal; }

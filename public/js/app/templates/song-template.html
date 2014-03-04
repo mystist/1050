@@ -53,7 +53,7 @@
           <thead>
             <tr>
               <th class="col-md-4">歌名</th>
-              <th>歌词首句</th>
+              <th class="col-md-5">歌词首句</th>
               <th class="col-md-1">首数</th>
               <th class="col-md-2">操作</th>
             </tr>
@@ -70,7 +70,8 @@
               <td><%= m.first_sentence %></td>
               <td><%= m.index %></td>
               <td>
-                <a class="btn btn-success btn-xs" href="javascript:;" tag="play">播放</a>
+                <a class="btn btn-success btn-xs" href="javascript:;" <%= m.song_src ? "" : "disabled='disabled'" %> tag="play">播放</a>
+                <a class="btn btn-warning btn-xs" href="<%= m.pic_src ? ("http://liber-1050.u.qiniudn.com/" + m.pic_src) : "javascript:;" %>" target="_blank" <%= m.pic_src ? "" : "disabled='disabled'" %> >歌谱</a>
                 <a class="btn btn-primary btn-xs" href="#modification/<%= m.id %>">编辑</a>
               </td>
             </tr>
@@ -227,7 +228,7 @@
             <table class="table table-condensed">
               <thead>
                 <tr>
-                  <th>文件名</th>
+                  <th class="col-md-4">文件名</th>
                   <th class="col-md-2">文件大小</th>
                   <th class="col-md-2">上传时间</th>
                   <th class="col-md-1">喜爱度</th>
@@ -283,11 +284,12 @@
             <table class="table table-condensed">
               <thead>
                 <tr>
-                  <th>文件名</th>
+                  <th class="col-md-4">文件名</th>
                   <th class="col-md-2">文件大小</th>
                   <th class="col-md-2">上传时间</th>
                   <th class="col-md-1">喜爱度</th>
-                  <th class="col-md-3">操作</th>
+                  <th class="col-md-1"></th>
+                  <th class="col-md-2">操作</th>
                 </tr>
               </thead>
               <tbody id="PicResourcesContainer">
@@ -373,7 +375,7 @@
   <% var m = model.toJSON(); %>
   
   <div class="audiojs panel panel-default player">
-    <audio src="http://kolber.github.io/audiojs/demos/mp3/01-dead-wrong-intro.mp3" preload="auto" />
+    <audio src="http://liber-1050.u.qiniudn.com/<%= encodeURIComponent(m.song_src) %>" preload="auto" />
     <div class="row">
       <div class="col-md-2 col-ms-2 col-xs-2">
         <div class="play-info">
@@ -389,7 +391,7 @@
           <p class="error"><span class="glyphicon glyphicon-remove"></span></p>
         </div>
       </div>
-      <div class="col-md-6 col-sm-6 col-xs-5">
+      <div class="col-md-7 col-sm-6 col-xs-5">
         <div class="scrubber">
           <div class="progress"></div>
           <div class="loaded"></div>
@@ -401,10 +403,9 @@
           <em class="played">00:00</em>/<strong class="duration">00:00</strong>
         </div>
       </div>
-      <div class="col-md-2 col-sm-3 col-xs-3">
+      <div class="col-md-1 col-sm-3 col-xs-3">
         <div class="play-info">
           <p class="oper">
-            <a class="btn btn-warning btn-xs" href="javascript:;">歌谱</a>
             <a class="btn btn-default btn-xs" href="javascript:;" tag="close">关闭</a>
           </p>
         </div>

@@ -28,7 +28,6 @@ end
 def encode_list(list)
   list.each do |obj|
     obj = encode_object(obj)
-    obj
   end
   list
 end
@@ -44,9 +43,9 @@ end
 
 get '/environment' do
   if settings.development?
-    "development!"
+    'development!'
   else
-    "not development!"
+    'not development!'
   end
 end
 
@@ -57,7 +56,7 @@ end
 
 get '/songs/:id' do
   song = Song.find_by_id(params[:id].to_i)
-  resources = getResources(params[:id].to_i)
+  resources = get_resources_by_song_id(params[:id].to_i)
   if song
     re = encode_object(song).attributes
     re['resources'] = encode_list(resources)
@@ -69,11 +68,11 @@ get '/songs/:id' do
 end
 
 get '/songs_category/:category_name' do
-  songs = Song.where(" category_big = '#{params[:category_name]}' ").order('`index`')
+  songs = Song.where('category_big = ?', params[:category_name]).order('`index`')
   json encode_list(songs)
 end
 
-def saveSong(song, obj)
+def save_song(song, obj)
   if song
     song.attributes.each do |key, value|
       if key != 'id'
@@ -86,10 +85,10 @@ def saveSong(song, obj)
   end
 end
 
-def addResources(list, song_id)
-  if(list.length>0)
-    list.each do |obj|
-      current_resource = Resource.where( {'song_id' => song_id, 'file_name' => obj['file_name']} )
+def add_resources(resources, song_id)
+  if(resources.length>0)
+    resources.each do |obj|
+      current_resource = Resource.where('song_id = ? and file_name = ?', song_id, obj['file_name'])
       if(current_resource.count==0) 
         new_resource = Resource.new
         new_resource.attributes.each do |key, value|
@@ -105,19 +104,23 @@ def addResources(list, song_id)
       end
     end
   end
-  getResources(song_id)
+  get_resources_by_song_id(song_id)
 end
 
-def getResources(song_id)
-  Resource.where('song_id' => song_id)
+def get_resources_by_song_id(song_id)
+  Resource.where('song_id = ?', song_id)
 end
 
 put '/songs/:id' do
   request.body.rewind  # in case someone already read it
   data = JSON.parse request.body.read
   song = Song.find_by_id(params[:id].to_i)
-  if(song&&saveSong(song, data))
-    resources = addResources(data['resources'], song.id)
+  if(song&&save_song(song, data))
+    resources = add_resources(data['resources'], song.id)
+    
+    src = get_most_starred_resource_src_by_song_id(song.id)
+    update_song_src_by_song_id(src, song.id)
+    
     re = encode_object(song).attributes
     re['resources'] = encode_list(resources)
     json re
@@ -131,8 +134,12 @@ post '/songs' do
   request.body.rewind  # in case someone already read it
   data = JSON.parse request.body.read
   song = Song.new
-  if(song&&saveSong(song, data))
-    resources = addResources(data['resources'], song.id)
+  if(song&&save_song(song, data))
+    resources = add_resources(data['resources'], song.id)
+    
+    src = get_most_starred_resource_src_by_song_id(song.id)
+    update_song_src_by_song_id(src, song.id)
+    
     re = encode_object(song).attributes
     re['resources'] = encode_list(resources)
     json re
@@ -144,14 +151,19 @@ end
 
 delete '/songs/:id' do
   param = (params[:id]).to_i
-  resources = getResources(param)
+  resources = get_resources_by_song_id(param)
   resources.delete_all
   json Song.delete(param)
 end
 
 delete '/resources/:id' do
   param = (params[:id]).to_i
-  json Resource.delete(param)
+  resource = Resource.find_by_id(param)
+  if resource.delete  
+    src = get_most_starred_resource_src_by_song_id(resource['song_id'])
+    update_song_src_by_song_id(src, resource['song_id'])
+    json true
+  end
 end
 
 patch '/resources/:id' do
@@ -171,12 +183,39 @@ patch '/resources/:id' do
       resource['stars'] += obj['plus'].to_i
     end
     resource.save
+    
+    src = get_most_starred_resource_src_by_song_id(resource['song_id'])
+    update_song_src_by_song_id(src, resource['song_id'])
+    
     re = encode_object(resource).attributes
     json re
   else
     re = { :error => true }
     json re
   end
+end
+
+def get_most_starred_resource_src_by_song_id(song_id)
+  src = {}
+  resources = Resource.where('song_id = ?', song_id).order('stars desc')
+  t = encode_object(resources.where('file_type = ?', 'song').first)
+  src['song_src'] = t ? t['file_name'] : nil
+  t = encode_object(resources.where('file_type = ?', 'pic').first)
+  src['pic_src'] = t ? t['file_name'] : nil
+  src
+end
+
+def update_song_src_by_song_id(src, song_id)
+  song = Song.find_by_id(song_id)
+  if song
+    song['song_src'] = src['song_src']
+    song['pic_src'] = src['pic_src']
+    song.save
+  end
+end
+
+get '/test' do
+  json nil
 end
 
 
