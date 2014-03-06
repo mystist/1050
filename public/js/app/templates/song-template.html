@@ -71,7 +71,7 @@
               <td><%= m.index %></td>
               <td>
                 <a class="btn btn-success btn-xs" href="javascript:;" <%= m.song_src ? "" : "disabled='disabled'" %> tag="play">播放</a>
-                <a class="btn btn-warning btn-xs" href="<%= m.pic_src ? ("http://liber-1050.u.qiniudn.com/" + m.pic_src) : "javascript:;" %>" target="_blank" <%= m.pic_src ? "" : "disabled='disabled'" %> >歌谱</a>
+                <a class="btn btn-warning btn-xs" href="<%= m.pic_src ? ("http://liber-1050.u.qiniudn.com/" + encodeURIComponent(m.pic_src)) : "javascript:;" %>" target="_blank" <%= m.pic_src ? "" : "disabled='disabled'" %> >歌谱</a>
                 <a class="btn btn-primary btn-xs" href="#modification/<%= m.id %>">编辑</a>
               </td>
             </tr>
@@ -380,7 +380,7 @@
       <div class="col-md-2 col-ms-2 col-xs-2">
         <div class="play-info">
           <p class="icon"><span class="glyphicon glyphicon-music"></span></p>
-          <p class="text" title="<%= m.name %>" ><%= m.name %></p>
+          <p class="text" title="<%= m.index + " / " + m.song_src %>" ><%= m.index + " / " + m.song_src %></p>
         </div>
       </div>
       <div class="col-md-1 col-sm-1 col-xs-1">

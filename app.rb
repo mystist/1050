@@ -108,7 +108,7 @@ def add_resources(resources, song_id)
 end
 
 def get_resources_by_song_id(song_id)
-  Resource.where('song_id = ?', song_id)
+  Resource.where('song_id = ?', song_id).order('stars desc')
 end
 
 put '/songs/:id' do

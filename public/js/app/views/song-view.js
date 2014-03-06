@@ -37,7 +37,7 @@ var SongsView = Backbone.View.extend({
   },
   
   play: function(e) {
-    var songId = $(e.currentTarget).closest('tr').attr('song_id');
+    var songId = $(e.currentTarget).closest('*[song_id]').attr('song_id');
     var song = this.collection.get(songId);
     var playerView = new PlayerView({model: song});
   }
@@ -96,7 +96,9 @@ var PlayerView = Backbone.View.extend({
 var EditSongView = Backbone.View.extend({
 
   options: {
-    resources: []
+    uploadedResources: [],
+    songResources: [],
+    picResources: []
   },
 
   template: "#EditSongTemplate",
@@ -122,12 +124,13 @@ var EditSongView = Backbone.View.extend({
   
   events: {
     'click *[tag="submit"]': 'submit',
-    'dblclick *[tag="del"]': 'del'
+    'dblclick *[tag="del"]': 'del',
+    'click *[tag="play"]': 'play'
   },
   
   submit: function(e) {
     var obj = utils.getObjFromForm(this.$el);
-    obj.resources = this.options.resources;
+    obj.resources = this.options.uploadedResources;
     var song = this.model;
     var isValid = song.save(obj, {
       wait: true,
@@ -148,8 +151,8 @@ var EditSongView = Backbone.View.extend({
       _.each(song.validationError, function(value, key) {
         var $target = this.$('*[name="'+key+'"]').closest('.form-group').find('*[tag="alert"]').first();
         var $alert = $(utils.getAlertHtml('alert-danger', value));
-        utils.renderAlert($target, $alert, 1000*60);
-        if(i==0) {
+        utils.renderAlert($target, $alert, 1000 * 60);
+        if(i == 0) {
          this.$('*[name="'+key+'"]').focus();
         }
         i++;
@@ -265,8 +268,8 @@ var EditSongView = Backbone.View.extend({
             uploaded_time: helper.formatDateTime(new Date(), 'second'),
             file_type: type
           };
-          if(_.indexOf(_.pluck(tThis.options.resources, 'file_name'), obj.file_name)==-1) {
-            tThis.options.resources.push(obj);
+          if(_.indexOf(_.pluck(tThis.options.uploadedResources, 'file_name'), obj.file_name) == -1) {
+            tThis.options.uploadedResources.push(obj);
           }
         },
         UploadComplete: function(up, files) {
@@ -281,22 +284,28 @@ var EditSongView = Backbone.View.extend({
   
   initResources: function() {
 
-    var songList = _.filter(this.model.get('resources'), function(obj) {
+    var songResourcesList = _.filter(this.model.get('resources'), function(obj) {
       return obj.file_type == 'song';
     });
-    var songs = new ResourceModel.Resources(songList);
-    if(songs.length>0) {
-      var songResourcesView = new ResourceView.ResourcesView({collection: songs, el: this.$('#SongResourcesContainer')});
+    this.options.songResources = new ResourceModel.Resources(songResourcesList);
+    if(this.options.songResources.length > 0) {
+      var songResourcesView = new ResourceView.ResourcesView({collection: this.options.songResources, el: this.$('#SongResourcesContainer')});
     }
     
-    var picList = _.filter(this.model.get('resources'), function(obj) {
+    var picResourcesList = _.filter(this.model.get('resources'), function(obj) {
       return obj.file_type == 'pic';
     });
-    var pics = new ResourceModel.Resources(picList);
-    if(pics.length>0) {
-      var picResourcesView = new ResourceView.ResourcesView({collection: pics, el: this.$('#PicResourcesContainer')});
+    this.options.picResources = new ResourceModel.Resources(picResourcesList);
+    if(this.options.picResources.length > 0) {
+      var picResourcesView = new ResourceView.ResourcesView({collection: this.options.picResources, el: this.$('#PicResourcesContainer')});
     }
     
+  },
+  
+  play: function(e) {
+    var resourceId = $(e.currentTarget).closest('*[resource_id]').attr('resource_id');
+    this.model.set('song_src', this.options.songResources.get(resourceId).get('file_name'));
+    var playerView = new PlayerView({model: this.model});
   }
 
 });

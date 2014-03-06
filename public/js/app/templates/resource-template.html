@@ -4,21 +4,28 @@
 
 <% var m = model.toJSON(); %>
 <td><%= m.file_name %></td>
-<td><%= (m.file_size/1000000).toFixed(2) %>MB</td>
+<td>
+  <% if(m.file_type == "song") { %>
+    <%= (m.file_size/1000000).toFixed(2) %>MB
+  <% } %>
+  <% if(m.file_type == "pic") { %>
+    <%= (m.file_size/1000).toFixed(2) %>KB
+  <% } %>
+</td>
 <td><%= helper.formatDateTime(m.uploaded_time, "second") %></td>
 <td tag="stars"></td>
 <td>
   <div class="btn-group" tag="resource_star_container">
   </div>
 </td>
-<td>
+<td resource_id="<%= m.id %>" >
   <% if(m.file_type == "song") { %>
-    <button type="button" class="btn btn-success btn-xs">播放</button>
+    <button type="button" class="btn btn-success btn-xs" tag="play">播放</button>
   <% } %>
   <% if(m.file_type == "pic") { %>
-    <button type="button" class="btn btn-warning btn-xs">查看</button>
+    <a class="btn btn-warning btn-xs" href="<%= "http://liber-1050.u.qiniudn.com/" + encodeURIComponent(m.file_name) %>" target="_blank" >歌谱</a>
   <% } %>
-  <button type="button" class="btn btn-primary btn-xs">下载</button>
+  <a class="btn btn-primary btn-xs" href="<%= "http://liber-1050.u.qiniudn.com/" + encodeURIComponent(m.file_name) + "?download" %>" target="_blank">下载</a>
   <button type="button" class="btn btn-default btn-xs" tag="delete_resource" data-toggle="tooltip" title="双击">删除</button>
 </td>
 
