@@ -1,4 +1,4 @@
-﻿define(['jquery', 'nprogress/nprogress'], function($, NProgress) {
+﻿define(['jquery', 'nprogress/nprogress', 'backbone'], function($, NProgress, Backbone) {
 
 NProgress.configure({
   showSpinner: false
@@ -181,6 +181,12 @@ var utils = {
     
     return new Progress();
   
+  },
+  
+  extendBackbone: function() {
+    Backbone.View.prototype.uninstall = function() {
+      this.remove();
+    }
   }
 
 }

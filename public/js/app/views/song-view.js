@@ -50,7 +50,7 @@ var PlayerView = Backbone.View.extend({
   
   initialize: function() {
     this.render();
-    this.initPlayer();
+    // this.initPlayer();
   },
   
   render: function() {
@@ -290,6 +290,11 @@ var EditSongView = Backbone.View.extend({
     this.options.songResources = new ResourceModel.Resources(songResourcesList);
     if(this.options.songResources.length > 0) {
       var songResourcesView = new ResourceView.ResourcesView({collection: this.options.songResources, el: this.$('#SongResourcesContainer')});
+      
+      // if((this.viewInUse || (this.viewInUse = {} || this.viewInUse)).songResourcesView) {
+        // this.viewInUse.songResourcesView.uninstall();
+      // }
+      // this.viewInUse.songResourcesView = songResourcesView;
     }
     
     var picResourcesList = _.filter(this.model.get('resources'), function(obj) {
@@ -298,6 +303,10 @@ var EditSongView = Backbone.View.extend({
     this.options.picResources = new ResourceModel.Resources(picResourcesList);
     if(this.options.picResources.length > 0) {
       var picResourcesView = new ResourceView.ResourcesView({collection: this.options.picResources, el: this.$('#PicResourcesContainer')});
+      if(this.picResourcesView) {
+        this.picResourcesView.uninstall();
+      }
+      this.picResourcesView = picResourcesView;
     }
     
   },
@@ -306,6 +315,11 @@ var EditSongView = Backbone.View.extend({
     var resourceId = $(e.currentTarget).closest('*[resource_id]').attr('resource_id');
     this.model.set('song_src', this.options.songResources.get(resourceId).get('file_name'));
     var playerView = new PlayerView({model: this.model});
+    
+    // if((this.viewInUse || (this.viewInUse = {} || this.viewInUse)).playerView) {
+      // this.viewInUse.playerView.uninstall();
+    // }
+    // this.viewInUse.playerView = playerView;
   }
 
 });
