@@ -46,11 +46,13 @@ var SongsView = Backbone.View.extend({
 
 var PlayerView = Backbone.View.extend({
 
+  audioInstance: null,
+
   template: '#PlayerTemplate',
   
   initialize: function() {
     this.render();
-    // this.initPlayer();
+    this.initPlayer();
   },
   
   render: function() {
@@ -60,9 +62,10 @@ var PlayerView = Backbone.View.extend({
   },
   
   initPlayer: function() {
-    var audioDom = this.$('audio:eq(0)')[0];
+    var audioDom = $('audio:eq(0)')[0];
+    var tThis = this;
     audiojs.events.ready(function() {
-      var as = audiojs.create(audioDom, {
+      tThis.audioInstance = audiojs.create(audioDom, {
         autoplay: true,
         css: false,
         createPlayer: {
@@ -290,11 +293,6 @@ var EditSongView = Backbone.View.extend({
     this.options.songResources = new ResourceModel.Resources(songResourcesList);
     if(this.options.songResources.length > 0) {
       var songResourcesView = new ResourceView.ResourcesView({collection: this.options.songResources, el: this.$('#SongResourcesContainer')});
-      
-      // if((this.viewInUse || (this.viewInUse = {} || this.viewInUse)).songResourcesView) {
-        // this.viewInUse.songResourcesView.uninstall();
-      // }
-      // this.viewInUse.songResourcesView = songResourcesView;
     }
     
     var picResourcesList = _.filter(this.model.get('resources'), function(obj) {
@@ -303,10 +301,6 @@ var EditSongView = Backbone.View.extend({
     this.options.picResources = new ResourceModel.Resources(picResourcesList);
     if(this.options.picResources.length > 0) {
       var picResourcesView = new ResourceView.ResourcesView({collection: this.options.picResources, el: this.$('#PicResourcesContainer')});
-      if(this.picResourcesView) {
-        this.picResourcesView.uninstall();
-      }
-      this.picResourcesView = picResourcesView;
     }
     
   },
@@ -314,12 +308,13 @@ var EditSongView = Backbone.View.extend({
   play: function(e) {
     var resourceId = $(e.currentTarget).closest('*[resource_id]').attr('resource_id');
     this.model.set('song_src', this.options.songResources.get(resourceId).get('file_name'));
-    var playerView = new PlayerView({model: this.model});
     
-    // if((this.viewInUse || (this.viewInUse = {} || this.viewInUse)).playerView) {
-      // this.viewInUse.playerView.uninstall();
-    // }
-    // this.viewInUse.playerView = playerView;
+    if((this.viewInUse || (this.viewInUse = {} || this.viewInUse)).playerView) {
+      delete this.viewInUse.playerView.audioInstance;
+      this.viewInUse.playerView.$('audio').remove();
+      this.viewInUse.playerView.remove();
+    }
+    this.viewInUse.playerView = new PlayerView({model: this.model});
   }
 
 });

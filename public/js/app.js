@@ -37,7 +37,6 @@ function($, Backbone, utils, SongModel, SongView) {
     
     initialize: function() {
       utils.setGlobalAjaxSettings();
-      // utils.extendBackbone();
     },
     
     initSongs: function(url) {
