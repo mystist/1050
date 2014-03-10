@@ -1,7 +1,46 @@
 <div class="navbar-fixed-top player-container">
   <div class="container">
     <div class="row">
-      <div class="col-md-12" id="PlayerContainer"></div>
+      <div class="col-md-12">
+        <div class="audiojs panel panel-default player" tag="player">
+          <audio preload="auto" ></audio>
+          <div class="row">
+            <div class="col-md-2 col-ms-2 col-xs-2">
+              <div class="play-info">
+                <p class="icon"><span class="glyphicon glyphicon-music"></span></p>
+                <p tag="song_info" class="text" title="" ></p>
+              </div>
+            </div>
+            <div class="col-md-1 col-sm-1 col-xs-1">
+              <div class="play-pause">
+                <p class="play"><span class="glyphicon glyphicon-play"></span></p>
+                <p class="pause"><span class="glyphicon glyphicon-pause"></span></p>
+                <p class="loading"><span class="glyphicon glyphicon-time"></span></p>
+                <p class="error"><span class="glyphicon glyphicon-remove"></span></p>
+              </div>
+            </div>
+            <div class="col-md-7 col-sm-6 col-xs-5">
+              <div class="scrubber">
+                <div class="progress"></div>
+                <div class="loaded"></div>
+              </div>
+              <div class="error-message"></div>
+            </div>
+            <div class="col-md-1 col-xs-1">
+              <div class="time">
+                <em class="played">00:00</em>/<strong class="duration">00:00</strong>
+              </div>
+            </div>
+            <div class="col-md-1 col-sm-3 col-xs-3">
+              <div class="play-info">
+                <p class="oper">
+                  <a class="btn btn-default btn-xs" href="javascript:;" tag="close">关闭</a>
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 </div>

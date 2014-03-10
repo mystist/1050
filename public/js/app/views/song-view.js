@@ -1,6 +1,6 @@
-﻿define(['jquery', 'backbone', 'text!app/templates/song-template.html', 'helper', 'utils/utils', 'plupload/zh_CN', 'app/models/resource-model', 'app/views/resource-view', 'audiojs/audio'],
+﻿define(['jquery', 'backbone', 'text!app/templates/song-template.html', 'helper', 'utils/utils', 'plupload/zh_CN', 'app/models/resource-model', 'app/views/resource-view'],
 
-function($, Backbone, SongTemplate, helper, utils, plupload, ResourceModel, ResourceView, audiojs) {
+function($, Backbone, SongTemplate, helper, utils, plupload, ResourceModel, ResourceView) {
 
 var ShowSongView = Backbone.View.extend({
 
@@ -51,8 +51,15 @@ var PlayerView = Backbone.View.extend({
   template: '#PlayerTemplate',
   
   initialize: function() {
-    this.render();
-    this.initPlayer();
+    // this.render();
+    // this.initPlayer();
+    
+    var $player = $('*[tag="player"]');
+    $player.find('audio').attr('src', 'http://s3.amazonaws.com/audiojs/04-islands-is-the-limit.mp3');
+    audiojs.instances.audiojs0.source.load();
+    // audiojs.instances.audiojs0.play();
+    
+    
   },
   
   render: function() {
