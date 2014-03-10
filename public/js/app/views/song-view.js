@@ -51,15 +51,7 @@ var PlayerView = Backbone.View.extend({
   template: '#PlayerTemplate',
   
   initialize: function() {
-    // this.render();
-    // this.initPlayer();
-    
-    var $player = $('*[tag="player"]');
-    $player.find('audio').attr('src', 'http://s3.amazonaws.com/audiojs/04-islands-is-the-limit.mp3');
-    audiojs.instances.audiojs0.source.load();
-    // audiojs.instances.audiojs0.play();
-    
-    
+    this.render();
   },
   
   render: function() {
@@ -68,36 +60,12 @@ var PlayerView = Backbone.View.extend({
     $('#PlayerContainer').empty().html(this.el);
   },
   
-  initPlayer: function() {
-    var audioDom = $('audio:eq(0)')[0];
-    var tThis = this;
-    audiojs.events.ready(function() {
-      tThis.audioInstance = audiojs.create(audioDom, {
-        autoplay: true,
-        css: false,
-        createPlayer: {
-          markup: false,
-          playPauseClass: 'play-pause',
-          scrubberClass: 'scrubber',
-          progressClass: 'progress',
-          loaderClass: 'loaded',
-          timeClass: 'time',
-          durationClass: 'duration',
-          playedClass: 'played',
-          errorMessageClass: 'error-message',
-          playingClass: 'playing',
-          loadingClass: 'loading',
-          errorClass: 'error'
-        }
-      });
-    });
-  },
-  
   events: {
     'click *[tag="close"]': 'close'
   },
   
   close: function() {
+    // Todo: Clean the iframe first.
     this.remove();
   }
 
@@ -315,13 +283,12 @@ var EditSongView = Backbone.View.extend({
   play: function(e) {
     var resourceId = $(e.currentTarget).closest('*[resource_id]').attr('resource_id');
     this.model.set('song_src', this.options.songResources.get(resourceId).get('file_name'));
+    var playerView = new PlayerView({model: this.model});
     
-    if((this.viewInUse || (this.viewInUse = {} || this.viewInUse)).playerView) {
-      delete this.viewInUse.playerView.audioInstance;
-      this.viewInUse.playerView.$('audio').remove();
-      this.viewInUse.playerView.remove();
-    }
-    this.viewInUse.playerView = new PlayerView({model: this.model});
+    // if((this.viewInUse || (this.viewInUse = {} || this.viewInUse)).playerView) {
+      // this.viewInUse.playerView.remove();
+    // }
+    // this.viewInUse.playerView = new PlayerView({model: this.model});
   }
 
 });

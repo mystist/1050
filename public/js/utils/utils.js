@@ -181,12 +181,6 @@ var utils = {
     
     return new Progress();
   
-  },
-  
-  extendBackbone: function() {
-    Backbone.View.prototype.uninstall = function() {
-      this.remove();
-    }
   }
 
 }

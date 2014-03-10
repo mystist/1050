@@ -20,12 +20,11 @@
       exports: 'plupload'
     },
     'backbone.localstorage': ['backbone'],
-    'bootstrap': ['jquery'],
-    'audiojs/audio': []
+    'bootstrap': ['jquery']
   }
 });
 
-define(['jquery', 'backbone', 'utils/utils', 'app/models/song-model', 'app/views/song-view', 'audiojs/audio', 'bootstrap'],
+define(['jquery', 'backbone', 'utils/utils', 'app/models/song-model', 'app/views/song-view', 'bootstrap'],
 
 function($, Backbone, utils, SongModel, SongView) {
 
@@ -35,7 +34,6 @@ function($, Backbone, utils, SongModel, SongView) {
     
     initialize: function() {
       utils.setGlobalAjaxSettings();
-      this.initPlayer();
     },
     
     initSongs: function(url) {
@@ -51,28 +49,6 @@ function($, Backbone, utils, SongModel, SongView) {
     showSongs: function() {
       var showSongView = new SongView.ShowSongView({collection: this.songs});
       var songsView = new SongView.SongsView({collection: this.songs});
-    },
-    
-    initPlayer: function() {
-      var audioDom = $('audio:eq(0)')[0];
-      audiojs.create(audioDom, {
-        autoplay: true,
-        css: false,
-        createPlayer: {
-          markup: false,
-          playPauseClass: 'play-pause',
-          scrubberClass: 'scrubber',
-          progressClass: 'progress',
-          loaderClass: 'loaded',
-          timeClass: 'time',
-          durationClass: 'duration',
-          playedClass: 'played',
-          errorMessageClass: 'error-message',
-          playingClass: 'playing',
-          loadingClass: 'loading',
-          errorClass: 'error'
-        }
-      });
     }
     
   });
