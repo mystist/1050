@@ -16,13 +16,13 @@ Freely, quickly and simple.
 Todos:  
 
 Choose Cloud Storage  
-Backbone Memory leak  
 Optimize  
 CDN  
 Interface: Upload Songs at once  
 Startup!  
 
+Done:  
 
-
+Backbone Memory leak  (Use iframe for Player to avoid memory leaks. How about the other Views ? See the problem in the future. )
 
 
