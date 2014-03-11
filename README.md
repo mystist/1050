@@ -24,14 +24,3 @@ Startup!
 Done:  
 
 Backbone Memory leak  (Use iframe for Player to avoid memory leaks. How about the other Views ? See the problem in the future. )
-
-
-sdasdadq
-
-
-
-
-sdfasdf
-
-
-werewr
