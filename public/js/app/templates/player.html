@@ -8,6 +8,7 @@
     <link href="/css/bootstrap.min.css" rel="stylesheet" media="screen">
     <link href="/js/libs/audiojs/custom.css" rel="stylesheet" media="screen">
     <script src="/js/libs/audiojs/audio.js"></script>
+    <script src="/js/utils/config.js"></script>
     <script>
     
       var getQueryString = function(name) {
@@ -18,7 +19,7 @@
     
       var audios = document.getElementsByTagName('audio');
       audiojs.events.ready(function() {
-        audios[0].src = 'http://liber-1050.u.qiniudn.com/' + getQueryString('src');
+        audios[0].src = config_1050.bucketUrl + getQueryString('src');
         var as = audiojs.create(audios[0], {
           autoplay: true,
           css: false,

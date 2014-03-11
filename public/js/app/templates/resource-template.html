@@ -23,9 +23,9 @@
     <button type="button" class="btn btn-success btn-xs" tag="play">播放</button>
   <% } %>
   <% if(m.file_type == "pic") { %>
-    <a class="btn btn-warning btn-xs" href="<%= "http://liber-1050.u.qiniudn.com/" + encodeURIComponent(m.file_name) %>" target="_blank" >查看</a>
+    <a class="btn btn-warning btn-xs" href="<%= config_1050.bucketUrl + encodeURIComponent(m.file_name) %>" target="_blank" >查看</a>
   <% } %>
-  <a class="btn btn-primary btn-xs" href="<%= "http://liber-1050.u.qiniudn.com/" + encodeURIComponent(m.file_name) + "?download" %>" target="_blank">下载</a>
+  <a class="btn btn-primary btn-xs" href="<%= config_1050.bucketUrl + encodeURIComponent(m.file_name) + "?download" %>" target="_blank">下载</a>
   <button type="button" class="btn btn-default btn-xs" tag="delete_resource" data-toggle="tooltip" title="双击">删除</button>
 </td>
 

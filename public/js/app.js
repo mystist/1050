@@ -20,7 +20,8 @@
       exports: 'plupload'
     },
     'backbone.localstorage': ['backbone'],
-    'bootstrap': ['jquery']
+    'bootstrap': ['jquery'],
+    'utils/config': []
   }
 });
 
