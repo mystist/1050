@@ -65,8 +65,19 @@ var PlayerView = Backbone.View.extend({
   },
   
   close: function() {
-    // Todo: Clean the iframe first.
+    this.clean();
     this.remove();
+  },
+  
+  clean: function() {
+    var $target = this.$('iframe');
+    $target[0].src = '';
+    $target[0].contentWindow.document.write('');
+    $target[0].contentWindow.close();
+    $target.remove();
+    if( typeof CollectGarbage == "function") {
+      CollectGarbage();
+    }
   }
 
 });
@@ -283,12 +294,11 @@ var EditSongView = Backbone.View.extend({
   play: function(e) {
     var resourceId = $(e.currentTarget).closest('*[resource_id]').attr('resource_id');
     this.model.set('song_src', this.options.songResources.get(resourceId).get('file_name'));
-    var playerView = new PlayerView({model: this.model});
     
-    // if((this.viewInUse || (this.viewInUse = {} || this.viewInUse)).playerView) {
-      // this.viewInUse.playerView.remove();
-    // }
-    // this.viewInUse.playerView = new PlayerView({model: this.model});
+    if((this.viewInUse || (this.viewInUse = {} || this.viewInUse)).playerView) {
+      this.viewInUse.playerView.close();
+    }
+    this.viewInUse.playerView = new PlayerView({model: this.model});
   }
 
 });

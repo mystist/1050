@@ -9,8 +9,16 @@
     <link href="/js/libs/audiojs/custom.css" rel="stylesheet" media="screen">
     <script src="/js/libs/audiojs/audio.js"></script>
     <script>
+    
+      var getQueryString = function(name) {
+        var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)", "i");
+        var r = window.location.search.substr(1).match(reg);
+        if (r != null) return r[2]; return null;
+      };
+    
       var audios = document.getElementsByTagName('audio');
       audiojs.events.ready(function() {
+        audios[0].src = 'http://liber-1050.u.qiniudn.com/' + getQueryString('src');
         var as = audiojs.create(audios[0], {
           autoplay: true,
           css: false,
@@ -33,30 +41,30 @@
     </script>
   </head>
   <body>
-    <div class="container audiojs">
-    <audio src="http://liber-1050.u.qiniudn.com/05.Kiss.mp3" preload="auto" ></audio>
-    <div class="row">
-      <div class="col-md-1 col-sm-1 col-xs-1">
-        <div class="play-pause">
-          <p class="play"><span class="glyphicon glyphicon-play"></span></p>
-          <p class="pause"><span class="glyphicon glyphicon-pause"></span></p>
-          <p class="loading"><span class="glyphicon glyphicon-time"></span></p>
-          <p class="error"><span class="glyphicon glyphicon-remove"></span></p>
+    <div class="audiojs">
+      <audio preload="auto" ></audio>
+      <div class="row">
+        <div class="col-md-1 col-sm-1 col-xs-1">
+          <div class="play-pause">
+            <p class="play"><span class="glyphicon glyphicon-play"></span></p>
+            <p class="pause"><span class="glyphicon glyphicon-pause"></span></p>
+            <p class="loading"><span class="glyphicon glyphicon-time"></span></p>
+            <p class="error"><span class="glyphicon glyphicon-remove"></span></p>
+          </div>
+        </div>
+        <div class="col-md-9 col-sm-9 col-xs-9">
+          <div class="scrubber">
+            <div class="progress"></div>
+            <div class="loaded"></div>
+          </div>
+          <div class="error-message"></div>
+        </div>
+        <div class="col-md-2 col-sm-2 col-xs-2">
+          <div class="time">
+            <em class="played">00:00</em>/<strong class="duration">00:00</strong>
+          </div>
         </div>
       </div>
-      <div class="col-md-9 col-sm-9 col-xs-9">
-        <div class="scrubber">
-          <div class="progress"></div>
-          <div class="loaded"></div>
-        </div>
-        <div class="error-message"></div>
-      </div>
-      <div class="col-md-2 col-sm-2 col-xs-2">
-        <div class="time">
-          <em class="played">00:00</em>/<strong class="duration">00:00</strong>
-        </div>
-      </div>
-    </div>
     </div>
   </body>
 </html>

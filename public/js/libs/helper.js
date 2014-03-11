@@ -109,7 +109,7 @@
     }
   },
   
-  // Provide by vendor, Copyright unknown. Did a few modification.
+  // Copyright unknown. Did a few modification.
   serializeObject : function(serializedArr) {
     var o = {};
     var a = serializedArr;
