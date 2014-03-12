@@ -194,8 +194,7 @@ var EditSongView = Backbone.View.extend({
     }
   
     var uploader = new plupload.Uploader({
-      flash_swf_url : '/dist/js/libs/plupload/Moxie.swf',
-      // flash_swf_url : 'http://liber-1050.u.qiniudn.com/Moxie.swf',
+      flash_swf_url : '/js/libs/plupload/Moxie.swf',
       runtimes : 'flash',
       container: $container[0],
       browse_button: $btnTarget[0],
