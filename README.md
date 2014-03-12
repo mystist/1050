@@ -15,7 +15,6 @@ Freely, quickly and simple.
 
 Todos:  
 
-Optimize  
 CDN  
 Interface: Upload Songs at once  
 Startup!  
@@ -27,3 +26,7 @@ Use iframe for Player to avoid memory leaks. How about the other Views ? See the
 
 Choose Cloud Storage:  
 Qiniu
+
+Optimize:  
+Use r.js to optimize js and css.  
+Set public_folder use sinatra config.  

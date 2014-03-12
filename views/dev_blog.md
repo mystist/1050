@@ -5,14 +5,19 @@
 服务器：`OpenShift`云服务。  
 数据库：`mysql`, 由`OpenShift`作为组件提供。  
 数据存储：`Qiniu`云存储  
-开发语言：`ruby`  
+开发语言：`ruby` + `javascript`  
 框架：`sinatra` + `activerecord` + `Backbone`  
 源码：[https://github.com/Mystist/1050](https://github.com/Mystist/1050)  
-涉及到的关键词：`OpenShift`, `sinatra`, `ruby`, `RESTful`, `activerecord`, `mysql`, `Backbone`, `requireJS`, `Bootstrap`, `git`, `github`, `markdown`  
+涉及到的关键词：`OpenShift`, `sinatra`, `ruby`, `RESTful`, `activerecord`, `mysql`, `Backbone`, `requireJS`, `Bootstrap`, `git`, `github`, `markdown`, `nodejs`, `NPM`, `bower`, `r.js`  
+
 
 ====
 
 ### 更新日志：
+
+#### 2014-03-11 ... 2014-03-12  
+    完成optimize.  
+    实现src与dist的自动切换。
 
 #### 2014-03-07 ... 2014-03-11  
     完成播放功能。方案：  
