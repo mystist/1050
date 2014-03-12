@@ -17,6 +17,7 @@ Todos:
 
 CDN  
 Interface: Upload Songs at once  
+Delete resource from Cloud Storge as well
 Startup!  
 
 Done:  
