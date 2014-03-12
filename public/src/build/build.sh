@@ -1,5 +1,3 @@
-r.js -o src/build/app.build.js
-cd dist
-rm -rf build build.txt static
-cd js
-rm -rf app
+r.js -o public/src/build/app.build.js
+cd public/dist
+rm -rf build.txt
