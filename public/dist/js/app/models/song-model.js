@@ -1,0 +1,1 @@
+define(["backbone"],function(e){var t=e.Model.extend({urlRoot:"/songs",validate:function(e){var t={},n="该项填写有误",r=["resources","error","song_src","pic_src"];_.each(e,function(e,i){if(_.indexOf(r,i)==-1)if(i=="index"){if(!e||isNaN(e))t[i]=n}else e||(t[i]=n)});if(!_.isEmpty(t))return t}}),n=e.Collection.extend({model:t}),r={Song:t,Songs:n};return r});

@@ -1,0 +1,1 @@
+define(["backbone","backbone.localstorage"],function(e){var t=e.Model.extend({urlRoot:"/resources"}),n=e.Collection.extend({model:t}),r=e.Model.extend({defaults:{resource_id:"",current:0}}),i=e.Collection.extend({model:r,localStorage:new e.LocalStorage("ResourceStarCollection")}),s={Resource:t,Resources:n,ResourceStar:r,ResourceStarCollection:i};return s});
