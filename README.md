@@ -15,15 +15,14 @@ Freely, quickly and simple.
 
 Todos:  
 
-CDN  
-Interface: Upload Songs at once  
 Delete resource from Cloud Storge as well
+Interface: Upload Songs at once  
 Startup!  
 
 Done:  
 
 Backbone Memory leak:  
-Use iframe for Player to avoid memory leaks. How about the other Views ? See the problem in the future. )  
+Use iframe for Player to avoid memory leaks. How about the other Views ? We may take care of the problem in the future.  
 
 Choose Cloud Storage:  
 Qiniu
@@ -31,3 +30,9 @@ Qiniu
 Optimize:  
 Use r.js to optimize js and css.  
 Set public_folder use sinatra config.  
+
+CDN:  
+Nothing need to do with CDN right now !  
+
+
+
