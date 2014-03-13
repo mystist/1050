@@ -160,14 +160,18 @@ end
 delete '/songs/:id' do
   param = (params[:id]).to_i
   resources = get_resources_by_song_id(param)
-  resources.delete_all
+  resources.each do |resource|
+    delete_resource_from_cloud_by_resource_key(resource['file_name'])
+    resource.delete
+  end
   json Song.delete(param)
 end
 
 delete '/resources/:id' do
   param = (params[:id]).to_i
   resource = Resource.find_by_id(param)
-  if resource.delete  
+  delete_resource_from_cloud_by_resource_key(resource['file_name'])
+  if resource.delete
     src = get_most_starred_resource_src_by_song_id(resource['song_id'])
     update_song_src_by_song_id(src, resource['song_id'])
     json true
@@ -222,8 +226,8 @@ def update_song_src_by_song_id(src, song_id)
   end
 end
 
-get '/test' do
-  json nil
+def delete_resource_from_cloud_by_resource_key(resource_key)
+  Qiniu::RS.delete('liber-1050', resource_key)
 end
 
 

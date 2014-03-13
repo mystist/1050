@@ -15,7 +15,7 @@ Freely, quickly and simple.
 
 Todos:  
 
-Delete resource from Cloud Storge as well
+Test in IE !  
 Interface: Upload Songs at once  
 Startup!  
 
@@ -33,6 +33,9 @@ Set public_folder use sinatra config.
 
 CDN:  
 Nothing need to do with CDN right now !  
+
+Delete resource from Cloud Storge as well:  
+Handled it in the backend.  
 
 
 
