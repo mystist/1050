@@ -11,4 +11,5 @@ gem 'qiniu-rs'
 
 group :development do
   gem 'rake'
+  gem 'roo'
 end
