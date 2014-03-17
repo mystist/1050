@@ -113,3 +113,13 @@ http://openapi.baidu.com/oauth/2.0/login_success#expires_in=2592000&access_token
 </html>
 
 #
+
+  @m.query("SELECT * from songs").each_hash do |res|
+    puts res
+  end
+
+
+#
+
+
+#
