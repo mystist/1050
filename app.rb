@@ -40,11 +40,6 @@ def encode_list(list)
   list
 end
 
-get '/' do
-  @token = Qiniu::RS.generate_upload_token :scope => 'liber-1050'
-  erb :index, :layout => :app_layout
-end
-
 get '/dev-blog' do
   markdown :dev_blog, :layout_engine => :erb, :layout => :dev_blog_layout
 end
@@ -230,6 +225,9 @@ def delete_resource_from_cloud_by_resource_key(resource_key)
   Qiniu::RS.delete('liber-1050', resource_key)
 end
 
-
+get '*' do
+  @token = Qiniu::RS.generate_upload_token :scope => 'liber-1050'
+  erb :index, :layout => :app_layout
+end
 
 

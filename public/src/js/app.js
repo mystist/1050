@@ -1,6 +1,6 @@
 ﻿require.config({
   waitSeconds: 20,
-  baseUrl: 'js/libs',
+  baseUrl: '/js/libs',
   paths: {
     'app': '../app',
     'utils': '../utils'
@@ -36,6 +36,7 @@ function($, Backbone, utils, SongModel, SongView) {
     
     initialize: function() {
       utils.setGlobalAjaxSettings();
+      // this.navigate();
     },
     
     initSongs: function(url) {
@@ -51,11 +52,18 @@ function($, Backbone, utils, SongModel, SongView) {
     showSongs: function() {
       var showSongView = new SongView.ShowSongView({collection: this.songs});
       var songsView = new SongView.SongsView({collection: this.songs});
+    },
+    
+    navigate: function() {
+      // If url is http://localhost:9292/#bala, the location.pathname will be '/'
+      // So location.pathname.length > 1 means the url is http://localhost:9292/bala
+      // So we need to navigate it to http://localhost:9292/#bala
+      // if(location.pathname.length > 1) {
+        // router.navigate('#' + location.pathname, {trigger: true, replace: true});
+      // }
     }
     
   });
-  
-  var app = new App();
   
   var Router = Backbone.Router.extend({
   
@@ -92,8 +100,9 @@ function($, Backbone, utils, SongModel, SongView) {
   });
   
   var router = new Router();
+  var app = new App();
   
-  Backbone.history.start();
+  Backbone.history.start({pushState: true});
   
   var Main = {
     app: app,
