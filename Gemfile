@@ -8,8 +8,8 @@ gem 'mysql'
 gem 'redcarpet'
 gem 'sinatra-contrib'
 gem 'qiniu-rs'
+gem 'roo'
 
 group :development do
   gem 'rake'
-  gem 'roo'
 end

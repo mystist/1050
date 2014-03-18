@@ -4,6 +4,7 @@ require 'sinatra/activerecord'
 require 'redcarpet'
 require 'sinatra/json'
 require 'qiniu-rs'
+require 'roo'
 
 configure :development do
   set :public_folder, File.dirname(__FILE__) + '/public/src'
@@ -47,6 +48,22 @@ end
 
 get '/dev-blog' do
   markdown :dev_blog, :layout_engine => :erb, :layout => :dev_blog_layout
+end
+
+get '/interface' do
+  erb :interface, :layout => :layout
+end
+
+post '/interface' do
+  file_path = 'uploads/' + params[:file][:filename]
+  File.open(file_path, "wb") do |f|
+    f.write(params[:file][:tempfile].read)
+  end
+  msg = "操作失败！<a href='/interface'>返回重试</a>"
+  if importSongsFromExcel(file_path)
+    msg = "恭喜，操作成功！<a href='/interface'>返回</a>"
+  end
+  msg
 end
 
 get '/environment' do
@@ -231,5 +248,47 @@ def delete_resource_from_cloud_by_resource_key(resource_key)
 end
 
 
+### import start
 
+def readExcel(path)
+  s = Roo::Excelx.new(path)
+  s.default_sheet = s.sheets.first
+  s
+end
 
+def convertExcelToList(s, attr_array)
+  list = []
+  2.upto(s.last_row) do |row|
+    obj = {}
+    attr_array.length.times do |i|
+      obj[attr_array[i]] = (s.cell(row, i+1)).to_s
+    end
+    list.push(obj)
+  end
+  list
+end
+
+def importSongsFromExcel(path)
+
+  attr_array = ['index', 'name', 'first_sentence', 'category_big', 'category_small', 'song_src', 'pic_src']
+  s = readExcel(path)
+  list = convertExcelToList(s, attr_array)
+  
+  list.each do |obj|
+    song = Song.where('`index` = ?', obj['index'].to_i)
+    if(song.count == 0)
+      song = Song.new
+      song.attributes.each do |key, value|
+        if obj[key]
+          song[key] = obj[key]
+        end
+      end
+      song.save
+    end
+  end
+
+  return true
+  
+end
+
+### import end
