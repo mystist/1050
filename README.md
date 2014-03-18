@@ -16,7 +16,6 @@ Freely, quickly and simple.
 Todos:  
 
 Test in IE !  
-Interface: Upload Songs at once  
 Startup!  
 
 Done:  
@@ -37,5 +36,6 @@ Nothing need to do with CDN right now !
 Delete resource from Cloud Storge as well:  
 Handled it in the backend.  
 
-
+Interface:  
+Upload Songs at once. See at [http://1050.14201420.com/interface](http://1050.14201420.com/interface)
 

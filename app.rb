@@ -55,13 +55,24 @@ get '/interface' do
 end
 
 post '/interface' do
-  file_path = 'uploads/' + params[:file][:filename]
-  File.open(file_path, "wb") do |f|
-    f.write(params[:file][:tempfile].read)
-  end
-  msg = "操作失败！<a href='/interface'>返回重试</a>"
-  if importSongsFromExcel(file_path)
-    msg = "恭喜，操作成功！<a href='/interface'>返回</a>"
+  msg = "请选择Excel文件！<a href='/interface'>返回重试</a>"
+  if(params[:file])
+    path = 'uploads/' + params[:file][:filename]
+    extension = path.slice(path.index('.'), path.length - path.index('.'))
+    if(extension == '.xlsx' || extension == '.xls')
+      File.open(path, "wb") do |f|
+        f.write(params[:file][:tempfile].read)
+      end
+      renamed_path = 'uploads/' + (Time.now.to_f * 1000).to_i.to_s + '_' + params[:file][:filename]
+      File.rename(path, renamed_path)
+      if importSongsFromExcel(renamed_path, extension)
+        msg = "恭喜，操作成功！<a href='/interface'>返回</a>"
+      else
+        "操作失败！<a href='/interface'>返回重试</a>"
+      end
+    else
+      msg = "只支持Excel文件！<a href='/interface'>返回重试</a>"
+    end
   end
   msg
 end
@@ -250,8 +261,12 @@ end
 
 ### import start
 
-def readExcel(path)
-  s = Roo::Excelx.new(path)
+def readExcel(path, extension)
+  if(extension == '.xlsx')
+    s = Roo::Excelx.new(path)
+  elsif(extension == '.xls')
+    s = Roo::Excel.new(path)
+  end
   s.default_sheet = s.sheets.first
   s
 end
@@ -268,23 +283,23 @@ def convertExcelToList(s, attr_array)
   list
 end
 
-def importSongsFromExcel(path)
+def importSongsFromExcel(path, extension)
 
   attr_array = ['index', 'name', 'first_sentence', 'category_big', 'category_small', 'song_src', 'pic_src']
-  s = readExcel(path)
+  s = readExcel(path, extension)
   list = convertExcelToList(s, attr_array)
   
   list.each do |obj|
-    song = Song.where('`index` = ?', obj['index'].to_i)
-    if(song.count == 0)
+    song = Song.find_by_index(obj['index'].to_i)
+    if(!song)
       song = Song.new
-      song.attributes.each do |key, value|
-        if obj[key]
-          song[key] = obj[key]
-        end
-      end
-      song.save
     end
+    song.attributes.each do |key, value|
+      if obj[key]
+        song[key] = obj[key]
+      end
+    end
+    song.save
   end
 
   return true
