@@ -15,7 +15,6 @@ Freely, quickly and simple.
 
 Todos:  
 
-Test in IE !  
 Interface: Upload Songs at once  
 Startup!  
 
@@ -36,6 +35,9 @@ Nothing need to do with CDN right now !
 
 Delete resource from Cloud Storge as well:  
 Handled it in the backend.  
+
+Test in IE:  
+Er...May be we can test it in the future, Because I come to handle the `pushState` url when I'm going to make a test !
 
 
 

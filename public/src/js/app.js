@@ -1,6 +1,6 @@
 ﻿require.config({
-  waitSeconds: 20,
-  baseUrl: '/js/libs',
+  waitSeconds: 27,
+  baseUrl: 'js/libs',
   paths: {
     'app': '../app',
     'utils': '../utils'
@@ -36,7 +36,7 @@ function($, Backbone, utils, SongModel, SongView) {
     
     initialize: function() {
       utils.setGlobalAjaxSettings();
-      // this.navigate();
+      this.initHashUrl();
     },
     
     initSongs: function(url) {
@@ -54,13 +54,11 @@ function($, Backbone, utils, SongModel, SongView) {
       var songsView = new SongView.SongsView({collection: this.songs});
     },
     
-    navigate: function() {
-      // If url is http://localhost:9292/#bala, the location.pathname will be '/'
-      // So location.pathname.length > 1 means the url is http://localhost:9292/bala
-      // So we need to navigate it to http://localhost:9292/#bala
-      // if(location.pathname.length > 1) {
-        // router.navigate('#' + location.pathname, {trigger: true, replace: true});
-      // }
+    initHashUrl: function() {
+      $(document).on('click', '*[tag="hash_url"]', function(e) {
+        e.preventDefault();
+        router.navigate($(this).attr("href"), {trigger: true});
+      });
     }
     
   });
@@ -69,7 +67,7 @@ function($, Backbone, utils, SongModel, SongView) {
   
     routes: {
       '': 'showSongs',
-      'songs/:categoryName': 'showSongs',
+      'category_big/:categoryName': 'showSongs',
       'modification': 'editSong',
       'modification/:id': 'editSong'
     },
