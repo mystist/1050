@@ -18,7 +18,7 @@ Freely, quickly and simple.
 
 Todos:  
 
-Startup!  
+Google Analysis
 
 Done:  
 
@@ -43,3 +43,9 @@ Upload Songs at once. See at [http://1050.14201420.com/interface](http://1050.14
 
 Test in IE:  
 Er...May be we can test it in the future, Because I come to handle the `pushState` url when I'm going to make a test !
+
+Startup:  
+Initial 1050 release. Version: 0.1.0  
+
+
+
