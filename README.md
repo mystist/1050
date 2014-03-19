@@ -15,7 +15,6 @@ Freely, quickly and simple.
 
 Todos:  
 
-Test in IE !  
 Startup!  
 
 Done:  
@@ -39,3 +38,5 @@ Handled it in the backend.
 Interface:  
 Upload Songs at once. See at [http://1050.14201420.com/interface](http://1050.14201420.com/interface)
 
+Test in IE:  
+Er...May be we can test it in the future, Because I come to handle the `pushState` url when I'm going to make a test !

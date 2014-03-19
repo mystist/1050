@@ -1,5 +1,5 @@
 ﻿require.config({
-  waitSeconds: 20,
+  waitSeconds: 27,
   baseUrl: 'js/libs',
   paths: {
     'app': '../app',
@@ -36,6 +36,7 @@ function($, Backbone, utils, SongModel, SongView) {
     
     initialize: function() {
       utils.setGlobalAjaxSettings();
+      this.initHashUrl();
     },
     
     initSongs: function(url) {
@@ -51,17 +52,22 @@ function($, Backbone, utils, SongModel, SongView) {
     showSongs: function() {
       var showSongView = new SongView.ShowSongView({collection: this.songs});
       var songsView = new SongView.SongsView({collection: this.songs});
+    },
+    
+    initHashUrl: function() {
+      $(document).on('click', '*[tag="hash_url"]', function(e) {
+        e.preventDefault();
+        router.navigate($(this).attr("href"), {trigger: true});
+      });
     }
     
   });
-  
-  var app = new App();
   
   var Router = Backbone.Router.extend({
   
     routes: {
       '': 'showSongs',
-      'songs/:categoryName': 'showSongs',
+      'category_big/:categoryName': 'showSongs',
       'modification': 'editSong',
       'modification/:id': 'editSong'
     },
@@ -92,8 +98,9 @@ function($, Backbone, utils, SongModel, SongView) {
   });
   
   var router = new Router();
+  var app = new App();
   
-  Backbone.history.start();
+  Backbone.history.start({pushState: true});
   
   var Main = {
     app: app,
