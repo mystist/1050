@@ -4,6 +4,9 @@
 The 1050 Poetry of Christian.  
 [http://1050.14201420.com/](http://1050.14201420.com/)
 
+Version: 0.1.0  
+Last uplated: 2014-03-19 15:47
+
 ====
 
 Play songs, View it's pictures.  
