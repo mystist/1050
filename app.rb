@@ -278,9 +278,24 @@ def convertExcelToList(s, attr_array)
     attr_array.length.times do |i|
       obj[attr_array[i]] = (s.cell(row, i+1)).to_s
     end
-    list.push(obj)
+    obj = reset_obj_attr(obj)
+    if is_obj_pass_condition?(obj)
+      list.push(obj)
+    end
   end
   list
+end
+
+def reset_obj_attr(obj)
+  obj['index'] = obj['index'].to_i
+  obj
+end
+
+def is_obj_pass_condition?(obj)
+  if (obj['index'] > 0) && !(obj['name'].strip.empty?)
+    return true
+  end
+  return false
 end
 
 def importSongsFromExcel(path, extension)
