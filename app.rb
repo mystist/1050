@@ -318,6 +318,6 @@ end
 ### import end
 
 get '*' do
-  @token = Qiniu::RS.generate_upload_token :scope => 'liber-1050'
+  @token = Qiniu::RS.generate_upload_token :scope => 'production-1050'
   erb :index, :layout => :app_layout
 end
