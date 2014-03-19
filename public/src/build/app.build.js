@@ -4,5 +4,5 @@
   mainConfigFile: "../js/app.js",
   name: "app",
   optimizeCss: "standard",
-  waitSeconds: 27
+  waitSeconds: 0
 })
