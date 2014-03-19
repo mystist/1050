@@ -5,7 +5,7 @@ The 1050 Poetry of Christian.
 [http://1050.14201420.com/](http://1050.14201420.com/)
 
 Version: 0.1.0  
-Last uplated: 2014-03-19 15:47
+Last updated: 2014-03-19 15:50
 
 ====
 
@@ -26,7 +26,7 @@ Backbone Memory leak:
 Use iframe for Player to avoid memory leaks. How about the other Views ? We may take care of the problem in the future.  
 
 Choose Cloud Storage:  
-Qiniu
+Qiniu.
 
 Optimize:  
 Use r.js to optimize js and css.  
