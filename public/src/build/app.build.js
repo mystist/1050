@@ -1,14 +1,9 @@
 ({
-  appDir: "../",
-  baseUrl: 'js/libs',
-  paths: {
-    'app': '../app',
-    'utils': '../utils'
-  },
-  dir: "../../dist",
-  mainConfigFile: "../js/app.js",
-  name: "app",
+  baseUrl: '.',
+  name: "almond",
+  include: "app",
+  out: "app-built.js",
+  wrap: true,
   optimizeCss: "standard",
-  optimize: "uglify2",
-  waitSeconds: 0
+  optimize: "uglify2"
 })

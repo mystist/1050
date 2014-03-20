@@ -1,6 +1,5 @@
 ﻿require.config({
-  waitSeconds: 0,
-  baseUrl: 'js/libs',
+  baseUrl: '/js/libs',
   paths: {
     'app': '../app',
     'utils': '../utils'

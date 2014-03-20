@@ -1,1 +1,1 @@
-window.config_1050={bucketUrl:"http://production-1050.qiniudn.com/"};
+window.config_1050={bucketUrl:"http://liber-1050.up.qiniudn.com/"};

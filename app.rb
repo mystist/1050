@@ -7,11 +7,11 @@ require 'qiniu-rs'
 require 'roo'
 
 configure :development do
-  set :public_folder, File.dirname(__FILE__) + '/public/src'
+  set :public_folder, File.dirname(__FILE__) + '/public/src/'
 end
 
 configure :production do
-  set :public_folder, File.dirname(__FILE__) + '/public/dist'
+  set :public_folder, File.dirname(__FILE__) + '/public/dist/'
 end
 
 Qiniu::RS.establish_connection! :access_key => '4drJ2mqHlMuy1sXSfd7W9KYQj3Z9iBAWUZ5kC-9g',
