@@ -25,13 +25,14 @@
 
 <%= erb :"inc/footer" %>
 
+<script src="/js/libs/require.js"></script>
+
 <script>
   require.config({
     waitSeconds: 0
   });
+  require(['js/app']);
 </script>
-
-<script data-main="/js/app" src="/js/libs/require.js"></script>
 
 </body>
 </html>
