@@ -12,5 +12,4 @@
 
 # Ignore all logfiles and tempfiles.
 /log/*.log
-/tmp
 .project
