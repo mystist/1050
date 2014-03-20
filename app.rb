@@ -7,7 +7,7 @@ require 'qiniu-rs'
 require 'roo'
 
 configure :development do
-  set :public_folder, File.dirname(__FILE__) + '/public/dist'
+  set :public_folder, File.dirname(__FILE__) + '/public/src'
 end
 
 configure :production do

@@ -9,6 +9,6 @@
   mainConfigFile: "../js/app.js",
   name: "app",
   optimizeCss: "standard",
-  optimize: "none",
+  optimize: "uglify2",
   waitSeconds: 0
 })
