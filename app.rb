@@ -45,41 +45,6 @@ get '/dev-blog' do
   markdown :dev_blog, :layout_engine => :erb, :layout => :dev_blog_layout
 end
 
-get '/interface' do
-  erb :interface, :layout => :layout
-end
-
-post '/interface' do
-  msg = "请选择Excel文件！<a href='/interface'>返回重试</a>"
-  if(params[:file])
-    path = 'uploads/' + params[:file][:filename]
-    extension = path.slice(path.index('.'), path.length - path.index('.'))
-    if(extension == '.xlsx' || extension == '.xls')
-      File.open(path, "wb") do |f|
-        f.write(params[:file][:tempfile].read)
-      end
-      renamed_path = 'uploads/' + (Time.now.to_f * 1000).to_i.to_s + '_' + params[:file][:filename]
-      File.rename(path, renamed_path)
-      if importSongsFromExcel(renamed_path, extension)
-        msg = "恭喜，操作成功！<a href='/interface'>返回</a>"
-      else
-        "操作失败！<a href='/interface'>返回重试</a>"
-      end
-    else
-      msg = "只支持Excel文件！<a href='/interface'>返回重试</a>"
-    end
-  end
-  msg
-end
-
-get '/environment' do
-  if settings.development?
-    'development!'
-  else
-    'not development!'
-  end
-end
-
 get '/songs' do
   songs = Song.all.order('`index`')
   json encode_list(songs)
@@ -254,6 +219,33 @@ def delete_resource_from_cloud_by_resource_key(resource_key)
 end
 
 ### import start
+
+get '/interface' do
+  erb :interface, :layout => :layout
+end
+
+post '/interface' do
+  msg = "请选择Excel文件！<a href='/interface'>返回重试</a>"
+  if(params[:file])
+    path = 'uploads/' + params[:file][:filename]
+    extension = path.slice(path.index('.'), path.length - path.index('.'))
+    if(extension == '.xlsx' || extension == '.xls')
+      File.open(path, "wb") do |f|
+        f.write(params[:file][:tempfile].read)
+      end
+      renamed_path = 'uploads/' + (Time.now.to_f * 1000).to_i.to_s + '_' + params[:file][:filename]
+      File.rename(path, renamed_path)
+      if importSongsFromExcel(renamed_path, extension)
+        msg = "恭喜，操作成功！<a href='/interface'>返回</a>"
+      else
+        "操作失败！<a href='/interface'>返回重试</a>"
+      end
+    else
+      msg = "只支持Excel文件！<a href='/interface'>返回重试</a>"
+    end
+  end
+  msg
+end
 
 def readExcel(path, extension)
   if(extension == '.xlsx')

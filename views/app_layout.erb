@@ -25,7 +25,11 @@
 
 <%= erb :"inc/footer" %>
 
-<script data-main="/js/app" src="/js/libs/require.js"></script>
+<% if settings.development? %>
+  <script data-main="/js/app" src="/js/libs/require.js"></script>
+<% else %>
+  <script src="/js/built.js"></script>
+<% end %>
 
 </body>
 </html>
