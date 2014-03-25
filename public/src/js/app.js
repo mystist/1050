@@ -10,6 +10,7 @@
       exports: 'Backbone'
     },
     'helper': {
+      deps: [],
       exports: 'helper'
     },
     'plupload/zh_CN': {
