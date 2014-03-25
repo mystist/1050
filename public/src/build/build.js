@@ -9,5 +9,5 @@
   mainConfigFile: "../js/app.js",
   name: "app",
   optimizeCss: "standard",
-  optimize: "uglify2"
+  optimize: "none"
 })

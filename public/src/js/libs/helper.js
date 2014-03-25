@@ -16,7 +16,7 @@
         len = 4;
         break;
       case "month" :
-        timeStr = time.getFullYear() + "-" + this.dateAddZero((time.getMonth()+1).toString()) + ".01" + " " + "00" + ":00" + ":00";
+        timeStr = time.getFullYear() + "-" + this.dateAddZero((time.getMonth()+1).toString()) + "-01" + " " + "00" + ":00" + ":00";
         len = 7;
         break;
       case "day" :

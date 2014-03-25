@@ -11,5 +11,5 @@
   insertRequire: ["../app"],
   wrap: true,
   optimizeCss: "standard",
-  optimize: "uglify2"
+  optimize: "none"
 })
