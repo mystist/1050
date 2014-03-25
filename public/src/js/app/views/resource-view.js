@@ -41,7 +41,7 @@ var ResourceView = Backbone.View.extend({
   
   render: function() {
     var template = _.template($(ResourceTemplate).find(this.template).html());
-    this.$el.empty().html(template(this));
+    this.$el.empty().html(template(_.extend({}, this, {helper: helper})));
     this.options.$target.append(this.el);
   },
   
