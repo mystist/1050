@@ -6,10 +6,10 @@
   },
   mainConfigFile: "../js/app.js",
   name: "almond",
-  include: "../app",
   out: "../js/built.js",
-  insertRequire: ["../app"],
+  include: "app",
+  insertRequire: ["app"],
   wrap: true,
   optimizeCss: "standard",
-  optimize: "none"
+  optimize: "uglify2"
 })
