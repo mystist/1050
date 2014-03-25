@@ -235,7 +235,7 @@ post '/interface' do
       end
       renamed_path = 'uploads/' + (Time.now.to_f * 1000).to_i.to_s + '_' + params[:file][:filename]
       File.rename(path, renamed_path)
-      if importSongsFromExcel(renamed_path, extension)
+      if import_songs_from_excel(renamed_path, extension)
         msg = "恭喜，操作成功！<a href='/interface'>返回</a>"
       else
         "操作失败！<a href='/interface'>返回重试</a>"
@@ -247,7 +247,7 @@ post '/interface' do
   msg
 end
 
-def readExcel(path, extension)
+def read_excel(path, extension)
   if(extension == '.xlsx')
     s = Roo::Excelx.new(path)
   elsif(extension == '.xls')
@@ -257,7 +257,7 @@ def readExcel(path, extension)
   s
 end
 
-def convertExcelToList(s, attr_array)
+def convert_excel_to_list(s, attr_array)
   list = []
   2.upto(s.last_row) do |row|
     obj = {}
@@ -284,11 +284,11 @@ def is_obj_pass_condition?(obj)
   return false
 end
 
-def importSongsFromExcel(path, extension)
+def import_songs_from_excel(path, extension)
 
   attr_array = ['index', 'name', 'first_sentence', 'category_big', 'category_small', 'song_src', 'pic_src']
-  s = readExcel(path, extension)
-  list = convertExcelToList(s, attr_array)
+  s = read_excel(path, extension)
+  list = convert_excel_to_list(s, attr_array)
   
   list.each do |obj|
     song = Song.find_by_index(obj['index'].to_i)
