@@ -215,7 +215,7 @@ def update_song_src_by_song_id(src, song_id)
 end
 
 def delete_resource_from_cloud_by_resource_key(resource_key)
-  Qiniu::RS.delete('liber-1050', resource_key)
+  Qiniu::RS.delete('production-1050', resource_key)
 end
 
 ### import start

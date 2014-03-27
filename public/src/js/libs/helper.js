@@ -1,4 +1,5 @@
-﻿var helper = {
+﻿
+var helper = {
 
   formatDateTime : function(time, type, resultType) {
     var timeStr = "";

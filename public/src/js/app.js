@@ -5,27 +5,21 @@
     'utils': '../utils'
   },
   shim: {
-    'backbone': {
-      deps: ['jquery', 'underscore'],
-      exports: 'Backbone'
-    },
     'helper': {
-      deps: [],
       exports: 'helper'
     },
-    'plupload/zh_CN': {
-      deps: ['plupload/plupload'],
+    'plupload/plupload': {
       exports: 'plupload'
     },
-    'backbone.localstorage': ['backbone'],
+    'plupload/zh_CN': ['plupload/plupload'],
     'bootstrap': ['jquery'],
     'utils/config': []
   }
 });
 
-define(['jquery', 'backbone', 'utils/utils', 'app/models/song-model', 'app/views/song-view', 'bootstrap'],
+define(['jquery', 'backbone', 'utils/utils', 'app/models/song-model', 'app/views/song-view', 'helper', 'bootstrap'],
 
-function($, Backbone, utils, SongModel, SongView) {
+function($, Backbone, utils, SongModel, SongView, helper) {
 
   var App = Backbone.View.extend({
     

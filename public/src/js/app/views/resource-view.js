@@ -1,6 +1,6 @@
-﻿define(['jquery', 'backbone', 'text!app/templates/resource-template.html', 'app/models/resource-model'],
+﻿define(['jquery', 'backbone', 'text!app/templates/resource-template.html', 'app/models/resource-model', 'helper'],
 
-function($, Backbone, ResourceTemplate, ResourceModel) {
+function($, Backbone, ResourceTemplate, ResourceModel, helper) {
 
 var ResourcesView = Backbone.View.extend({
 
@@ -24,16 +24,15 @@ var ResourcesView = Backbone.View.extend({
 
 var ResourceView = Backbone.View.extend({
 
-  options: {
-    resourceStar: null,
-    resourceStarCollection: null
-  },
+  options: null,
+  resourceStar: null,
 
   tagName: 'tr',
 
   template: "#ResourceTemplate",
   
-  initialize: function() {
+  initialize: function(options) {
+    this.options = options || {};
     this.render();
     this.renderStars();
     this.renderResourceStar();
@@ -53,14 +52,14 @@ var ResourceView = Backbone.View.extend({
 
     var resourceStar = this.options.resourceStarCollection.where({'resource_id': this.model.id});
     if(resourceStar.length!=0) {
-      this.options.resourceStar = resourceStar[0];
+      this.resourceStar = resourceStar[0];
     } else {
-      this.options.resourceStar = new ResourceModel.ResourceStar({'resource_id': this.model.id});
-      this.options.resourceStarCollection.add(this.options.resourceStar);
+      this.resourceStar = new ResourceModel.ResourceStar({'resource_id': this.model.id});
+      this.options.resourceStarCollection.add(this.resourceStar);
     }
     
     var template = _.template($(ResourceTemplate).find('#ResourceStarTemplate').html());
-    this.$('*[tag="resource_star_container"]').empty().html(template({model: this.options.resourceStar}));
+    this.$('*[tag="resource_star_container"]').empty().html(template({model: this.resourceStar}));
     
   },
   
@@ -92,7 +91,7 @@ var ResourceView = Backbone.View.extend({
       success: function(model, response) {
         if(response&&!response.error) {
           tThis.renderStars();
-          tThis.options.resourceStar.save({'current': current}, {
+          tThis.resourceStar.save({'current': current}, {
             wait: true,
             success: function(model, response) {
               if(response&&!response.error) {
@@ -107,7 +106,7 @@ var ResourceView = Backbone.View.extend({
   
   up: function(e) {
     var plus = 0;
-    var current = this.options.resourceStar.get('current');
+    var current = this.resourceStar.get('current');
     if(current==1) {
       current = 0;
       plus = -1;
@@ -123,7 +122,7 @@ var ResourceView = Backbone.View.extend({
   
   down: function(e) {
     var plus = 0;
-    var current = this.options.resourceStar.get('current');
+    var current = this.resourceStar.get('current');
     if(current==1) {
       current = -1;
       plus = -2;
