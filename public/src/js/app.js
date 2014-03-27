@@ -8,13 +8,25 @@
     'helper': {
       exports: 'helper'
     },
+    'utils/config': {
+      exports: 'config'
+    },
+    'bootstrap': {
+      deps: ['jquery'],
+      exports: '$.fn.tooltip'
+    },
     'plupload/plupload': {
       exports: 'plupload'
     },
-    'plupload/zh_CN': ['plupload/plupload'],
-    'bootstrap': ['jquery'],
-    'utils/config': []
-  }
+    'plupload/zh_CN': {
+      deps: ['plupload/plupload'],
+      exports: 'plupload',
+      init: function(plupload) {
+        return plupload;
+      }
+    }
+  },
+  enforceDefine: true
 });
 
 define(['jquery', 'backbone', 'utils/utils', 'app/models/song-model', 'app/views/song-view', 'helper', 'bootstrap'],

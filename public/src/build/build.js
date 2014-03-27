@@ -5,8 +5,10 @@
     "app": "../app",
     "utils": "../utils"
   },
+  mainConfigFile: "../js/app.js",
+  wrapShim: true,
   dir: "../../dist",
   name: "app",
   optimizeCss: "standard",
-  optimize: "none"
+  optimize: "uglify2"
 })

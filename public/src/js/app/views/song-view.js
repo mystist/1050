@@ -1,6 +1,6 @@
-﻿define(['jquery', 'backbone', 'text!app/templates/song-template.html', 'helper', 'utils/utils', 'app/models/resource-model', 'app/views/resource-view', 'plupload/plupload', 'plupload/zh_CN', 'utils/config', 'bootstrap'],
+﻿define(['jquery', 'backbone', 'text!app/templates/song-template.html', 'helper', 'utils/utils', 'app/models/resource-model', 'app/views/resource-view', 'plupload/zh_CN', 'utils/config', 'bootstrap'],
 
-function($, Backbone, SongTemplate, helper, utils, ResourceModel, ResourceView, plupload) {
+function($, Backbone, SongTemplate, helper, utils, ResourceModel, ResourceView, plupload, config) {
 
 var ShowSongView = Backbone.View.extend({
 
@@ -28,7 +28,7 @@ var SongsView = Backbone.View.extend({
   
   render: function() {
     var template = _.template($(SongTemplate).find(this.template).html());
-    this.$el.html(template(this));
+    this.$el.html(template(_.extend({}, this, {config: config})));
     $("#SongsContainer").empty().html(this.el);
   },
   

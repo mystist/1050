@@ -15,18 +15,25 @@
 
 ### 更新日志：  
 
+#### 2014-03-28  
+    发布新版本：`0.1.2`  
+    Backbone升级到1.1.2；
+    更加规范的使用requirejs；
+    使用almond，修复almond下的shim模块找不到的bug；
+    其它一些微小的修复。
+    
 #### 2014-03-20  
     使用uglify2实现optimization.  
     Openshift使用hot-deploy进行Build.  
 
 #### 2014-03-19  
-    发布版本：0.1.1  
+    发布新版本：`0.1.1`  
     使用production版本的云存储；  
     加入Google分析；  
     简单的SEO优化。
 
 #### 2014-03-19  
-    Boom！发布初始版本：0.1.0
+    Boom！发布初始版本：`0.1.0`
 
 #### 2014-03-13, 2014-04-19  
     完成`pushstate`的处理，使得url更加友好。  

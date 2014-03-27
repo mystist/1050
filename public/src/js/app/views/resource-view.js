@@ -1,6 +1,6 @@
-﻿define(['jquery', 'backbone', 'text!app/templates/resource-template.html', 'app/models/resource-model', 'helper'],
+﻿define(['jquery', 'backbone', 'text!app/templates/resource-template.html', 'app/models/resource-model', 'helper', 'utils/config'],
 
-function($, Backbone, ResourceTemplate, ResourceModel, helper) {
+function($, Backbone, ResourceTemplate, ResourceModel, helper, config) {
 
 var ResourcesView = Backbone.View.extend({
 
@@ -40,7 +40,7 @@ var ResourceView = Backbone.View.extend({
   
   render: function() {
     var template = _.template($(ResourceTemplate).find(this.template).html());
-    this.$el.empty().html(template(_.extend({}, this, {helper: helper})));
+    this.$el.empty().html(template(_.extend({}, this, {helper: helper}, {config: config})));
     this.options.$target.append(this.el);
   },
   

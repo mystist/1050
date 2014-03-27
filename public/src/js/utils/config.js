@@ -1,5 +1,5 @@
 
-window.config_1050 = {
+var config = {
 
   bucketUrl: 'http://production-1050.qiniudn.com/'
 

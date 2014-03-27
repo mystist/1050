@@ -71,7 +71,7 @@
               <td><%= m.index %></td>
               <td>
                 <a class="btn btn-success btn-xs" href="javascript:;" <%= m.song_src ? "" : "disabled='disabled'" %> tag="play">播放</a>
-                <a class="btn btn-warning btn-xs" href="<%= m.pic_src ? (config_1050.bucketUrl + encodeURIComponent(m.pic_src)) : "javascript:;" %>" target="_blank" <%= m.pic_src ? "" : "disabled='disabled'" %> >歌谱</a>
+                <a class="btn btn-warning btn-xs" href="<%= m.pic_src ? (config.bucketUrl + encodeURIComponent(m.pic_src)) : "javascript:;" %>" target="_blank" <%= m.pic_src ? "" : "disabled='disabled'" %> >歌谱</a>
                 <a class="btn btn-primary btn-xs" href="modification/<%= m.id %>" tag="hash_url">编辑</a>
               </td>
             </tr>
