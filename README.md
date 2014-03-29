@@ -18,7 +18,11 @@ Freely, quickly and simple.
 
 #### Todos:  
 
-Search
+Cache index page.  
+Search.
+Add style when mouse hover the item of the table.  
+Add a pic button to the player.  
+Add hover event to the `pic` button to show a Div of it's pic.  
 
 #### Done:  
 
