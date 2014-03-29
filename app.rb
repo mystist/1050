@@ -226,17 +226,35 @@ end
 
 post '/interface' do
   msg = "请选择Excel文件！<a href='/interface'>返回重试</a>"
-  if(params[:file])
-    path = 'uploads/' + params[:file][:filename]
+  if(params[:song_file])
+    path = 'uploads/' + params[:song_file][:filename]
     extension = path.slice(path.index('.'), path.length - path.index('.'))
     if(extension == '.xlsx' || extension == '.xls')
       File.open(path, "wb") do |f|
-        f.write(params[:file][:tempfile].read)
+        f.write(params[:song_file][:tempfile].read)
       end
-      renamed_path = 'uploads/' + (Time.now.to_f * 1000).to_i.to_s + '_' + params[:file][:filename]
+      renamed_path = 'uploads/' + (Time.now.to_f * 1000).to_i.to_s + '_' + params[:song_file][:filename]
       File.rename(path, renamed_path)
       if import_songs_from_excel(renamed_path, extension)
-        msg = "恭喜，操作成功！<a href='/interface'>返回</a>"
+        msg = "恭喜，诗歌导入成功！<a href='/interface'>返回</a>"
+      else
+        "操作失败！<a href='/interface'>返回重试</a>"
+      end
+    else
+      msg = "只支持Excel文件！<a href='/interface'>返回重试</a>"
+    end
+  end
+  if(params[:resource_file])
+    path = 'uploads/' + params[:resource_file][:filename]
+    extension = path.slice(path.index('.'), path.length - path.index('.'))
+    if(extension == '.xlsx' || extension == '.xls')
+      File.open(path, "wb") do |f|
+        f.write(params[:resource_file][:tempfile].read)
+      end
+      renamed_path = 'uploads/' + (Time.now.to_f * 1000).to_i.to_s + '_' + params[:resource_file][:filename]
+      File.rename(path, renamed_path)
+      if import_resources_from_excel(renamed_path, extension)
+        msg = "恭喜，资源导入成功！<a href='/interface'>返回</a>"
       else
         "操作失败！<a href='/interface'>返回重试</a>"
       end
@@ -273,19 +291,23 @@ def convert_excel_to_list(s, attr_array)
 end
 
 def reset_obj_attr(obj)
-  obj['index'] = obj['index'].to_i
+  if(obj['index'])
+    obj['index'] = obj['index'].to_i
+  end
   obj
 end
 
 def is_obj_pass_condition?(obj)
-  if (obj['index'] > 0) && !(obj['name'].strip.empty?)
-    return true
+  if(obj['index'])
+    if (obj['index'] > 0) && !(obj['name'].strip.empty?)
+      return true
+    end
+    return false
   end
-  return false
+  return true
 end
 
 def import_songs_from_excel(path, extension)
-
   attr_array = ['index', 'name', 'first_sentence', 'category_big', 'category_small', 'song_src', 'pic_src']
   s = read_excel(path, extension)
   list = convert_excel_to_list(s, attr_array)
@@ -304,7 +326,32 @@ def import_songs_from_excel(path, extension)
   end
 
   return true
+end
+
+def import_resources_from_excel(path, extension)
+  attr_array = ['name', 'file_name', 'file_size', 'file_type']
+  s = read_excel(path, extension)
+  list = convert_excel_to_list(s, attr_array)
   
+  list.each do |obj|
+    song = Song.find_by_name(obj['name'].force_encoding("UTF-8"))
+    if(song)
+      resource = Resource.where('song_id = ? and file_name = ?', song['id'], obj['file_name'].force_encoding("UTF-8"))
+      if(resource.count == 0)
+        resource = Resource.new
+        resource.attributes.each do |key, value|
+          if(obj[key] && obj[key] != 'name')
+            resource[key] = obj[key]
+          end
+          resource['song_id'] = song['id']
+          resource['stars'] = 0
+        end
+        resource.save
+      end
+    end
+  end
+
+  return true
 end
 
 ### import end

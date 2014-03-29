@@ -4,8 +4,8 @@
 The 1050 Poetry of Christian.  
 [http://1050.14201420.com/](http://1050.14201420.com/)
 
-Version: 0.1.2  
-Last updated: 2014-03-28 0:59
+Version: 0.2.0  
+Last updated: 2014-03-29 21:05
 
 ====
 
@@ -39,7 +39,8 @@ Delete resource from Cloud Storge as well:
 Handled it in the backend.  
 
 Interface:  
-Upload Songs at once. See at [http://1050.14201420.com/interface](http://1050.14201420.com/interface)
+Upload Songs at once. See at [http://1050.14201420.com/interface](http://1050.14201420.com/interface)  
+Upload Resources at once.  
 
 Test in IE:  
 Er...May be we can test it in the future, Because I come to handle the `pushState` url when I'm going to make a test !
