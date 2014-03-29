@@ -19,7 +19,7 @@
     
       var audios = document.getElementsByTagName('audio');
       audiojs.events.ready(function() {
-        audios[0].src = config_1050.bucketUrl + getQueryString('src');
+        audios[0].src = config.bucketUrl + getQueryString('src');
         var as = audiojs.create(audios[0], {
           autoplay: true,
           css: false,

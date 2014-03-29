@@ -70,6 +70,10 @@ http://openapi.baidu.com/oauth/2.0/login_success#expires_in=2592000&access_token
 
 #
 
+jeyll编码错误解决： 改变控制台的编码格式为UTF-8 chcp 65001 or set LC_ALL=en_US.UTF-8 set LANG=en_US.UTF-8
+
+#
+
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -205,6 +209,8 @@ importSongs()
 
 <script>(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)})(window,document,'script','//www.google-analytics.com/analytics.js','ga');ga('create','UA-49132975-1','14201420.com');ga('send','pageview');</script>
 
+
+#
 
 #
 
