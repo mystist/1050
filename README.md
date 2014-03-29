@@ -18,7 +18,6 @@ Freely, quickly and simple.
 
 #### Todos:  
 
-FixBug: patch method error in built.js
 Search
 
 #### Done:  
