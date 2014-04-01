@@ -46,8 +46,13 @@ get '/dev-blog' do
 end
 
 get '/songs' do
-  songs = Song.all.order('`index`')
-  json encode_list(songs)
+  cache_file = File.join('cache', 'songs')
+  if !File.exist?(cache_file) || (File.mtime(cache_file) < (Time.now - 3600*24*5))
+    songs = Song.all.order('`index`')
+    songs = json encode_list(songs)
+    File.open(cache_file, "w") { |f| f << songs }
+  end
+  send_file cache_file, :type => 'application/json'
 end
 
 get '/songs/:id' do
