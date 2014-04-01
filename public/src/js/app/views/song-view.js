@@ -39,7 +39,13 @@ var SongsView = Backbone.View.extend({
   play: function(e) {
     var songId = $(e.currentTarget).closest('*[song_id]').attr('song_id');
     var song = this.collection.get(songId);
-    var playerView = new PlayerView({model: song});
+    
+    if((this.viewInUse || (this.viewInUse = {} || this.viewInUse)).playerView) {
+      this.viewInUse.playerView.close();
+    }
+    this.viewInUse.playerView = new PlayerView({model: song});
+    
+    utils.renderNowPlaying($(e.currentTarget), 'success');
   }
 
 });
@@ -69,10 +75,12 @@ var PlayerView = Backbone.View.extend({
   
   clean: function() {
     var $target = this.$('iframe');
-    $target[0].src = '';
-    $target[0].contentWindow.document.write('');
-    $target[0].contentWindow.close();
-    $target.remove();
+    if($target.length != 0) {
+      $target[0].src = '';
+      $target[0].contentWindow.document.write('');
+      $target[0].contentWindow.close();
+      $target.remove();
+    }
     if( typeof CollectGarbage == "function") {
       CollectGarbage();
     }
@@ -295,6 +303,8 @@ var EditSongView = Backbone.View.extend({
       this.viewInUse.playerView.close();
     }
     this.viewInUse.playerView = new PlayerView({model: this.model});
+    
+    utils.renderNowPlaying($(e.currentTarget), 'success');
   }
 
 });

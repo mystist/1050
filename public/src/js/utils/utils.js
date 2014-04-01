@@ -105,6 +105,12 @@ var utils = {
     }
   },
   
+  renderNowPlaying: function($target, cssName) {
+    var $context = $target.closest('.table');
+    $context.find('tr[class="'+cssName+'"]').removeClass(cssName);
+    $target.closest('tr').addClass(cssName);
+  },
+  
   // Copyright NProgress. For custom use. Simulate uploading progress cause IE 8 has no `loaded` object.
   Progress: function() {
   
