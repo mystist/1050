@@ -50,7 +50,7 @@ end
 
 get '/songs' do
   @song = Song.order('updated_at DESC').first
-  @etag = @song.updated_at
+  @etag = @song.updated_at.to_s
   last_modified @etag
   etag @etag
   songs = Song.all.order('`index`')
