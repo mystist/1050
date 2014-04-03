@@ -49,7 +49,7 @@ get '/dev-blog' do
 end
 
 get '/songs' do
-  @etag = Song.maximum('updated_at').to_f.to_s + '/' + Song.count.to_s
+  @etag = DateTime.parse(Song.maximum('updated_at').to_s).to_time.to_f.to_s + '/' + Song.count.to_s
   last_modified @etag
   etag @etag
   songs = Song.all.order('`index`')
