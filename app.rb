@@ -8,10 +8,13 @@ require 'roo'
 
 configure :development do
   set :public_folder, File.dirname(__FILE__) + '/public/src/'
+  set :random, (Time.now.to_f * 1000).to_i.to_s
 end
 
 configure :production do
   set :public_folder, File.dirname(__FILE__) + '/public/dist/'
+  set :static_cache_control, [:public, :max_age => 3600*24*30*12]
+  set :random, (Time.now.to_f * 1000).to_i.to_s
 end
 
 Qiniu::RS.establish_connection! :access_key => '4drJ2mqHlMuy1sXSfd7W9KYQj3Z9iBAWUZ5kC-9g',
@@ -46,13 +49,11 @@ get '/dev-blog' do
 end
 
 get '/songs' do
-  cache_file = File.join('cache', 'songs')
-  if !File.exist?(cache_file) || (File.mtime(cache_file) < (Time.now - 3600*24*5))
-    songs = Song.all.order('`index`')
-    songs = json encode_list(songs)
-    File.open(cache_file, "w") { |f| f << songs }
-  end
-  send_file cache_file, :type => 'application/json'
+  @etag = Song.maximum('updated_at').to_f.to_s + '/' + Song.count.to_s
+  last_modified @etag
+  etag @etag
+  songs = Song.all.order('`index`')
+  json encode_list(songs)
 end
 
 get '/songs/:id' do
@@ -360,6 +361,11 @@ def import_resources_from_excel(path, extension)
 end
 
 ### import end
+
+get '/cache' do
+  cache_control :max_age => 10
+  "hello" + "**" + Time.now.to_s
+end
 
 get '*' do
   @token = Qiniu::RS.generate_upload_token :scope => 'production-1050'

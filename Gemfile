@@ -9,6 +9,7 @@ gem 'redcarpet'
 gem 'sinatra-contrib'
 gem 'qiniu-rs'
 gem 'roo'
+gem 'rack-cache'
 
 group :development do
   gem 'rake'

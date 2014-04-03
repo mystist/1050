@@ -7,7 +7,7 @@
   <title>赞美诗选编(1050首)</title>
   <meta name="keywords" content="基督教赞美诗歌1050,基督教诗歌,基督教歌曲,基督教赞美诗,赞美诗选编,1050">
   <meta name="description" content="赞美诗选编(1050首)可以播放诗歌本《赞美诗选编1050首》的歌曲，查看歌谱，上传歌曲、歌谱，为你喜欢的歌曲、歌谱投票。">
-  <link href="/css/app.css" rel="stylesheet" media="screen">
+  <link href="/css/app.css?random=<%= settings.random %>" rel="stylesheet" media="screen">
   <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
   <!--[if lt IE 9]>
     <script src="http://cdn.staticfile.org/html5shiv/r29/html5.min.js"></script>
@@ -28,7 +28,7 @@
 <% if settings.development? %>
   <script data-main="/js/app" src="/js/libs/require.js"></script>
 <% else %>
-  <script src="/js/built.js"></script>
+  <script src="/js/built.js?random=<%= settings.random %>"></script>
 <% end %>
 
 </body>
