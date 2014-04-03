@@ -8,12 +8,18 @@
 开发语言：`ruby` + `javascript`  
 框架：`sinatra` + `activerecord` + `Backbone`  
 源码：[https://github.com/Mystist/1050](https://github.com/Mystist/1050)  
-涉及到的关键词：`OpenShift`, `sinatra`, `ruby`, `RESTful`, `activerecord`, `mysql`, `Backbone`, `requireJS`, `Bootstrap`, `git`, `github`, `markdown`, `nodejs`, `NPM`, `bower`, `r.js`, `almond.js`  
+涉及到的关键词：`OpenShift`, `sinatra`, `ruby`, `RESTful`, `activerecord`, `mysql`, `Backbone`, `requireJS`, `Bootstrap`, `git`, `github`, `markdown`, `nodejs`, `NPM`, `bower`, `r.js`, `almond.js`, `rack-cache`  
 
 
 ====
 
 ### 更新日志：  
+
+#### 2014-04-03  
+    发布版本：`0.2.1`  
+    实现缓存的功能：
+    使用max-age缓存静态文件，通过文件名附带参数实现其自动更新。
+    使用etag+文件系统的方式缓存首页的请求，通过数据的last_updated判断缓存的自动更新。
 
 #### 2014-03-29  
     Boom! 发布新版本：`0.2.0`  

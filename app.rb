@@ -13,8 +13,8 @@ end
 
 configure :production do
   set :public_folder, File.dirname(__FILE__) + '/public/dist/'
-  set :static_cache_control, [:public, :max_age => 3600*24*30*12]
   set :random, (Time.now.to_f * 1000).to_i.to_s
+  set :static_cache_control, [:public, :max_age => 3600*24*30*12]
 end
 
 Qiniu::RS.establish_connection! :access_key => '4drJ2mqHlMuy1sXSfd7W9KYQj3Z9iBAWUZ5kC-9g',

@@ -4,8 +4,8 @@
 The 1050 Poetry of Christian.  
 [http://1050.14201420.com/](http://1050.14201420.com/)
 
-Version: 0.2.0  
-Last updated: 2014-03-29 21:05
+Version: 0.2.1  
+Last updated: 2014-04-03 15:03
 
 ====
 
@@ -18,7 +18,6 @@ Freely, quickly and simple.
 
 #### Todos:  
 
-Cache index page.  
 Search.
 Add style when mouse hover the item of the table.  
 Add a pic button to the player.  
@@ -55,6 +54,11 @@ Initial 1050 release. Version: 0.1.0
 
 Google Analytics：  
 Universal Analytics.  
+
+Cache:  
+Cache the staice files.  
+Cache the request `/songs` using `rack-cache` by etag and file system.  
+
 
 
 
