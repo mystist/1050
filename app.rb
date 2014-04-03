@@ -49,7 +49,9 @@ get '/dev-blog' do
 end
 
 get '/songs' do
-  @etag = Song.maximum('updated_at').to_s + '/' + Song.count.to_s
+  # @song = Song.order('updated_at DESC').first
+  # puts @song.updated_at
+  @etag = Song.maximum('updated_at').hash.to_s + '/' + Song.count.to_s
   last_modified @etag
   etag @etag
   songs = Song.all.order('`index`')
@@ -110,7 +112,7 @@ def add_resources(resources, song_id)
 end
 
 def get_resources_by_song_id(song_id)
-  Resource.where('song_id = ?', song_id).order('stars desc')
+  Resource.where('song_id = ?', song_id).order('stars DESC')
 end
 
 put '/songs/:id' do
@@ -203,7 +205,7 @@ end
 
 def get_most_starred_resource_src_by_song_id(song_id)
   src = {}
-  resources = Resource.where('song_id = ?', song_id).order('stars desc')
+  resources = Resource.where('song_id = ?', song_id).order('stars DESC')
   t = encode_object(resources.where('file_type = ?', 'song').first)
   src['song_src'] = t ? t['file_name'] : nil
   t = encode_object(resources.where('file_type = ?', 'pic').first)
