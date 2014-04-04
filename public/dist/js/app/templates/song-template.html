@@ -70,8 +70,8 @@
               <td><%= m.first_sentence %></td>
               <td><%= m.index %></td>
               <td>
+                <a class="btn btn-warning btn-xs" <%= m.pic_src ? "" : "disabled='disabled'" %> data-toggle="popover" data-content="<a href='<%= m.pic_src ? (config.bucketUrl + encodeURIComponent(m.pic_src)) : "javascript:;" %>' target='_blank' style='display: block; width: 200px; height: 300px;'><img src='<%= m.pic_src ? (config.bucketUrl + encodeURIComponent(m.pic_src) + "?imageView2/2/w/200/h/300/q/50") : "" %>' /></a>" >歌谱</a>
                 <a class="btn btn-success btn-xs" href="javascript:;" <%= m.song_src ? "" : "disabled='disabled'" %> tag="play">播放</a>
-                <a class="btn btn-warning btn-xs" href="<%= m.pic_src ? (config.bucketUrl + encodeURIComponent(m.pic_src)) : "javascript:;" %>" target="_blank" <%= m.pic_src ? "" : "disabled='disabled'" %> >歌谱</a>
                 <a class="btn btn-primary btn-xs" href="modification/<%= m.id %>" tag="hash_url">编辑</a>
               </td>
             </tr>
@@ -335,7 +335,7 @@
       <div class="col-md-3">
         <button tag="submit" type="button" class="btn btn-success">确 定</button>
         <label>&nbsp;&nbsp;</label>
-        <button tag="del" type="button" class="btn btn-default" data-toggle="tooltip" title="双击">删除</button>
+        <!-- <button tag="del" type="button" class="btn btn-default" data-toggle="tooltip" title="双击">删除</button> -->
       </div>
       <div class="col-md-9">
         <div tag="alert">
@@ -382,14 +382,15 @@
           <p class="text" title="<%= m.song_src %>" ><%= m.index + " / " + m.song_src %></p>
         </div>
       </div>
-      <div class="col-md-9 col-sm-9 col-xs-9">
+      <div class="col-md-8 col-sm-8 col-xs-8">
         <div class="play-container">
           <iframe frameborder="0" scrolling="no" width="100%" height="100%" src="/pages/player.html?src=<%= encodeURIComponent(m.song_src) %>" ></iframe>
         </div>
       </div>
-      <div class="col-md-1 col-sm-1 col-xs-1">
+      <div class="col-md-2 col-sm-2 col-xs-2">
         <div class="play-oper">
           <p class="oper">
+            <a class="btn btn-warning btn-xs" href="<%= m.pic_src ? (config.bucketUrl + encodeURIComponent(m.pic_src)) : "javascript:;" %>" target="_blank" <%= m.pic_src ? "" : "disabled='disabled'" %> >歌谱</a>
             <a class="btn btn-default btn-xs" href="javascript:;" tag="close">关闭</a>
           </p>
         </div>

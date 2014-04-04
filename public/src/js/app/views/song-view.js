@@ -24,6 +24,11 @@ var SongsView = Backbone.View.extend({
   
   initialize: function() {
     this.render();
+    this.$el.popover({
+      selector: '*[data-toggle="popover"]',
+      placement: 'left',
+      html: true
+    });
   },
   
   render: function() {

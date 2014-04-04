@@ -4,8 +4,8 @@
 The 1050 Poetry of Christian.  
 [http://1050.14201420.com/](http://1050.14201420.com/)
 
-Version: 0.2.1  
-Last updated: 2014-04-03 15:03
+Version: 0.2.2  
+Last updated: 2014-04-04 18:35
 
 ====
 
@@ -19,10 +19,6 @@ Freely, quickly and simple.
 #### Todos:  
 
 Search.
-Add style when mouse hover the item of the table.  
-Add a pic button to the player.  
-Add hover event to the `pic` button to show a Div of it's pic.  (Maybe in the midlle will better.)
-Add now playing. 
 
 #### Done:  
 
@@ -59,6 +55,10 @@ Cache:
 Cache the staice files.  
 Cache the request `/songs` using `rack-cache` by etag and file system.  
 
-
+A lot: 
+Add style when mouse hover the item of the table.  
+Add a pic button to the player.  
+Add hover event to the `pic` button to show a Div of it's pic.  (Maybe in the midlle will better.)
+Add now playing. 
 
 

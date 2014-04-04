@@ -55,12 +55,6 @@ get '/songs' do
   etag @etag
   songs = Song.all.order('`index`')
   json encode_list(songs)
-  
-  # @etag = Song.maximum('updated_at').hash.to_s + '/' + Song.count.to_s
-  # last_modified @etag
-  # etag @etag
-  # songs = Song.all.order('`index`')
-  # json encode_list(songs)
 end
 
 get '/songs/:id' do
