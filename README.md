@@ -55,10 +55,10 @@ Cache:
 Cache the staice files.  
 Cache the request `/songs` using `rack-cache` by etag and file system.  
 
-A lot: 
+A lot:   
 Add style when mouse hover the item of the table.  
 Add a pic button to the player.  
-Add hover event to the `pic` button to show a Div of it's pic.  (Maybe in the midlle will better.)
-Add now playing. 
+Add hover event to the `pic` button to show a Div of it's pic.  (Maybe in the midlle will better.)  
+Add now playing.   
 
 
