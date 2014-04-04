@@ -9,38 +9,47 @@
 
 <div class="navbar navbar-default navbar-fixed-top">
   <div class="container">
-    <a class="logo-container" href="/">
-      <span class="logo"></span>
-    </a>
     <div class="navbar-header dropdown">
       <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target=".navbar-collapse">
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
       </button>
-      <a href="javascript:;" class="dropdown-toggle navbar-brand" data-toggle="dropdown">赞美诗选编(1050首) <b class="caret"></b></a>
-      <ul class="dropdown-menu">
-        <li><a href="/">首页</a></li>
-        <!-- <li><a href="/modification" tag="hash_url">添加诗歌</a></li> -->
-        <!-- <li><a href="#">我的诗歌单</a></li> -->
-        <li class="divider"></li>
-        <li><a href="/dev-blog">网站开发博客</a></li>
-      </ul>
+      <a href="/" class="dropdown-toggle navbar-brand logo-container">赞美诗选编(1050首)<span class="logo"></span></a>
     </div>
     <div class="navbar-collapse collapse">
       <ul class="nav navbar-nav narrow-nav">
-        <li><a href="/category_big/颂赞" tag="hash_url">颂赞</a></li>
-        <li><a href="/category_big/纪念" tag="hash_url">纪念</a></li>
-        <li><a href="/category_big/福音" tag="hash_url">福音</a></li>
-        <li><a href="/category_big/教会" tag="hash_url">教会</a></li>
-        <li><a href="/category_big/道路" tag="hash_url">道路</a></li>
-        <li><a href="/category_big/灵交" tag="hash_url">灵交</a></li>
-        <li><a href="/category_big/其它" tag="hash_url">其它</a></li>
-        <li><a href="/category_big/附录" tag="hash_url">附录</a></li>
+        <li class="dropdown">
+          <a href="javascript:;" class="dropdown-toggle" data-toggle="dropdown">目录 <b class="caret"></b></a>
+          <ul class="dropdown-menu">
+            <li><a href="/category_big/颂赞" tag="hash_url">颂赞</a></li>
+            <li><a href="/category_big/纪念" tag="hash_url">纪念</a></li>
+            <li><a href="/category_big/福音" tag="hash_url">福音</a></li>
+            <li><a href="/category_big/教会" tag="hash_url">教会</a></li>
+            <li><a href="/category_big/道路" tag="hash_url">道路</a></li>
+            <li><a href="/category_big/灵交" tag="hash_url">灵交</a></li>
+            <li><a href="/category_big/其它" tag="hash_url">其它</a></li>
+            <li><a href="/category_big/附录" tag="hash_url">附录</a></li>
+          </ul>
+        </li>
+        <!-- <li><a href="/modification" tag="hash_url">添加诗歌</a></li> -->
+        <!-- <li><a href="#">我的诗歌单</a></li> -->
+        <li><a href="/dev-blog">网站开发博客</a></li>
       </ul>
+      <form class="navbar-form navbar-right" role="search">
+        <button type="button" class="btn btn-default">
+          <span class="glyphicon glyphicon-user"></span>
+        </button>
+        <div class="form-group">
+          <input type="text" class="form-control" placeholder="请输入关键字">
+        </div>
+        <button type="submit" class="btn btn-default">搜索</button>
+      </form>
+      <!-- 
       <ul class="nav navbar-nav narrow-nav navbar-right">
         <li><a class="notification-indicator" href="javascript:;"><span class="mail-status unread">&nbsp;</span></a></li>
       </ul>
+      -->
     </div>
   </div>
 </div>
