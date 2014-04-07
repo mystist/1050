@@ -30,7 +30,7 @@ def encode_object(obj)
   if obj
     obj.attributes.each do |key, value|
       if obj[key].is_a? String
-        obj[key].force_encoding("UTF-8")
+        obj[key].force_encoding('UTF-8')
       end
     end
   end
@@ -73,6 +73,21 @@ end
 get '/songs_category/:category_name' do
   songs = Song.where('category_big = ?', params[:category_name]).order('`index`')
   json encode_list(songs)
+end
+
+get '/songs_search/:keywords' do
+  keywords = params[:keywords].force_encoding('UTF-8')
+  if(keywords.to_i != 0)
+    song = Song.find_by_index(keywords.to_i)
+    json encode_object(song)
+  else
+    songs = Song.where('name like ? or first_sentence like ?', "%#{keywords}%", "%#{keywords}%").order('`index`')
+    json encode_list(songs)
+  end
+end
+
+get '/search' do
+  redirect to("/search/#{URI.escape(params[:keywords])}")
 end
 
 def save_song(song, obj)
@@ -362,11 +377,6 @@ def import_resources_from_excel(path, extension)
 end
 
 ### import end
-
-get '/cache' do
-  cache_control :max_age => 10
-  "hello" + "**" + Time.now.to_s
-end
 
 get '*' do
   @token = Qiniu::RS.generate_upload_token :scope => 'production-1050'

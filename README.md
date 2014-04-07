@@ -4,8 +4,8 @@
 The 1050 Poetry of Christian.  
 [http://1050.14201420.com/](http://1050.14201420.com/)
 
-Version: 0.2.2  
-Last updated: 2014-04-04 18:35
+Version: 0.2.3  
+Last updated: 2014-04-07 23:43
 
 ====
 
@@ -18,7 +18,7 @@ Freely, quickly and simple.
 
 #### Todos:  
 
-Search.
+Login.  
 
 #### Done:  
 
@@ -61,4 +61,5 @@ Add a pic button to the player.
 Add hover event to the `pic` button to show a Div of it's pic.  (Maybe in the midlle will better.)  
 Add now playing.   
 
-
+Search:  
+Done at version: `0.2.3`  

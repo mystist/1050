@@ -22,26 +22,28 @@
         <li class="dropdown">
           <a href="javascript:;" class="dropdown-toggle" data-toggle="dropdown">目录 <b class="caret"></b></a>
           <ul class="dropdown-menu">
-            <li><a href="/category_big/颂赞" tag="hash_url">颂赞</a></li>
-            <li><a href="/category_big/纪念" tag="hash_url">纪念</a></li>
-            <li><a href="/category_big/福音" tag="hash_url">福音</a></li>
-            <li><a href="/category_big/教会" tag="hash_url">教会</a></li>
-            <li><a href="/category_big/道路" tag="hash_url">道路</a></li>
-            <li><a href="/category_big/灵交" tag="hash_url">灵交</a></li>
-            <li><a href="/category_big/其它" tag="hash_url">其它</a></li>
-            <li><a href="/category_big/附录" tag="hash_url">附录</a></li>
+            <li><a href="/category_big/颂赞" tag="hash_url">颂赞 (1-115)</a></li>
+            <li><a href="/category_big/纪念" tag="hash_url">纪念 (116-209)</a></li>
+            <li><a href="/category_big/福音" tag="hash_url">福音 (210-370)</a></li>
+            <li><a href="/category_big/教会" tag="hash_url">教会 (371-512)</a></li>
+            <li><a href="/category_big/道路" tag="hash_url">道路 (513-738)</a></li>
+            <li><a href="/category_big/灵交" tag="hash_url">灵交 (739-917)</a></li>
+            <li><a href="/category_big/其它" tag="hash_url">其它 (918-1000)</a></li>
+            <li><a href="/category_big/附录" tag="hash_url">附录 (1000-1050)</a></li>
           </ul>
         </li>
         <!-- <li><a href="/modification" tag="hash_url">添加诗歌</a></li> -->
         <!-- <li><a href="#">我的诗歌单</a></li> -->
         <li><a href="/dev-blog">网站开发博客</a></li>
       </ul>
-      <form class="navbar-form navbar-right" role="search">
+      <form class="navbar-form navbar-right" role="search" action="/search" method="get">
+        <!--
         <button type="button" class="btn btn-default">
           <span class="glyphicon glyphicon-user"></span>
         </button>
+        -->
         <div class="form-group">
-          <input type="text" class="form-control" placeholder="请输入关键字">
+          <input type="text" class="form-control" placeholder="请输入关键字" name="keywords">
         </div>
         <button type="submit" class="btn btn-default">搜索</button>
       </form>

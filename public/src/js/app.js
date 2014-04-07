@@ -36,6 +36,7 @@ function($, Backbone, utils, SongModel, SongView, helper) {
   var App = Backbone.View.extend({
     
     songs: null,
+    categoryName: null,
     
     initialize: function() {
       utils.setGlobalAjaxSettings();
@@ -53,8 +54,8 @@ function($, Backbone, utils, SongModel, SongView, helper) {
     },
     
     showSongs: function() {
-      var showSongView = new SongView.ShowSongView({collection: this.songs});
-      var songsView = new SongView.SongsView({collection: this.songs});
+      var showSongView = new SongView.ShowSongView({collection: this.songs, app: this});
+      var pagerView = new SongView.PagerView({collection: this.songs});
     },
     
     initHashUrl: function() {
@@ -72,7 +73,8 @@ function($, Backbone, utils, SongModel, SongView, helper) {
       '': 'showSongs',
       'category_big/:categoryName': 'showSongs',
       'modification': 'editSong',
-      'modification/:id': 'editSong'
+      'modification/:id': 'editSong',
+      'search/:keywords': 'search'
     },
     
     showSongs: function(categoryName) {
@@ -80,6 +82,7 @@ function($, Backbone, utils, SongModel, SongView, helper) {
         app.initSongs('/songs');
       } else {
         app.initSongs('/songs_category/'+encodeURIComponent(categoryName));
+        app.categoryName = categoryName;
       }
     },
     
@@ -95,6 +98,13 @@ function($, Backbone, utils, SongModel, SongView, helper) {
         }});
       } else {
         var editSongView = new SongView.EditSongView({model: new SongModel.Song()});
+      }
+    },
+    
+    search: function(keywords) {
+      if(keywords) {
+        app.categoryName = '“' + keywords + '” 搜索结果';
+        app.initSongs('/songs_search/'+encodeURIComponent(keywords));
       }
     }
     

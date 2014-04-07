@@ -4,16 +4,91 @@ function($, Backbone, SongTemplate, helper, utils, ResourceModel, ResourceView, 
 
 var ShowSongView = Backbone.View.extend({
 
+  options: null,
+
   template: "#ShowSongTemplate",
   
-  initialize: function() {
+  initialize: function(options) {
+    this.options = options || {};
     this.render();
   },
   
   render: function() {
     var template = _.template($(SongTemplate).find(this.template).html());
-    this.$el.html(template(this));
+    this.$el.html(template(_.extend({}, this, {app: this.options.app})));
     $("#IndexContainer").empty().html(this.el);
+  }
+
+});
+
+var PagerView = Backbone.View.extend({
+
+  curPage: 0,
+  totalPage: 0,
+  pageSize: 100,
+  
+  curSongsList: null,
+
+  template: "#PagerTemplate",
+  
+  initialize: function() {
+    this.initPager();
+    this.filterSongs();
+    this.render();
+    this.renderHtml();
+  },
+  
+  initPager: function() {
+    if(this.collection.length > 0) {
+      this.curPage = 1;
+      var t = this.collection.length / this.pageSize;
+      if(t === parseInt(t, 10)) {
+        this.totalPage = t;
+      } else {
+        this.totalPage = parseInt(t, 10) + 1;
+      }
+    }
+  },
+  
+  filterSongs: function() {
+    var t = (this.curPage - 1) * this.pageSize;
+    this.curSongsList = _.filter(this.collection.toJSON(), function(obj, index) {
+      return index >= t && index < t + this.pageSize;
+    }, this);
+  },
+  
+  render: function() {
+    $("#PagerContainer").empty().html(this.el);
+  },
+  
+  renderHtml: function() {
+    var tThis = this;
+    require(['app/models/song-model'], function(SongModel) {
+      var songsView = new SongsView({collection: new SongModel.Songs(tThis.curSongsList)});
+
+      var template = _.template($(SongTemplate).find(tThis.template).html());
+      tThis.$el.html(template(tThis));
+    });
+  },
+  
+  events: {
+    'click .pagination a': 'goto'
+  },
+  
+  goto: function(e) {
+    var $target = $(e.currentTarget);
+    switch($target.attr('tag')) {
+      case 'prev':
+        this.curPage -= 1;
+        break;
+      case 'next':
+        this.curPage += 1;
+        break;
+      default:
+        this.curPage = parseInt($target.html(), 10);
+    }
+    this.filterSongs();
+    this.renderHtml();
   }
 
 });
@@ -316,6 +391,7 @@ var EditSongView = Backbone.View.extend({
 
 var SongView = {
   ShowSongView: ShowSongView,
+  PagerView: PagerView,
   SongsView: SongsView,
   EditSongView: EditSongView,
   PlayerView: PlayerView

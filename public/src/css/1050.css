@@ -37,6 +37,9 @@ h4 {
 
 /* end custom */
 
+.pagination {
+  margin-top: 0;
+}
 
 .popover {
   max-width: 500px;

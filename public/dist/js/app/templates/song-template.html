@@ -7,7 +7,7 @@
   <div class="row">
     <div class="page-header pull-left col-md-12 col-sm-12 col-xs-12">
       <div class="pull-left">
-        <h3>诗歌列表<small>（<%= list?list.length:0 %>首）</small></h3>
+        <h3><%= app.categoryName ? app.categoryName : "首页" %><small>（<%= list?list.length:0 %>首）</small></h3>
         <h4>向天父献上我们的赞美</h4>
       </div>
       <blockquote class="pull-right">
@@ -21,11 +21,12 @@
 
 <div class="container">
   <div id="SongsContainer"></div>
+  <div id="PagerContainer"></div>
 </div>
 
 </script>
 
-<script id="SongsTemplate" type="text/template">
+<script id="SongsTemplate_bak" type="text/template">
 
   <%
     var list = collection.toJSON();
@@ -52,10 +53,10 @@
         <table class="table table-condensed table-hover">
           <thead>
             <tr>
-              <th class="col-md-4">歌名</th>
-              <th class="col-md-5">歌词首句</th>
-              <th class="col-md-1">首数</th>
-              <th class="col-md-2">操作</th>
+              <th class="col-md-4 col-sm-4 col-xs-4">歌名</th>
+              <th class="col-md-5 col-sm-4 col-xs-4">歌词首句</th>
+              <th class="col-md-1 col-sm-1 col-xs-1">首数</th>
+              <th class="col-md-2 col-sm-3 col-xs-3">操作</th>
             </tr>
           </thead>
           <tbody>
@@ -70,7 +71,7 @@
               <td><%= m.first_sentence %></td>
               <td><%= m.index %></td>
               <td>
-                <a class="btn btn-warning btn-xs" <%= m.pic_src ? "" : "disabled='disabled'" %> data-toggle="popover" data-content="<a href='<%= m.pic_src ? (config.bucketUrl + encodeURIComponent(m.pic_src)) : "javascript:;" %>' target='_blank' style='display: block; width: 200px; height: 300px;'><img src='<%= m.pic_src ? (config.bucketUrl + encodeURIComponent(m.pic_src) + "?imageView2/2/w/200/h/300/q/50") : "" %>' /></a>" >歌谱</a>
+                <a class="btn btn-warning btn-xs" <%= m.pic_src ? "" : "disabled='disabled'" %> data-toggle="popover" data-content="<a href='<%= m.pic_src ? (config.bucketUrl + encodeURIComponent(m.pic_src)) : "javascript:;" %>' target='_blank' style='display: block; width: 120px; height: 200px;'><img src='<%= m.pic_src ? (config.bucketUrl + encodeURIComponent(m.pic_src) + "?imageView2/1/w/120/h/200") : "" %>' /></a>" >歌谱</a>
                 <a class="btn btn-success btn-xs" href="javascript:;" <%= m.song_src ? "" : "disabled='disabled'" %> tag="play">播放</a>
                 <a class="btn btn-primary btn-xs" href="modification/<%= m.id %>" tag="hash_url">编辑</a>
               </td>
@@ -86,13 +87,72 @@
 
 </script>
 
+<script id="SongsTemplate" type="text/template">
+
+  <%
+    var list = collection.toJSON();
+  %>
+
+  <div class="row">
+    <div class="col-md-12 col-sm-12 col-xs-12">
+      <h1></h1>
+      <div class="panel panel-default">
+        <div class="panel-heading">诗歌列表</div>
+        <table class="table table-condensed table-hover">
+          <thead>
+            <tr>
+              <th class="col-md-4 col-sm-4 col-xs-4">歌名</th>
+              <th class="col-md-5 col-sm-4 col-xs-4">歌词首句</th>
+              <th class="col-md-1 col-sm-1 col-xs-1">首数</th>
+              <th class="col-md-2 col-sm-3 col-xs-3">操作</th>
+            </tr>
+          </thead>
+          <tbody>
+          <% _.each(list, function(m) { %>
+            <tr song_id="<%= m.id %>" >
+              <td>《<%= m.name %>》</td>
+              <td><%= m.first_sentence %></td>
+              <td><%= m.index %></td>
+              <td>
+                <a class="btn btn-warning btn-xs" <%= m.pic_src ? "" : "disabled='disabled'" %> data-toggle="popover" data-content="<a href='<%= m.pic_src ? (config.bucketUrl + encodeURIComponent(m.pic_src)) : "javascript:;" %>' target='_blank' style='display: block; width: 200px; height: 300px;'><img src='<%= m.pic_src ? (config.bucketUrl + encodeURIComponent(m.pic_src) + "?imageView2/1/w/200/h/300") : "" %>' /></a>" >歌谱</a>
+                <a class="btn btn-success btn-xs" href="javascript:;" <%= m.song_src ? "" : "disabled='disabled'" %> tag="play">播放</a>
+                <a class="btn btn-primary btn-xs" href="modification/<%= m.id %>" tag="hash_url">编辑</a>
+              </td>
+            </tr>
+          <% }); %>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+</script>
+
+<script id="PagerTemplate" type="text/template">
+  <ul class="pagination">
+    <% if(curPage > 1) { %>
+    <li><a href="javascript:;" tag="prev">&laquo;</a></li>
+    <% } %>
+    <% for(var i = 1; i <= totalPage; i++) { %>
+      <% if(i == curPage) { %>
+    <li class="active"><span><%= i %> <span class="sr-only">(current)</span></span></li>  
+      <% } else { %>
+    <li><a href="javascript:;"><%= i %></a></li>
+      <% } %>
+    <% } %>
+    <% if(curPage < totalPage) { %>
+    <li><a href="javascript:;" tag="next">&raquo;</a></li>
+    <% } %>
+  </ul>
+</script>
+
 <script id="EditSongTemplate" type="text/template">
 
 <% var m = model.id?model.toJSON():null; %>
 
 <div class="container">
   <div class="row">
-    <div class="page-header pull-left col-md-12">
+    <div class="page-header pull-left col-md-12 col-sm-12 col-xs-12">
       <div class="pull-left">
         <h3><%= m ? "修改诗歌" : "添加诗歌" %></h3>
         <h4>为福音贡献我们的力量</h4>
@@ -379,7 +439,7 @@
       <div class="col-md-2 col-ms-2 col-xs-2">
         <div class="play-info">
           <p class="icon"><span class="glyphicon glyphicon-music"></span></p>
-          <p class="text" title="<%= m.song_src %>" ><%= m.index + " / " + m.song_src %></p>
+          <p class="text" title="<%= m.song_src %>" ><%= m.song_src %></p>
         </div>
       </div>
       <div class="col-md-8 col-sm-8 col-xs-8">
