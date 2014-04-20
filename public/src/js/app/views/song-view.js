@@ -178,15 +178,19 @@ var EditSongView = Backbone.View.extend({
   
   initialize: function() {
     this.render();
-    this.$el.tooltip({
-      selector: '*[data-toggle="tooltip"]',
-      placement: 'right'
-    });
     if(this.model.id) {
       this.initResources();
     }
-    this.initUploader('song');
-    this.initUploader('pic');
+    var tThis = this;
+    setTimeout(function() {
+      tThis.$el.tooltip({
+        selector: '*[data-toggle="tooltip"]',
+        placement: 'right'
+      });
+    
+      tThis.initUploader('song');
+      tThis.initUploader('pic');
+    }, 50);
   },
   
   render: function() {

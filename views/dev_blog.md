@@ -8,7 +8,7 @@
 开发语言：`ruby` + `javascript`  
 框架：`sinatra` + `activerecord` + `Backbone`  
 源码：[https://github.com/Mystist/1050](https://github.com/Mystist/1050)  
-涉及到的关键词：`OpenShift`, `sinatra`, `ruby`, `RESTful`, `activerecord`, `mysql`, `Backbone`, `requireJS`, `Bootstrap`, `git`, `github`, `markdown`, `nodejs`, `NPM`, `bower`, `r.js`, `almond.js`, `rack-cache`  
+涉及到的关键词：`OpenShift`, `sinatra`, `ruby`, `RESTful`, `activerecord`, `mysql`, `Backbone`, `localStorage`, `requireJS`, `Bootstrap`, `git`, `github`, `markdown`, `nodejs`, `NPM`, `bower`, `r.js`, `almond.js`, `rack-cache`  
 
 
 ====
