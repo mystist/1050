@@ -10,6 +10,8 @@
   <meta name="description" content="播放诗歌本《赞美诗选编1050首》的歌曲，查看歌谱，上传歌曲、歌谱，为你喜欢的歌曲、歌谱投票。">
   <link href="css/bootstrap.css" rel="stylesheet" media="screen">
   <link href="css/1050.css" rel="stylesheet" media="screen">
+  
+  <script type="text/javascript" src="http://qzonestyle.gtimg.cn/qzone/openapi/qc_loader.js" data-appid="101066989" data-redirecturi="http://1050.14201420.com" charset="utf-8"></script>
 </head>
 <body>
 
@@ -103,6 +105,7 @@
           <label>密码：</label>
           <input type="password" class="form-control" />
         </div>
+        <span id="qqLoginBtn"></span>
         <button type="submit" class="btn btn-primary">确 定</button>
       </form>
       <h1></h1>
@@ -133,6 +136,12 @@
     </div>
   </div>
 </div>
+
+<script type="text/javascript">
+    QC.Login({
+       btnId:"qqLoginBtn"    //插入按钮的节点id
+});
+</script>
 
 </body>
 </html>
