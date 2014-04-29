@@ -8,7 +8,7 @@ var LoginView = Backbone.View.extend({
 
   initialize: function() {
     this.render();
-    this.initOpenLogin();
+    this.initLogin();
   },
   
   render: function() {
@@ -17,17 +17,21 @@ var LoginView = Backbone.View.extend({
     $("#IndexContainer").empty().html(this.el);
   },
   
-  initOpenLogin: function() {
+  initLogin: function() {
     var tThis = this;
     QC.Login({
       btnId:"qqLoginBtn",
       size: "A_M"
-    }, tThis.afterLogin);
+    }, tThis.afterLogin, tThis.afterLogout);
   },
   
   afterLogin: function(oInfo, oOpts) {
     alert(oInfo.nickname);
     alert(oOpts.btnId);
+  },
+  
+  afterLogout: function() {
+    alert('loged out...');
   }
 
 });
