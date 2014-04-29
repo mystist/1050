@@ -18,10 +18,16 @@ var LoginView = Backbone.View.extend({
   },
   
   initOpenLogin: function() {
+    var tThis = this;
     QC.Login({
       btnId:"qqLoginBtn",
       size: "A_M"
-    });
+    }, tThis.afterLogin);
+  },
+  
+  afterLogin: function(oInfo, oOpts) {
+    alert(oInfo.nickname);
+    alert(oOpts.btnId);
   }
 
 });
