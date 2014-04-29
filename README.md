@@ -18,7 +18,10 @@ Freely, quickly and simple.
 
 #### Todos:  
 
-Login.  
+1. Login.  
+2. Uploader.  
+3. My Song List.  
+4. Waterfall + lazyload.  
 
 #### Done:  
 

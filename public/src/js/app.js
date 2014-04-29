@@ -29,9 +29,9 @@
   enforceDefine: true
 });
 
-define(['jquery', 'backbone', 'utils/utils', 'app/models/song-model', 'app/views/song-view', 'helper', 'bootstrap'],
+define(['jquery', 'backbone', 'utils/utils', 'app/models/song-model', 'app/views/song-view', 'app/views/user-view', 'helper', 'bootstrap'],
 
-function($, Backbone, utils, SongModel, SongView, helper) {
+function($, Backbone, utils, SongModel, SongView, UserView, helper) {
 
   var App = Backbone.View.extend({
     
@@ -74,7 +74,8 @@ function($, Backbone, utils, SongModel, SongView, helper) {
       'category_big/:categoryName': 'showSongs',
       'modification': 'editSong',
       'modification/:id': 'editSong',
-      'search/:keywords': 'search'
+      'search/:keywords': 'search',
+      'login': 'login'
     },
     
     showSongs: function(categoryName) {
@@ -106,6 +107,10 @@ function($, Backbone, utils, SongModel, SongView, helper) {
         app.categoryName = '“' + keywords + '” 搜索结果';
         app.initSongs('/songs_search/'+encodeURIComponent(keywords));
       }
+    },
+    
+    login: function() {
+      var loginView = new UserView.LoginView();
     }
     
   });

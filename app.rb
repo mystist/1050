@@ -26,6 +26,9 @@ end
 class Resource < ActiveRecord::Base
 end
 
+class User < ActiveRecord::Base
+end
+
 def encode_object(obj)
   if obj
     obj.attributes.each do |key, value|
@@ -88,6 +91,13 @@ end
 
 get '/search' do
   redirect to("/search/#{URI.escape(params[:keywords])}")
+end
+
+enable :sessions
+
+post '/login' do
+  session[:username] = params[:username]
+  redirect to('/')
 end
 
 def save_song(song, obj)
