@@ -96,6 +96,7 @@
 
     <div class="col-md-12">
       <h1></h1>
+      <!--
       <form class="form" role="form">
         <div class="form-group">
           <label>用户名：</label>
@@ -105,16 +106,19 @@
           <label>密码：</label>
           <input type="password" class="form-control" />
         </div>
-        <span id="qqLoginBtn"></span>
         <button type="submit" class="btn btn-primary">确 定</button>
       </form>
+      -->
+      <div id="qqLoginBtn"></div>
       <h1></h1>
     </div>
     
     <div class="col-md-12">
       <div class="well well-lg">
+        <!--
         <p><strong>提示：</strong></p>
         <p>首次使用的用户名将视为注册。</p>
+        -->
         <p><strong>登录后可以：</strong></p>
         <p>1. 上传自己的歌曲、歌谱。</p>
         <p>2. 将诗歌添加到「我的诗歌单」。</p>
@@ -138,9 +142,10 @@
 </div>
 
 <script type="text/javascript">
-    QC.Login({
-       btnId:"qqLoginBtn"    //插入按钮的节点id
-});
+  QC.Login({
+    btnId:"qqLoginBtn",
+    size: "A_M"
+  });
 </script>
 
 </body>
