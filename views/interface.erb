@@ -1,3 +1,22 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>赞美诗选编(1050首)</title>
+  <link href="/css/bootstrap.css" rel="stylesheet" media="screen">
+  <link href="/css/1050.css" rel="stylesheet" media="screen">
+  <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+  <!--[if lt IE 9]>
+    <script src="/js/libs/html5shiv.js"></script>
+    <script src="/js/libs/respond.min.js"></script>
+  <![endif]-->
+</head>
+<body>
+
+<%= erb :'inc/head' %>
+
+<div class="wrap">
 
   <div class="container">
     <div class="row">
@@ -18,9 +37,7 @@
     <div class="row">
       <div class="col-md-12">
 
-        <div class="page-header">
-          <h4><strong>导入诗歌</strong></h4>
-        </div>
+        <h4><strong>导入诗歌</strong></h4>
         
         <form role="form" method="post" enctype="multipart/form-data" accept-charset="utf-8">
           <div class="form-group">
@@ -31,9 +48,9 @@
           <button type="submit" class="btn btn-default">确 定</button>
         </form>
         
-        <div class="page-header">
-          <h4><strong>导入资源</strong></h4>
-        </div>
+        <hr />
+        
+        <h4><strong>导入资源</strong></h4>
         
         <form role="form" method="post" enctype="multipart/form-data" accept-charset="utf-8">
           <div class="form-group">
@@ -49,3 +66,13 @@
   </div>
   
   <h4>&nbsp;</h4>
+
+</div>
+
+<%= erb :'inc/footer' %>
+
+<script src="/js/libs/jquery.js"></script>
+<script src="/js/libs/bootstrap.js"></script>
+
+</body>
+</html>

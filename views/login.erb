@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>赞美诗选编(1050首)</title>
+  <link href="/css/bootstrap.css" rel="stylesheet" media="screen">
+  <link href="/css/1050.css" rel="stylesheet" media="screen">
+  <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+  <!--[if lt IE 9]>
+    <script src="/js/libs/html5shiv.js"></script>
+    <script src="/js/libs/respond.min.js"></script>
+  <![endif]-->
+  <script src="http://qzonestyle.gtimg.cn/qzone/openapi/qc_loader.js" data-appid="101066989" data-redirecturi="http://1050.14201420.com/login" charset="utf-8"></script>
+</head>
+<body>
+
+<%= erb :'inc/head' %>
+
+<div class="wrap">
+
+  <div class="container">
+    <div class="row">
+      <div class="page-header pull-left col-md-12 col-sm-12 col-xs-12">
+        <div class="pull-left">
+          <h3>登录</h3>
+          <h4>见证生命的长进</h4>
+        </div>
+        <blockquote class="pull-right">
+          <h3></h3>
+          <h5>“ 万国啊，你们都当赞美耶和华！”</h5>
+          <small>诗篇117:1</small>
+        </blockquote>
+      </div>
+    </div>
+  </div>
+    
+  <div class="container">
+    <div class="row">
+
+      <div class="col-md-12">
+        <h1></h1>
+        <div id="qqLoginBtn"></div>
+        <h1></h1>
+      </div>
+      
+      <div class="col-md-12">
+        <div class="well well-lg">
+          <p><strong>登录后可以：</strong></p>
+          <p>1. 上传自己的歌曲、歌谱。</p>
+          <p>2. 将诗歌添加到「我的诗歌单」。</p>
+        </div>
+      </div>
+      
+    </div>
+  </div>
+  
+</div>
+
+<%= erb :'inc/footer' %>
+
+<script src="/js/libs/jquery.js"></script>
+<script src="/js/libs/bootstrap.js"></script>
+
+<script>
+
+  var openApi = {
+  
+    initialize: function() {
+      var tThis = this;
+      QC.Login({
+        btnId:"qqLoginBtn",
+        size: "A_M"
+      }, tThis.afterLogin, tThis.afterLogout);    
+    },
+    
+    afterLogin: function() {
+      alert(oInfo.nickname);
+      alert(oOpts.btnId);
+    },
+    
+    afterLogout: function() {
+      alert('loged out...');    
+    }
+  
+  };
+  
+  openApi.initialize();
+
+</script>
+
+</body>
+</html>

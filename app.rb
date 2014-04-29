@@ -95,6 +95,10 @@ end
 
 enable :sessions
 
+get '/login' do
+  erb :login
+end
+
 post '/login' do
   session[:username] = params[:username]
   redirect to('/')
@@ -253,7 +257,7 @@ end
 ### import start
 
 get '/interface' do
-  erb :interface, :layout => :layout
+  erb :interface
 end
 
 post '/interface' do
