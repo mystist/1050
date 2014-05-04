@@ -11,7 +11,6 @@
     <script src="/js/libs/html5shiv.js"></script>
     <script src="/js/libs/respond.min.js"></script>
   <![endif]-->
-  <script src="http://qzonestyle.gtimg.cn/qzone/openapi/qc_loader.js" data-appid="101066989" data-redirecturi="http://1050.14201420.com/login" charset="utf-8"></script>
 </head>
 <body>
 
@@ -61,6 +60,8 @@
 
 <script src="/js/libs/jquery.js"></script>
 <script src="/js/libs/bootstrap.js"></script>
+<script src="/js/libs/helper.js"></script>
+<script src="http://qzonestyle.gtimg.cn/qzone/openapi/qc_loader.js" data-appid="101066989" data-redirecturi="http://1050.14201420.com/pages/qc_callback.html" charset="utf-8"></script>
 
 <script>
 
@@ -68,21 +69,65 @@
   
     initialize: function() {
       var tThis = this;
-      QC.Login({
-        btnId:"qqLoginBtn",
-        size: "A_M"
-      }, tThis.afterLogin, tThis.afterLogout);    
+      if(helper.getQueryString("logout") == "true") {
+        ajax.logout().done(function(response) {
+          if(!response.error) {
+            QC.Login.signOut();
+            window.location.href = "/";
+          }
+        });
+      } else {
+        QC.Login({
+          btnId: "qqLoginBtn",
+          size: "A_M"
+        }, tThis.afterLogin, tThis.afterLogout);
+      }
     },
     
     afterLogin: function(oInfo, oOpts) {
-      alert(oInfo.nickname);
-      alert(oOpts.btnId);
+      if(QC.Login.check()) {
+        QC.Login.getMe(function(openId, accessToken) {
+          $("#qqLoginBtn").html("QQ登录成功，正在处理用户信息......");
+          var data = {
+            open_id: openId,
+            access_token: accessToken,
+            nickname: oInfo.nickname,
+            figure_url: oInfo.figureurl
+          };
+          ajax.login(data).done(function(response) {
+            if(!response.error) {
+              window.location.href = "/";
+            }
+          });
+        });
+      }
     },
     
     afterLogout: function() {
-      alert('loged out...');    
+      alert("loged out...");
     }
   
+  };
+  
+  var ajax = {
+  
+    login: function(data) {
+      return $.ajax({
+        url: "/login",
+        type: "post",
+        dataType: "json",
+        data: data
+      });
+    },
+    
+    logout: function() {
+      return $.ajax({
+        url: "/logout",
+        type: "post",
+        dataType: "json"
+      });
+    }
+    
   };
   
   openApi.initialize();

@@ -161,7 +161,7 @@ var PlayerView = Backbone.View.extend({
       $target[0].contentWindow.close();
       $target.remove();
     }
-    if( typeof CollectGarbage == "function") {
+    if(typeof CollectGarbage == "function") {
       CollectGarbage();
     }
   }

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140304063434) do
+ActiveRecord::Schema.define(version: 20140419113815) do
 
   create_table "resources", force: true do |t|
     t.integer  "song_id"
@@ -35,6 +35,12 @@ ActiveRecord::Schema.define(version: 20140304063434) do
     t.datetime "updated_at"
     t.string   "song_src"
     t.string   "pic_src"
+  end
+
+  create_table "users", force: true do |t|
+    t.string   "open_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
 end

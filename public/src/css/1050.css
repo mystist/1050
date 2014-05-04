@@ -27,6 +27,7 @@ h4 {
 
 }
 */
+
 .logo-container .logo {
   float: left;
   margin: -5px 5px 0 0;
@@ -35,12 +36,25 @@ h4 {
   background-image: url('../images/logo.png');
 }
 
+.login-img {
+  position: absolute;
+  left: 1px;
+  top: 1px;
+}
+
+.login-nickname {
+  padding-left: 25px;
+}
+
 /* end custom */
 
+.navbar-right .dropdown-menu {
+  left: 0;
+  right: auto;
+}
 .pagination {
   margin-top: 0;
 }
-
 .popover {
   max-width: 500px;
 }

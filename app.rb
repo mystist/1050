@@ -93,6 +93,15 @@ get '/search' do
   redirect to("/search/#{URI.escape(params[:keywords])}")
 end
 
+### login start
+
+def add_user(open_id)
+  user = User.new
+  user.open_id = open_id
+  user.save
+  user
+end
+
 enable :sessions
 
 get '/login' do
@@ -100,9 +109,24 @@ get '/login' do
 end
 
 post '/login' do
-  session[:username] = params[:username]
-  redirect to('/')
+  user = User.find_by_open_id(params[:open_id])
+  if !user
+    user = add_user(params[:open_id])
+  end
+  session[:user_id] = user.id
+  session[:nickname] = params[:nickname]
+  session[:figure_url] = params[:figure_url]
+  re = { :error => false }
+  json re
 end
+
+post '/logout' do
+  session.clear
+  re = { :error => false }
+  json re
+end
+
+### login end
 
 def save_song(song, obj)
   if song
