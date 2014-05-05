@@ -298,21 +298,24 @@
             </thead>
             <tbody id="SongResourcesContainer">
               <tr>
-                <td colspan="20">暂无歌曲，请上传。</td>
+                <td colspan="20">暂无歌曲，请登录后上传。</td>
               </tr>
             </tbody>
           </table>
         </div>
-        <div class="row">
-          <div class="col-md-12">
-            <div class="btn btn-success" tag="upload">
-              <span class="glyphicon glyphicon-upload"></span> 上传歌曲
-            </div>
-            <label>&nbsp;&nbsp;</label>
-            <span tag="alert">
-            </span>
-          </div>
+      </div>
+    </div>
+    
+    <% if(userId) { %>
+    
+    <div class="row">
+      <div class="col-md-12">
+        <div class="btn btn-success" tag="upload">
+          <span class="glyphicon glyphicon-upload"></span> 上传歌曲
         </div>
+        <label>&nbsp;&nbsp;</label>
+        <span tag="alert">
+        </span>
       </div>
     </div>
     
@@ -330,6 +333,8 @@
         <button type="button" class="btn btn-primary" tag="start_upload" style="display: none;">开始上传</button>
       </div>
     </div>
+    
+    <% } %>
     
     </div>
     
@@ -354,21 +359,24 @@
             </thead>
             <tbody id="PicResourcesContainer">
               <tr>
-                <td colspan="20">暂无歌谱，请上传。</td>
+                <td colspan="20">暂无歌谱，请登录后上传。</td>
               </tr>
             </tbody>
           </table>
         </div>
-        <div class="row">
-          <div class="col-md-12">
-            <div class="btn btn-warning" tag="upload">
-              <span class="glyphicon glyphicon-upload"></span> 上传歌谱
-            </div>
-            <label>&nbsp;&nbsp;</label>
-            <span tag="alert">
-            </span>
-          </div>
+      </div>
+    </div>
+    
+    <% if(userId) { %>
+    
+    <div class="row">
+      <div class="col-md-12">
+        <div class="btn btn-warning" tag="upload">
+          <span class="glyphicon glyphicon-upload"></span> 上传歌谱
         </div>
+        <label>&nbsp;&nbsp;</label>
+        <span tag="alert">
+        </span>
       </div>
     </div>
     
@@ -386,6 +394,8 @@
         <button type="button" class="btn btn-primary" tag="start_upload" style="display: none;">开始上传</button>
       </div>
     </div>
+    
+    <% } %>
     
     </div>
     

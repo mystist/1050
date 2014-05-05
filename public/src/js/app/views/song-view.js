@@ -182,20 +182,22 @@ var EditSongView = Backbone.View.extend({
       this.initResources();
     }
     var tThis = this;
-    setTimeout(function() {
-      tThis.$el.tooltip({
-        selector: '*[data-toggle="tooltip"]',
-        placement: 'right'
-      });
-    
-      tThis.initUploader('song');
-      tThis.initUploader('pic');
-    }, 50);
+    setTimeout(function() {  
+      if($("#IndexContainer").attr("user_id")) {
+        tThis.$el.tooltip({
+          selector: '*[data-toggle="tooltip"]',
+          placement: 'right'
+        });
+        
+        tThis.initUploader('song');
+        tThis.initUploader('pic');
+      }
+    }, 80);
   },
   
   render: function() {
     var template = _.template($(SongTemplate).find(this.template).html());
-    this.$el.html(template(_.extend({}, {model: this.model}, {helper: helper})));
+    this.$el.html(template(_.extend({}, {model: this.model}, {helper: helper}, {userId: $("#IndexContainer").attr("user_id")})));
     $("#IndexContainer").empty().html(this.el);
   },
   

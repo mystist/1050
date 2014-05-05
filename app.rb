@@ -145,7 +145,7 @@ def add_resources(resources, song_id)
   if(resources.length>0)
     resources.each do |obj|
       current_resource = Resource.where('song_id = ? and file_name = ?', song_id, obj['file_name'])
-      if(current_resource.count==0) 
+      if(current_resource.count == 0) 
         new_resource = Resource.new
         new_resource.attributes.each do |key, value|
           if key != 'id'
@@ -156,6 +156,9 @@ def add_resources(resources, song_id)
         end
         new_resource['song_id'] = song_id
         new_resource['stars'] = 0
+        if !session[:user_id].nil?
+          new_resource['user_id'] = session[:user_id].to_i
+        end
         new_resource.save
       end
     end

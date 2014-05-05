@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140419113815) do
+ActiveRecord::Schema.define(version: 20140505061757) do
 
   create_table "resources", force: true do |t|
     t.integer  "song_id"
@@ -21,9 +21,11 @@ ActiveRecord::Schema.define(version: 20140419113815) do
     t.integer  "stars"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "user_id"
   end
 
   add_index "resources", ["song_id"], name: "fk_resources_songs", using: :btree
+  add_index "resources", ["user_id"], name: "fk_resources_users", using: :btree
 
   create_table "songs", force: true do |t|
     t.integer  "index"
