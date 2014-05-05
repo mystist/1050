@@ -73,7 +73,7 @@
         ajax.logout().done(function(response) {
           if(!response.error) {
             QC.Login.signOut();
-            window.location.href = "/";
+            window.location.href = "/login";
           }
         });
       } else {
