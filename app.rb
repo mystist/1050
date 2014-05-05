@@ -95,14 +95,14 @@ end
 
 ### login start
 
+use Rack::Session::Pool, :expire_after => 2592000
+
 def add_user(open_id)
   user = User.new
   user.open_id = open_id
   user.save
   user
 end
-
-enable :sessions
 
 get '/login' do
   erb :login
