@@ -24,9 +24,11 @@ class Song < ActiveRecord::Base
 end
 
 class Resource < ActiveRecord::Base
+  belongs_to :user
 end
 
 class User < ActiveRecord::Base
+  has_many :resource
 end
 
 def encode_object(obj)
@@ -60,12 +62,26 @@ get '/songs' do
   json encode_list(songs)
 end
 
+def get_resources_with_user_info(resources)
+  resources_with_user_info = []
+  resources.each do |resource|
+    hash = {}
+    resource.attributes.each do |key, value|
+      hash[key] = value
+    end
+    hash[:nickname] = resource.user ? resource.user.nickname.force_encoding('UTF-8') : nil
+    hash[:figure_url] = resource.user ? resource.user.figure_url.force_encoding('UTF-8') : nil
+    resources_with_user_info.push(hash)
+  end
+  resources_with_user_info
+end
+
 get '/songs/:id' do
   song = Song.find_by_id(params[:id].to_i)
   resources = get_resources_by_song_id(params[:id].to_i)
   if song
     re = encode_object(song).attributes
-    re['resources'] = encode_list(resources)
+    re['resources'] = get_resources_with_user_info(encode_list(resources))
     json re
   else
     re = { :error => true }
@@ -97,9 +113,14 @@ end
 
 use Rack::Session::Pool, :expire_after => 2592000
 
-def add_user(open_id)
-  user = User.new
-  user.open_id = open_id
+def get_user(p)
+  user = User.find_by_open_id(p[:open_id])
+  if(!user)
+    user = User.new
+  end
+  user.open_id = p[:open_id]
+  user.nickname = p[:nickname]
+  user.figure_url = p[:figure_url]
   user.save
   user
 end
@@ -109,13 +130,15 @@ get '/login' do
 end
 
 post '/login' do
-  user = User.find_by_open_id(params[:open_id])
-  if !user
-    user = add_user(params[:open_id])
-  end
+  p = {
+    :open_id => params[:open_id],
+    :nickname => params[:nickname],
+    :figure_url => params[:figure_url]
+  }
+  user = get_user(p)
   session[:user_id] = user.id
-  session[:nickname] = params[:nickname]
-  session[:figure_url] = params[:figure_url]
+  session[:nickname] = user.nickname
+  session[:figure_url] = user.figure_url
   re = { :error => false }
   json re
 end
@@ -167,7 +190,7 @@ def add_resources(resources, song_id)
 end
 
 def get_resources_by_song_id(song_id)
-  Resource.where('song_id = ?', song_id).order('stars DESC')
+  resources = Resource.includes(:user).where('song_id = ?', song_id).order('stars DESC')
 end
 
 put '/songs/:id' do
@@ -181,7 +204,7 @@ put '/songs/:id' do
     update_song_src_by_song_id(src, song.id)
     
     re = encode_object(song).attributes
-    re['resources'] = encode_list(resources)
+    re['resources'] = get_resources_with_user_info(encode_list(resources))
     json re
   else
     re = { :error => true }
@@ -200,7 +223,7 @@ post '/songs' do
     update_song_src_by_song_id(src, song.id)
     
     re = encode_object(song).attributes
-    re['resources'] = encode_list(resources)
+    re['resources'] = get_resources_with_user_info(encode_list(resources))
     json re
   else
     re = { :error => true }

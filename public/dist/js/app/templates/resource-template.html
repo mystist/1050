@@ -13,6 +13,11 @@
   <% } %>
 </td>
 <td><%= helper.formatDateTime(m.uploaded_time, "second") %></td>
+<td>
+  <% if(m.user_id) { %>
+    <img src="<%= m.figure_url %>" style="width: 22px; height: 22px;" /> <%= m.nickname %>
+  <% } %>
+</td>
 <td tag="stars"></td>
 <td>
   <div class="btn-group" tag="resource_star_container">
@@ -20,13 +25,15 @@
 </td>
 <td resource_id="<%= m.id %>" >
   <% if(m.file_type == "song") { %>
-    <button type="button" class="btn btn-success btn-xs" tag="play">播放</button>
+  <button type="button" class="btn btn-success btn-xs" tag="play">播放</button>
   <% } %>
   <% if(m.file_type == "pic") { %>
     <a class="btn btn-warning btn-xs" href="<%= config.bucketUrl + encodeURIComponent(m.file_name) %>" target="_blank" >查看</a>
   <% } %>
   <a class="btn btn-primary btn-xs" href="<%= config.bucketUrl + encodeURIComponent(m.file_name) + "?download/" + encodeURIComponent(m.file_name) %>" target="_blank">下载</a>
+  <% if(m.user_id && m.user_id == userId) { %>
   <button type="button" class="btn btn-default btn-xs" tag="delete_resource" data-toggle="tooltip" title="双击">删除</button>
+  <% } %>
 </td>
 
 </script>

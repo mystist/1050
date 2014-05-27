@@ -288,9 +288,10 @@
           <table class="table table-condensed table-hover">
             <thead>
               <tr>
-                <th class="col-md-4">文件名</th>
-                <th class="col-md-2">文件大小</th>
+                <th class="col-md-3">文件名</th>
+                <th class="col-md-1">文件大小</th>
                 <th class="col-md-2">上传时间</th>
+                <th class="col-md-2">上传者</th>
                 <th class="col-md-1">喜爱度</th>
                 <th class="col-md-1"></th>
                 <th class="col-md-2">操作</th>
@@ -298,21 +299,24 @@
             </thead>
             <tbody id="SongResourcesContainer">
               <tr>
-                <td colspan="20">暂无歌曲，请上传。</td>
+                <td colspan="20">暂无歌曲，请登录后上传。</td>
               </tr>
             </tbody>
           </table>
         </div>
-        <div class="row">
-          <div class="col-md-12">
-            <div class="btn btn-success" tag="upload">
-              <span class="glyphicon glyphicon-upload"></span> 上传歌曲
-            </div>
-            <label>&nbsp;&nbsp;</label>
-            <span tag="alert">
-            </span>
-          </div>
+      </div>
+    </div>
+    
+    <% if(userId) { %>
+    
+    <div class="row">
+      <div class="col-md-12">
+        <div class="btn btn-success" tag="upload">
+          <span class="glyphicon glyphicon-upload"></span> 上传歌曲
         </div>
+        <label>&nbsp;&nbsp;</label>
+        <span tag="alert">
+        </span>
       </div>
     </div>
     
@@ -330,6 +334,8 @@
         <button type="button" class="btn btn-primary" tag="start_upload" style="display: none;">开始上传</button>
       </div>
     </div>
+    
+    <% } %>
     
     </div>
     
@@ -344,9 +350,10 @@
           <table class="table table-condensed table-hover">
             <thead>
               <tr>
-                <th class="col-md-4">文件名</th>
-                <th class="col-md-2">文件大小</th>
+                <th class="col-md-3">文件名</th>
+                <th class="col-md-1">文件大小</th>
                 <th class="col-md-2">上传时间</th>
+                <th class="col-md-2">上传者</th>
                 <th class="col-md-1">喜爱度</th>
                 <th class="col-md-1"></th>
                 <th class="col-md-2">操作</th>
@@ -354,21 +361,24 @@
             </thead>
             <tbody id="PicResourcesContainer">
               <tr>
-                <td colspan="20">暂无歌谱，请上传。</td>
+                <td colspan="20">暂无歌谱，请登录后上传。</td>
               </tr>
             </tbody>
           </table>
         </div>
-        <div class="row">
-          <div class="col-md-12">
-            <div class="btn btn-warning" tag="upload">
-              <span class="glyphicon glyphicon-upload"></span> 上传歌谱
-            </div>
-            <label>&nbsp;&nbsp;</label>
-            <span tag="alert">
-            </span>
-          </div>
+      </div>
+    </div>
+    
+    <% if(userId) { %>
+    
+    <div class="row">
+      <div class="col-md-12">
+        <div class="btn btn-warning" tag="upload">
+          <span class="glyphicon glyphicon-upload"></span> 上传歌谱
         </div>
+        <label>&nbsp;&nbsp;</label>
+        <span tag="alert">
+        </span>
       </div>
     </div>
     
@@ -386,6 +396,8 @@
         <button type="button" class="btn btn-primary" tag="start_upload" style="display: none;">开始上传</button>
       </div>
     </div>
+    
+    <% } %>
     
     </div>
     

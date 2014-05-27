@@ -41,6 +41,8 @@ ActiveRecord::Schema.define(version: 20140505061757) do
 
   create_table "users", force: true do |t|
     t.string   "open_id"
+    t.string   "nickname"
+    t.string   "figure_url"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
