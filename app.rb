@@ -5,6 +5,7 @@ require 'redcarpet'
 require 'sinatra/json'
 require 'qiniu-rs'
 require 'roo'
+require 'date'
 
 configure :development do
   set :public_folder, File.dirname(__FILE__) + '/public/src/'
@@ -31,6 +32,14 @@ class User < ActiveRecord::Base
   has_many :resource
 end
 
+class Meeting < ActiveRecord::Base
+end
+
+class MeetingSong < ActiveRecord::Base
+end
+
+### utils start
+
 def encode_object(obj)
   if obj
     obj.attributes.each do |key, value|
@@ -48,6 +57,23 @@ def encode_list(list)
   end
   list
 end
+
+def save_object(obj, data)
+  if obj
+    obj.attributes.each do |key, value|
+      if key != 'id'
+        if data[key]
+          obj[key] = data[key]
+        end
+      end
+    end
+    obj.save
+  else
+    return false
+  end
+end
+
+### utils end
 
 get '/dev-blog' do
   markdown :dev_blog, :layout_engine => :erb, :layout => :dev_blog_layout
@@ -109,61 +135,6 @@ get '/search' do
   redirect to("/search/#{URI.escape(params[:keywords])}")
 end
 
-### login start
-
-use Rack::Session::Pool, :expire_after => 2592000
-
-def get_user(p)
-  user = User.find_by_open_id(p[:open_id])
-  if(!user)
-    user = User.new
-  end
-  user.open_id = p[:open_id]
-  user.nickname = p[:nickname]
-  user.figure_url = p[:figure_url]
-  user.save
-  user
-end
-
-get '/login' do
-  erb :login
-end
-
-post '/login' do
-  p = {
-    :open_id => params[:open_id],
-    :nickname => params[:nickname],
-    :figure_url => params[:figure_url]
-  }
-  user = get_user(p)
-  session[:user_id] = user.id
-  session[:nickname] = user.nickname
-  session[:figure_url] = user.figure_url
-  re = { :error => false }
-  json re
-end
-
-post '/logout' do
-  session.clear
-  re = { :error => false }
-  json re
-end
-
-### login end
-
-def save_song(song, obj)
-  if song
-    song.attributes.each do |key, value|
-      if key != 'id'
-        if obj[key]
-          song[key] = obj[key]
-        end
-      end
-    end
-    song.save
-  end
-end
-
 def add_resources(resources, song_id)
   if(resources.length>0)
     resources.each do |obj|
@@ -197,7 +168,7 @@ put '/songs/:id' do
   request.body.rewind  # in case someone already read it
   data = JSON.parse request.body.read
   song = Song.find_by_id(params[:id].to_i)
-  if(song&&save_song(song, data))
+  if(save_object(song, data))
     resources = add_resources(data['resources'], song.id)
     
     src = get_most_starred_resource_src_by_song_id(song.id)
@@ -216,7 +187,7 @@ post '/songs' do
   request.body.rewind  # in case someone already read it
   data = JSON.parse request.body.read
   song = Song.new
-  if(song&&save_song(song, data))
+  if(save_object(song, data))
     resources = add_resources(data['resources'], song.id)
     
     src = get_most_starred_resource_src_by_song_id(song.id)
@@ -441,6 +412,81 @@ def import_resources_from_excel(path, extension)
 end
 
 ### import end
+
+### login start
+
+use Rack::Session::Pool, :expire_after => 2592000
+
+def get_user(p)
+  user = User.find_by_open_id(p[:open_id])
+  if(!user)
+    user = User.new
+  end
+  user.open_id = p[:open_id]
+  user.nickname = p[:nickname]
+  user.figure_url = p[:figure_url]
+  user.save
+  user
+end
+
+get '/login' do
+  erb :login
+end
+
+post '/login' do
+  p = {
+    :open_id => params[:open_id],
+    :nickname => params[:nickname],
+    :figure_url => params[:figure_url]
+  }
+  user = get_user(p)
+  session[:user_id] = user.id
+  session[:nickname] = user.nickname
+  session[:figure_url] = user.figure_url
+  re = { :error => false }
+  json re
+end
+
+post '/logout' do
+  session.clear
+  re = { :error => false }
+  json re
+end
+
+### login end
+
+### meeting start
+
+post '/meetingSongs' do
+  request.body.rewind  # in case someone already read it
+  data = JSON.parse request.body.read
+  if(!session[:user_id].nil?)
+    current_meeting = Meeting.where("user_id = ? and status = 'current'", session[:user_id]).take
+    if(!current_meeting)
+      current_meeting = init_meeting()
+    end
+    data['meeting_id'] = current_meeting.id
+    meeting_song = MeetingSong.new
+    if(save_object(meeting_song, data))
+      json encode_object(meeting_song)
+    else
+      re = { :error => true }
+      json re
+    end
+  end
+end
+
+def init_meeting
+  meeting = Meeting.new
+  meeting['date'] = (Date.today + (7 - Date.today.wday)).to_s
+  meeting['info'] = '主日礼拜聚会'
+  meeting['user_id'] = session[:user_id]
+  meeting['status'] = 'current'
+  meeting.save
+  meeting
+end
+
+### meeting end
 
 get '*' do
   @token = Qiniu::RS.generate_upload_token :scope => 'production-1050'

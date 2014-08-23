@@ -74,7 +74,8 @@ function($, Backbone, utils, SongModel, SongView, helper) {
       'category_big/:categoryName': 'showSongs',
       'modification': 'editSong',
       'modification/:id': 'editSong',
-      'search/:keywords': 'search'
+      'search/:keywords': 'search',
+      'meeting': 'meeting'
     },
     
     showSongs: function(categoryName) {
@@ -106,6 +107,10 @@ function($, Backbone, utils, SongModel, SongView, helper) {
         app.categoryName = '“' + keywords + '” 搜索结果';
         app.initSongs('/songs_search/'+encodeURIComponent(keywords));
       }
+    },
+    
+    meeting: function() {
+      console.log('everything is ok !');
     }
     
   });

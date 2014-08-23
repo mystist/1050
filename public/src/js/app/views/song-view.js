@@ -1,6 +1,6 @@
-﻿define(['jquery', 'backbone', 'text!app/templates/song-template.html', 'helper', 'utils/utils', 'app/models/resource-model', 'app/views/resource-view', 'plupload/zh_CN', 'utils/config', 'bootstrap'],
+﻿define(['jquery', 'backbone', 'text!app/templates/song-template.html', 'helper', 'utils/utils', 'app/models/resource-model', 'app/views/resource-view', 'app/models/meeting-model', 'plupload/zh_CN', 'utils/config', 'bootstrap'],
 
-function($, Backbone, SongTemplate, helper, utils, ResourceModel, ResourceView, plupload, config) {
+function($, Backbone, SongTemplate, helper, utils, ResourceModel, ResourceView, MeetingModel, plupload, config) {
 
 var ShowSongView = Backbone.View.extend({
 
@@ -204,7 +204,8 @@ var EditSongView = Backbone.View.extend({
   events: {
     'click *[tag="submit"]': 'submit',
     'dblclick *[tag="del"]': 'del',
-    'click *[tag="play"]': 'play'
+    'click *[tag="play"]': 'play',
+    'click *[tag="add"]': 'add'
   },
   
   submit: function(e) {
@@ -391,6 +392,14 @@ var EditSongView = Backbone.View.extend({
     this.viewInUse.playerView = new PlayerView({model: this.model});
     
     utils.renderNowPlaying($(e.currentTarget), 'success');
+  },
+  
+  add: function(e) {
+    var meetingSong = new MeetingModel.MeetingSong({'song_id': this.model.id});
+    meetingSong.save(null, {
+      wait: true,
+      $btn: $(e.currentTarget)
+    });
   }
 
 });

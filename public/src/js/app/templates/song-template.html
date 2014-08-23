@@ -407,6 +407,9 @@
       <div class="col-md-3">
         <button tag="submit" type="button" class="btn btn-primary">确 定</button>
         <label>&nbsp;&nbsp;</label>
+        <% if(userId) { %>
+          <button type="button" class="btn btn-default" tag="add">添加到「我的诗歌单」</button>
+        <% } %>
         <!-- <button tag="del" type="button" class="btn btn-default" data-toggle="tooltip" title="双击">删除</button> -->
       </div>
       <div class="col-md-9">
