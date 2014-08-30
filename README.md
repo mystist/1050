@@ -4,8 +4,8 @@
 The 1050 Poetry of Christian.  
 [http://1050.14201420.com/](http://1050.14201420.com/)
 
-Version: 0.2.4  
-Last updated: 2014-05-27 17:19
+Version: 0.2.5  
+Last updated: 2014-08-30 21:31
 
 ====
 
@@ -18,8 +18,11 @@ Freely, quickly and simple.
 
 #### Todos:  
 
-1. My Song List.  
-2. Waterfall + lazyload.  
+1. Logo thumbnail.  
+2. Waterfall + lazyload + hotfix of pager url.  
+3. Speed up home page.  
+4. Create main site: www.14201420.com with jekyll.  
+5. Write something for brothers and sisters.  
 
 #### Done:  
 
@@ -67,3 +70,6 @@ Done at version: `0.2.3`
 
 Login and Uploader:  
 Done at version: `0.2.4`  
+
+My song list:  
+Done at version: `0.2.5`

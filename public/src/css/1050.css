@@ -46,6 +46,22 @@ h4 {
   padding-left: 25px;
 }
 
+.song-list-date, .song-list-button {
+  margin-right: 8px;
+}
+
+.song-list-panel {
+  clear: both;
+}
+
+.song-list-container {
+  margin-bottom: 5px;
+}
+
+.song-list-alert .alert {
+  margin-bottom: 4px;
+}
+
 /* end custom */
 
 .navbar-right .dropdown-menu {

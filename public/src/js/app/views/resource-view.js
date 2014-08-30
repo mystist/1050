@@ -13,10 +13,11 @@ var ResourcesView = Backbone.View.extend({
     var resourceStarCollection = new ResourceModel.ResourceStarCollection();
     resourceStarCollection.fetch();
     
-    this.$el.empty();
+    this.$el.empty().hide();
     _.each(this.collection.models, function(model) {
       var resourceView = new ResourceView.ResourceView({model: model, $target: this.$el, resourceStarCollection: resourceStarCollection});
     }, this);
+    this.$el.show();
     
   }
 

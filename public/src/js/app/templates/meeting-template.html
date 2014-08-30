@@ -1,0 +1,109 @@
+<div>
+
+<script id="MeetingsTemplate" type="text/template">
+
+<div class="container">
+  <div class="row">
+    <div class="page-header pull-left col-md-12 col-sm-12 col-xs-12">
+      <div class="pull-left">
+        <h3>我的诗歌单</h3>
+        <h4>唱出喜乐，唱出圣灵的感动</h4>
+      </div>
+      <blockquote class="pull-right">
+        <h3></h3>
+        <h5>“ 我赐给你们一条新命令，乃是叫你们彼此相爱。”</h5>
+        <small>约翰福音13:34</small>
+      </blockquote>
+    </div>
+  </div>
+</div>
+
+<div class="container">
+
+  <div class="row">
+    <div class="col-md-12">
+      <h1></h1>
+      <h4>歌单列表</h4>
+    </div>
+  </div>
+  
+  <div class="row">
+    <div class="col-md-12">
+      <h1></h1>
+      <div class="panel-group" tag="songsContainer">
+      </div>
+    </div>
+  </div>
+
+</div>
+
+</script>
+
+<script id="MeetingTemplate" type="text/template">
+
+  <% var m = model.toJSON(); %>
+
+  <div class="panel-heading">
+    <h5 class="panel-title">
+      <a data-toggle="collapse" href="#<%= m.id %>" >
+        <span class="glyphicon <%= m.status == 'current' ? 'glyphicon-tag' : 'glyphicon-pushpin' %> song-list-date"></span>
+        <% if(m.status == "current") { %>
+          未保存的歌单
+        <% } else { %>
+          <%= helper.formatDateTime(m.date, 'day', 'shortString') %> <%= m.info %>
+        <% } %>
+      </a>
+      <button type="button" class="btn btn-default btn-xs pull-right" data-toggle="tooltip" title="双击" data-placement="bottom" tag="del">删除</button>
+      <% if(m.status == "current") { %>
+        <button type="button" class="btn btn-primary btn-xs pull-right song-list-button" tag="save">保存</button>
+      <% } else { %>
+        <button type="button" class="btn btn-default btn-xs pull-right song-list-button" tag="edit">修改</button>                
+      <% } %>
+    </h5>
+  </div>
+  <div class="panel-collapse collapse in" id="<%= m.id %>" >
+    <div class="panel-body">
+        
+      <% if(m.status == "current") { %>
+        
+      <form class="form-horizontal" role="form">
+        <div class="form-group">
+          <label class="col-md-1 control-label">聚会时间</label>
+          <div class="col-md-11">
+            <input type="text" class="form-control" name="date" value="<%= helper.formatDateTime(m.date, 'day', 'shortString') %>" />
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="col-md-1 control-label">聚会信息</label>
+          <div class="col-md-11">
+            <input type="text" class="form-control" name="info" value="<%= m.info %>" />
+          </div>
+        </div>
+      </form>
+      
+      <% } %> 
+      
+      <table class="table table-condensed table-hover" meeting_id="<%= m.id %>" >
+        <thead>
+          <tr>
+            <th class="col-md-4 col-sm-4 col-xs-4">歌名</th>
+            <th class="col-md-5 col-sm-4 col-xs-4">歌词首句</th>
+            <th class="col-md-1 col-sm-1 col-xs-1">首数</th>
+            <th class="col-md-2 col-sm-3 col-xs-3">操作</th>
+          </tr>
+        </thead>
+        <tbody status="<%= m.status %>" >
+
+        </tbody>
+      </table>
+      
+    </div>
+  </div>
+        
+</script>
+
+<script id="MeetingSongTemplate" type="text/template">
+  <a class="btn btn-link btn-xs pull-right" tag="del"><span class="glyphicon glyphicon-remove"></span></a>
+</script>
+
+</div>
