@@ -38,6 +38,8 @@ end
 class MeetingSong < ActiveRecord::Base
 end
 
+use Rack::Session::Pool, :expire_after => 2592000
+
 ### utils start
 
 def encode_object(obj)
@@ -414,8 +416,6 @@ end
 ### import end
 
 ### login start
-
-use Rack::Session::Pool, :expire_after => 2592000
 
 def get_user(p)
   user = User.find_by_open_id(p[:open_id])
