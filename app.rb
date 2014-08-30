@@ -441,8 +441,8 @@ post '/login' do
   }
   user = get_user(p)
   session[:user_id] = user.id
-  session[:nickname] = user.nickname
-  session[:figure_url] = user.figure_url
+  session[:nickname] = user.nickname.force_encoding('UTF-8')
+  session[:figure_url] = user.figure_url.force_encoding('UTF-8')
   re = { :error => false }
   json re
 end
