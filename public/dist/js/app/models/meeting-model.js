@@ -1,0 +1,1 @@
+define(["backbone"],function(e){var n=e.Model.extend({urlRoot:"/meetings"}),o=e.Collection.extend({model:n}),t=e.Model.extend({urlRoot:"/meetingSongs"}),i=e.Collection.extend({model:t}),l={Meeting:n,Meetings:o,MeetingSong:t,MeetingSongs:i};return l});

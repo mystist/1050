@@ -10,7 +10,28 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140505061757) do
+ActiveRecord::Schema.define(version: 20140822134334) do
+
+  create_table "meeting_songs", force: true do |t|
+    t.integer  "meeting_id"
+    t.integer  "song_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "meeting_songs", ["meeting_id"], name: "fk_meeting_songs_meetings", using: :btree
+  add_index "meeting_songs", ["song_id"], name: "fk_meeting_songs_songs", using: :btree
+
+  create_table "meetings", force: true do |t|
+    t.integer  "user_id"
+    t.datetime "date"
+    t.string   "info"
+    t.string   "status"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "meetings", ["user_id"], name: "fk_meetings_users", using: :btree
 
   create_table "resources", force: true do |t|
     t.integer  "song_id"

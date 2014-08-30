@@ -26,67 +26,6 @@
 
 </script>
 
-<script id="SongsTemplate_bak" type="text/template">
-
-  <%
-    var list = collection.toJSON();
-    var categoryBig = _.uniq(_.map(list, function(obj) {
-      return obj['category_big'];
-    }));
-  %>
-
-  <% _.each(categoryBig, function(item) { %>
-  <div class="row">
-    <div class="col-md-12">
-      <h4><strong><%= item %></strong></h4>
-      <%
-        var curList = _.filter(list, function(obj) {
-          return obj["category_big"] == item;
-        });
-        var curCategorySmall = _.uniq(_.map(curList, function(obj) {
-          return obj['category_small'];
-        }));
-      %>
-      <% _.each(curCategorySmall, function(subItem) { %>
-      <div class="panel panel-default">
-        <div class="panel-heading"><%= subItem %></div>
-        <table class="table table-condensed table-hover">
-          <thead>
-            <tr>
-              <th class="col-md-4 col-sm-4 col-xs-4">歌名</th>
-              <th class="col-md-5 col-sm-4 col-xs-4">歌词首句</th>
-              <th class="col-md-1 col-sm-1 col-xs-1">首数</th>
-              <th class="col-md-2 col-sm-3 col-xs-3">操作</th>
-            </tr>
-          </thead>
-          <tbody>
-          <%
-            var curCurList = _.filter(curList, function(obj) {
-              return obj["category_small"] == subItem;
-            });
-          %>
-          <% _.each(curCurList, function(m) { %>
-            <tr song_id="<%= m.id %>" >
-              <td>《<%= m.name %>》</td>
-              <td><%= m.first_sentence %></td>
-              <td><%= m.index %></td>
-              <td>
-                <a class="btn btn-warning btn-xs" <%= m.pic_src ? "" : "disabled='disabled'" %> data-toggle="popover" data-content="<a href='<%= m.pic_src ? (config.bucketUrl + encodeURIComponent(m.pic_src)) : "javascript:;" %>' target='_blank' style='display: block; width: 120px; height: 200px;'><img src='<%= m.pic_src ? (config.bucketUrl + encodeURIComponent(m.pic_src) + "?imageView2/1/w/120/h/200") : "" %>' /></a>" >歌谱</a>
-                <a class="btn btn-success btn-xs" href="javascript:;" <%= m.song_src ? "" : "disabled='disabled'" %> tag="play">播放</a>
-                <a class="btn btn-primary btn-xs" href="modification/<%= m.id %>" tag="hash_url">编辑</a>
-              </td>
-            </tr>
-          <% }); %>
-          </tbody>
-        </table>
-      </div>
-      <% }); %>
-    </div>
-  </div>
-  <% }); %>
-
-</script>
-
 <script id="SongsTemplate" type="text/template">
 
   <%
@@ -98,7 +37,7 @@
       <h1></h1>
       <div class="panel panel-default">
         <div class="panel-heading">诗歌列表</div>
-        <table class="table table-condensed table-hover">
+        <table class="table table-condensed table-hover" tag="songsContainer">
           <thead>
             <tr>
               <th class="col-md-4 col-sm-4 col-xs-4">歌名</th>
@@ -114,7 +53,8 @@
               <td><%= m.first_sentence %></td>
               <td><%= m.index %></td>
               <td>
-                <a class="btn btn-warning btn-xs" <%= m.pic_src ? "" : "disabled='disabled'" %> data-toggle="popover" data-content="<a href='<%= m.pic_src ? (config.bucketUrl + encodeURIComponent(m.pic_src)) : "javascript:;" %>' target='_blank' style='display: block; width: 200px; height: 300px;'><img src='<%= m.pic_src ? (config.bucketUrl + encodeURIComponent(m.pic_src) + "?imageView2/1/w/200/h/300") : "" %>' /></a>" >歌谱</a>
+                <!-- <a class="btn btn-warning btn-xs" <%= m.pic_src ? "" : "disabled='disabled'" %> data-toggle="popover" data-content="<a href='<%= m.pic_src ? (config.bucketUrl + encodeURIComponent(m.pic_src)) : "javascript:;" %>' target='_blank' style='display: block; width: 200px; height: 300px;'><img src='<%= m.pic_src ? (config.bucketUrl + encodeURIComponent(m.pic_src) + "?imageView2/1/w/200/h/300") : "" %>' /></a>" >歌谱</a> -->
+                <a class="btn btn-warning btn-xs" <%= m.pic_src ? '' : 'disabled="disabled"' %> href="<%= m.pic_src ? (config.bucketUrl + encodeURIComponent(m.pic_src)) : 'javascript:;' %>" target="_blank" >歌谱</a>
                 <a class="btn btn-success btn-xs" href="javascript:;" <%= m.song_src ? "" : "disabled='disabled'" %> tag="play">播放</a>
                 <a class="btn btn-primary btn-xs" href="modification/<%= m.id %>" tag="hash_url">编辑</a>
               </td>
@@ -126,6 +66,21 @@
     </div>
   </div>
 
+</script>
+
+<script id="SongTemplate" type="text/template">
+
+  <% var m = model.toJSON(); %>
+
+  <td>《<%= m.name %>》</td>
+  <td><%= m.first_sentence %></td>
+  <td><%= m.index %></td>
+  <td>
+    <a class="btn btn-warning btn-xs" <%= m.pic_src ? '' : 'disabled="disabled"' %> href="<%= m.pic_src ? (config.bucketUrl + encodeURIComponent(m.pic_src)) : 'javascript:;' %>" target="_blank" >歌谱</a>
+    <a class="btn btn-success btn-xs" href="javascript:;" <%= m.song_src ? "" : "disabled='disabled'" %> tag="play">播放</a>
+    <a class="btn btn-primary btn-xs" href="modification/<%= m.id %>" tag="hash_url">编辑</a>
+  </td>
+  
 </script>
 
 <script id="PagerTemplate" type="text/template">
@@ -285,7 +240,7 @@
       <div class="col-md-12">
         <h4><label>歌曲文件：</label></h4>
         <div class="panel panel-default">
-          <table class="table table-condensed table-hover">
+          <table class="table table-condensed table-hover" tag="songsContainer">
             <thead>
               <tr>
                 <th class="col-md-3">文件名</th>
@@ -407,6 +362,9 @@
       <div class="col-md-3">
         <button tag="submit" type="button" class="btn btn-primary">确 定</button>
         <label>&nbsp;&nbsp;</label>
+        <% if(userId) { %>
+          <button type="button" class="btn btn-default" data-toggle="tooltip" title="将新增至“未保存的歌单”中" tag="add">添加到「我的诗歌单」</button>
+        <% } %>
         <!-- <button tag="del" type="button" class="btn btn-default" data-toggle="tooltip" title="双击">删除</button> -->
       </div>
       <div class="col-md-9">

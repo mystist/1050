@@ -1,1 +1,0 @@
-r.js -o public/src/build/build.almond.js

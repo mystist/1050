@@ -29,9 +29,9 @@
   enforceDefine: true
 });
 
-define(['jquery', 'backbone', 'utils/utils', 'app/models/song-model', 'app/views/song-view', 'helper', 'bootstrap'],
+define(['jquery', 'backbone', 'utils/utils', 'app/models/song-model', 'app/views/song-view', 'app/models/meeting-model', 'app/views/meeting-view', 'helper', 'bootstrap'],
 
-function($, Backbone, utils, SongModel, SongView, helper) {
+function($, Backbone, utils, SongModel, SongView, MeetingModel, MeetingView, helper) {
 
   var App = Backbone.View.extend({
     
@@ -74,7 +74,8 @@ function($, Backbone, utils, SongModel, SongView, helper) {
       'category_big/:categoryName': 'showSongs',
       'modification': 'editSong',
       'modification/:id': 'editSong',
-      'search/:keywords': 'search'
+      'search/:keywords': 'search',
+      'meeting': 'meeting'
     },
     
     showSongs: function(categoryName) {
@@ -106,6 +107,16 @@ function($, Backbone, utils, SongModel, SongView, helper) {
         app.categoryName = '“' + keywords + '” 搜索结果';
         app.initSongs('/songs_search/'+encodeURIComponent(keywords));
       }
+    },
+    
+    meeting: function() {
+      meetings = new MeetingModel.Meetings()
+      meetings.url = '/meetings/' + $('#IndexContainer').attr('user_id');
+      meetings.fetch({success: function(collection, response) {
+        if(response&&!response.error) {
+          var meetingsView = new MeetingView.MeetingsView({collection: meetings});
+        }
+      }});
     }
     
   });

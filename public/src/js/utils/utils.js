@@ -106,7 +106,7 @@ var utils = {
   },
   
   renderNowPlaying: function($target, cssName) {
-    var $context = $target.closest('.table');
+    var $context = $target.closest('*[tag="songsContainer"]').first();
     $context.find('tr[class="'+cssName+'"]').removeClass(cssName);
     $target.closest('tr').addClass(cssName);
   },
