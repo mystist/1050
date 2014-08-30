@@ -38,7 +38,8 @@ end
 class MeetingSong < ActiveRecord::Base
 end
 
-use Rack::Session::Pool, :expire_after => 2592000
+# use Rack::Session::Pool, :expire_after => 2592000
+enable :sessions
 
 ### utils start
 
