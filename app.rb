@@ -39,7 +39,9 @@ class MeetingSong < ActiveRecord::Base
 end
 
 # use Rack::Session::Pool, :expire_after => 2592000
-enable :sessions
+use Rack::Session::Cookie, :key => 'rack.session',
+                           :expire_after => 2592000, # In seconds
+                           :secret => '1050'
 
 ### utils start
 
