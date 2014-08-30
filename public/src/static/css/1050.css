@@ -46,8 +46,8 @@ h4 {
   padding-left: 25px;
 }
 
-.song-list-date {
-  margin-right: 10px;
+.song-list-date, .song-list-button {
+  margin-right: 8px;
 }
 
 /* end custom */

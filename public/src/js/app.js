@@ -29,9 +29,9 @@
   enforceDefine: true
 });
 
-define(['jquery', 'backbone', 'utils/utils', 'app/models/song-model', 'app/views/song-view', 'helper', 'bootstrap'],
+define(['jquery', 'backbone', 'utils/utils', 'app/models/song-model', 'app/views/song-view', 'app/models/meeting-model', 'app/views/meeting-view', 'helper', 'bootstrap'],
 
-function($, Backbone, utils, SongModel, SongView, helper) {
+function($, Backbone, utils, SongModel, SongView, MeetingModel, MeetingView, helper) {
 
   var App = Backbone.View.extend({
     
@@ -110,7 +110,13 @@ function($, Backbone, utils, SongModel, SongView, helper) {
     },
     
     meeting: function() {
-      console.log('everything is ok !');
+      meetings = new MeetingModel.Meetings()
+      meetings.url = '/meetings/' + $('#IndexContainer').attr('user_id');
+      meetings.fetch({success: function(collection, response) {
+        if(response&&!response.error) {
+          var meetingsView = new MeetingView.MeetingsView({collection: meetings});
+        }
+      }});
     }
     
   });

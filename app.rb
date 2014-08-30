@@ -486,6 +486,66 @@ def init_meeting
   meeting
 end
 
+get '/meetings/:user_id' do
+  if(!session[:user_id].nil?)
+    meetings = Meeting.where('user_id = ?', params[:user_id]).order('id DESC')
+    json attach_meetings_with_its_songs(encode_list(meetings))
+  end
+end
+
+def attach_meetings_with_its_songs(meetings)
+  attached_meetings = []
+  meetings.each do |meeting|
+    hash = {}
+    meeting.attributes.each do |key, value|
+      hash[key] = value
+    end
+    hash[:meeting_songs] = attach_meeting_songs_with_song_info(MeetingSong.where('meeting_id = ?', meeting.id))
+    attached_meetings.push(hash)
+  end
+  attached_meetings
+end
+
+def attach_meeting_songs_with_song_info(meeting_songs)
+  attached_meeting_songs = []
+  meeting_songs.each do |meeting_song|
+    hash = {}
+    meeting_song.attributes.each do |key, value|
+      hash[key] = value
+    end
+    hash[:song] = encode_object(Song.find_by_id(meeting_song.song_id))
+    attached_meeting_songs.push(hash)
+  end
+  attached_meeting_songs
+end
+
+delete '/meetingSongs/:id' do
+  param = (params[:id]).to_i
+  json MeetingSong.delete(param)
+end
+
+put '/meetings/:id' do
+  request.body.rewind  # in case someone already read it
+  data = JSON.parse request.body.read
+  meeting = Meeting.find_by_id(params[:id].to_i)
+  if(save_object(meeting, data))
+    re = encode_object(meeting)
+    json re
+  else
+    re = { :error => true }
+    json re
+  end
+end
+
+delete '/meetings/:id' do
+  param = (params[:id]).to_i
+  meeting_songs = MeetingSong.where('meeting_id = ?', param)
+  meeting_songs.each do |meeting_song|
+    meeting_song.delete
+  end
+  json Meeting.delete(param)
+end
+
 ### meeting end
 
 get '*' do

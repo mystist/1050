@@ -99,11 +99,11 @@ var SongsView = Backbone.View.extend({
   
   initialize: function() {
     this.render();
-    this.$el.popover({
-      selector: '*[data-toggle="popover"]',
-      placement: 'left',
-      html: true
-    });
+    // this.$el.popover({
+    //   selector: '*[data-toggle="popover"]',
+    //   placement: 'left',
+    //   html: true
+    // });
   },
   
   render: function() {
@@ -120,7 +120,7 @@ var SongsView = Backbone.View.extend({
     var songId = $(e.currentTarget).closest('*[song_id]').attr('song_id');
     var song = this.collection.get(songId);
     
-    if((this.viewInUse || (this.viewInUse = {} || this.viewInUse)).playerView) {
+    if((this.viewInUse || (this.viewInUse = {})).playerView) {
       this.viewInUse.playerView.close();
     }
     this.viewInUse.playerView = new PlayerView({model: song});
@@ -128,6 +128,40 @@ var SongsView = Backbone.View.extend({
     utils.renderNowPlaying($(e.currentTarget), 'success');
   }
 
+});
+
+var SongView = Backbone.View.extend({
+
+  options: null,
+
+  tagName: 'tr',
+  
+  template: "#SongTemplate",
+  
+  initialize: function(options) {
+    this.options = options || {};
+    this.render();
+  },
+  
+  render: function() {
+    var template = _.template($(SongTemplate).find(this.template).html());
+    this.$el.empty().html(template(this));
+    this.options.$target.append(this.el);
+  },
+  
+  events: {
+    'click *[tag="play"]': 'play'
+  },
+  
+  play: function(e) {
+    if((this.viewInUse || (this.viewInUse = {})).playerView) {
+      this.viewInUse.playerView.close();
+    }
+    this.viewInUse.playerView = new PlayerView({model: this.model});
+    
+    utils.renderNowPlaying($(e.currentTarget), 'success');
+  }
+  
 });
 
 var PlayerView = Backbone.View.extend({
@@ -185,8 +219,7 @@ var EditSongView = Backbone.View.extend({
     setTimeout(function() {  
       if($("#IndexContainer").attr("user_id")) {
         tThis.$el.tooltip({
-          selector: '*[data-toggle="tooltip"]',
-          placement: 'right'
+          selector: '*[data-toggle="tooltip"]'
         });
         
         tThis.initUploader('song');
@@ -386,7 +419,7 @@ var EditSongView = Backbone.View.extend({
     var resourceId = $(e.currentTarget).closest('*[resource_id]').attr('resource_id');
     this.model.set('song_src', this.songResources.get(resourceId).get('file_name'));
     
-    if((this.viewInUse || (this.viewInUse = {} || this.viewInUse)).playerView) {
+    if((this.viewInUse || (this.viewInUse = {})).playerView) {
       this.viewInUse.playerView.close();
     }
     this.viewInUse.playerView = new PlayerView({model: this.model});
@@ -407,6 +440,7 @@ var EditSongView = Backbone.View.extend({
 var SongView = {
   ShowSongView: ShowSongView,
   PagerView: PagerView,
+  SongView: SongView,
   SongsView: SongsView,
   EditSongView: EditSongView,
   PlayerView: PlayerView
