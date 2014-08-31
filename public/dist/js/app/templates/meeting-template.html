@@ -46,16 +46,17 @@
   <div class="panel-heading">
     <h5 class="panel-title">
       <a data-toggle="collapse" href="#<%= m.id %>" >
-        <span class="glyphicon <%= m.status == 'current' ? 'glyphicon-tag' : 'glyphicon-pushpin' %> song-list-date"></span>
+        <span class="glyphicon <%= m.status == 'current' ? 'glyphicon-time' : 'glyphicon-pushpin' %> song-list-date"></span>
         <% if(m.status == "current") { %>
-          未保存的歌单
+          临时歌单
         <% } else { %>
           <%= helper.formatDateTime(m.date, 'day', 'shortString') %> <%= m.info %>
         <% } %>
       </a>
       <button type="button" class="btn btn-default btn-xs pull-right" data-toggle="tooltip" title="双击" data-placement="bottom" tag="del">删除</button>
       <% if(m.status == "current") { %>
-        <button type="button" class="btn btn-primary btn-xs pull-right song-list-button" tag="save">保存</button>
+        <button type="button" class="btn btn-default btn-xs pull-right song-list-button" tag="save">保存</button>
+        <button type="button" class="btn btn-primary btn-xs pull-right song-list-button" tag="generate">生成歌单</button>
       <% } else { %>
         <button type="button" class="btn btn-default btn-xs pull-right song-list-button" tag="edit">修改</button>                
       <% } %>
