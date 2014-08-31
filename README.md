@@ -4,7 +4,7 @@
 The 1050 Poetry of Christian.  
 [http://1050.14201420.com/](http://1050.14201420.com/)
 
-Version: 0.3.0  
+Version: 0.3.1  
 Last updated: 2014-08-31 21:17
 
 ====
