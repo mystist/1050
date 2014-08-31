@@ -73,15 +73,20 @@ var MeetingView = Backbone.View.extend({
   },
   
   events: {
-    'click *[tag="save"]': 'save',
+    'click *[tag="save"]': 'put',
+    'click *[tag="generate"]': 'put',
     'click *[tag="edit"]': 'edit',
     'dblclick *[tag="del"]': 'del'
   },
   
-  save: function(e) {
+  put: function(e) {
     var tThis = this;
     var obj = utils.getObjFromForm(this.$el.find('form'));
-    obj['status'] = 'confirmed';
+    
+    if ($(e.currentTarget).attr('tag') == 'generate') {
+      obj['status'] = 'confirmed';
+    }
+    
     this.model.save(obj, {
       wait: true,
       $btn: $(e.currentTarget),
@@ -98,7 +103,7 @@ var MeetingView = Backbone.View.extend({
   edit: function(e) {
     var $target = this.$el.closest('.panel-group').find('*[status="current"]');
     if($target.length > 1) {
-      var $alert = $(utils.getAlertHtml('alert-danger', '请先保存“未保存的歌单”'));
+      var $alert = $(utils.getAlertHtml('alert-danger', '请先生成当前的“临时歌单”'));
       var $target = this.options.$target.find('*[tag="alert"]').first();
       utils.renderAlert($target, $alert);
     } else {
