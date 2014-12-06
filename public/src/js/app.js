@@ -1,4 +1,5 @@
-﻿require.config({
+﻿
+require.config({
   baseUrl: '/js/libs',
   paths: {
     'app': '../app',
@@ -14,6 +15,10 @@
     'bootstrap': {
       deps: ['jquery'],
       exports: '$.fn.tooltip'
+    },
+    'bootstrap-waterfall': {
+      deps: ['jquery'],
+      exports: '$.fn.waterfall'
     },
     'plupload/plupload': {
       exports: 'plupload'
@@ -110,7 +115,7 @@ function($, Backbone, utils, SongModel, SongView, MeetingModel, MeetingView, hel
     },
     
     meeting: function() {
-      meetings = new MeetingModel.Meetings()
+      meetings = new MeetingModel.Meetings();
       meetings.url = '/meetings/' + $('#IndexContainer').attr('user_id');
       meetings.fetch({success: function(collection, response) {
         if(response&&!response.error) {
@@ -134,6 +139,3 @@ function($, Backbone, utils, SongModel, SongView, MeetingModel, MeetingView, hel
   return Main;
 
 });
-
-
-
