@@ -16,6 +16,8 @@
 ### 更新日志：  
 
 #### 2014-12-06  
+    Hotfix: `0.4.2`, `0.4.1`  
+      更新bootstrap-waterfall.  
     Release: `0.4.0`:  
       使用[bootstrap-waterfall](https://github.com/Mystist/bootstrap-waterfall)显示歌曲。
 
