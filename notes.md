@@ -214,8 +214,8 @@ importSongs()
 
 r.js -o public/src/build/build.js
 r.js -o public/src/build/build.almond.js
-更新readme.md（版本、时间、内容）
-更新dev_blog.md
+更新 readme.md（版本、时间、内容）
+更新 dev_blog.md
 
 
 

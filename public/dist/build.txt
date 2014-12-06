@@ -71,6 +71,7 @@ js/app/models/meeting-model.js
 js/libs/plupload/plupload.js
 js/libs/plupload/zh_CN.js
 js/libs/bootstrap.js
+js/libs/bootstrap-waterfall.js
 js/app/views/song-view.js
 text!app/templates/meeting-template.html
 js/app/views/meeting-view.js
