@@ -4,8 +4,8 @@
 The 1050 Poetry of Christian.  
 [http://1050.14201420.com/](http://1050.14201420.com/)
 
-Version: 0.3.2  
-Last updated: 2014-08-31 21:46
+Version: 0.4.0  
+Last updated: 2014-12-06 19:44
 
 ====
 
@@ -18,12 +18,13 @@ Freely, quickly and simple.
 
 #### Todos:  
 
-1. Waterfall + lazyload + hotfix of pager url.  
+1. Hotfix of pager url.  
 2. Speed up home page.  
-3. Create main site: www.14201420.com with jekyll.  
-4. Write something for brothers and sisters.  
+3. Create main site: www.14201420.com with jekyll. (Using Yeoman)  
 
 #### Done:  
+
+Waterfall.  
 
 Backbone Memory leak:  
 Use iframe for Player to avoid memory leaks. How about the other Views ? We may take care of the problem in the future.  
