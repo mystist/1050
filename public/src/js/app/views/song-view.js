@@ -1,4 +1,4 @@
-﻿define(['jquery', 'backbone', 'text!app/templates/song-template.html', 'helper', 'utils/utils', 'app/models/resource-model', 'app/views/resource-view', 'app/models/meeting-model', 'plupload/zh_CN', 'utils/config', 'bootstrap'],
+﻿define(['jquery', 'backbone', 'text!app/templates/song-template.html', 'helper', 'utils/utils', 'app/models/resource-model', 'app/views/resource-view', 'app/models/meeting-model', 'plupload/zh_CN', 'utils/config', 'bootstrap', 'bootstrap-waterfall'],
 
 function($, Backbone, SongTemplate, helper, utils, ResourceModel, ResourceView, MeetingModel, plupload, config) {
 
@@ -64,15 +64,15 @@ var PagerView = Backbone.View.extend({
   renderHtml: function() {
     var tThis = this;
     require(['app/models/song-model'], function(SongModel) {
-      var songsView = new SongsView({collection: new SongModel.Songs(tThis.curSongsList)});
-
       var template = _.template($(SongTemplate).find(tThis.template).html());
       tThis.$el.html(template(tThis));
+      
+      var songsView = new SongsView({collection: new SongModel.Songs(tThis.curSongsList)});
     });
   },
   
   events: {
-    'click .pagination a': 'goto'
+    'click .pagination li:not(.disabled) a': 'goto'
   },
   
   goto: function(e) {
@@ -85,7 +85,7 @@ var PagerView = Backbone.View.extend({
         this.curPage += 1;
         break;
       default:
-        this.curPage = parseInt($target.html(), 10);
+        this.curPage = parseInt($target.text(), 10);
     }
     this.filterSongs();
     this.renderHtml();
@@ -99,21 +99,22 @@ var SongsView = Backbone.View.extend({
   
   initialize: function() {
     this.render();
-    // this.$el.popover({
-    //   selector: '*[data-toggle="popover"]',
-    //   placement: 'left',
-    //   html: true
-    // });
   },
   
   render: function() {
     var template = _.template($(SongTemplate).find(this.template).html());
-    this.$el.html(template(_.extend({}, this, {config: config})));
+    this.$el.html(template());
+    
+    var songsTemplate = _.template($(SongTemplate).find('*[type="text/bootstrap-waterfall-template"]')[0].outerHTML);
+    this.$el.append(songsTemplate(_.extend({}, this, {config: config}, {userId: $("#IndexContainer").attr("user_id")})));
+    
     $("#SongsContainer").empty().html(this.el);
+    this.$('.bootstrap-waterfall').waterfall();
   },
   
   events: {
-    'click *[tag="play"]': 'play'
+    'click *[tag="play"]': 'play',
+    'click *[tag="add"]': 'add'
   },
   
   play: function(e) {
@@ -125,7 +126,24 @@ var SongsView = Backbone.View.extend({
     }
     this.viewInUse.playerView = new PlayerView({model: song});
     
-    utils.renderNowPlaying($(e.currentTarget), 'success');
+    this.renderNowPlaying($(e.currentTarget), 'btn-success');
+  },
+  
+  renderNowPlaying: function ($target, cssName) {
+    var $context = $target.closest('#SongsContainer');
+    $context.find('a.' + cssName).removeClass(cssName);
+    $target.addClass(cssName);
+  },
+  
+  add: function(e) {
+    var songId = $(e.currentTarget).closest('*[song_id]').attr('song_id');
+    var song = this.collection.get(songId);
+    
+    var meetingSong = new MeetingModel.MeetingSong({'song_id': song.id});
+    meetingSong.save(null, {
+      wait: true,
+      $btn: $(e.currentTarget)
+    });
   }
 
 });
@@ -237,8 +255,7 @@ var EditSongView = Backbone.View.extend({
   events: {
     'click *[tag="submit"]': 'submit',
     'dblclick *[tag="del"]': 'del',
-    'click *[tag="play"]': 'play',
-    'click *[tag="add"]': 'add'
+    'click *[tag="play"]': 'play'
   },
   
   submit: function(e) {
@@ -425,14 +442,6 @@ var EditSongView = Backbone.View.extend({
     this.viewInUse.playerView = new PlayerView({model: this.model});
     
     utils.renderNowPlaying($(e.currentTarget), 'success');
-  },
-  
-  add: function(e) {
-    var meetingSong = new MeetingModel.MeetingSong({'song_id': this.model.id});
-    meetingSong.save(null, {
-      wait: true,
-      $btn: $(e.currentTarget)
-    });
   }
 
 });
