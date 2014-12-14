@@ -104,12 +104,12 @@ var SongsView = Backbone.View.extend({
   render: function() {
     var template = _.template($(SongTemplate).find(this.template).html());
     this.$el.html(template());
-    
-    var songsTemplate = _.template($(SongTemplate).find('*[type="text/bootstrap-waterfall-template"]')[0].outerHTML);
-    this.$el.append(songsTemplate(_.extend({}, this, {config: config}, {userId: $("#IndexContainer").attr("user_id")})));
-    
     $("#SongsContainer").empty().html(this.el);
-    this.$('.bootstrap-waterfall').waterfall();
+    
+    var songsTemplate = _.template($(SongTemplate).find('#bootstrap-waterfall-template').html());
+    this.$('.bootstrap-waterfall')
+      .data('bootstrap-waterfall-template', songsTemplate(_.extend({}, this, {config: config}, {userId: $("#IndexContainer").attr("user_id")})))
+      .waterfall();
   },
   
   events: {
