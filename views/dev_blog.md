@@ -15,6 +15,10 @@
 
 ### 更新日志：  
 
+#### 2014-12-14  
+    Release: `0.5.0`
+      更新[bootstrap-waterfall](https://github.com/Mystist/bootstrap-waterfall)
+
 #### 2014-12-07
     Release: `0.4.3`:  
       更新[bootstrap-waterfall](https://github.com/Mystist/bootstrap-waterfall)
