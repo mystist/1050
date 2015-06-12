@@ -39,41 +39,53 @@ define(['jquery', 'backbone', 'utils/utils', 'app/models/song-model', 'app/views
 function($, Backbone, utils, SongModel, SongView, MeetingModel, MeetingView, helper) {
 
   var App = Backbone.View.extend({
-    
+
     songs: null,
     categoryName: null,
-    
+
     initialize: function() {
       utils.setGlobalAjaxSettings();
       this.initHashUrl();
     },
-    
+
     initSongs: function(url) {
       this.songs = new SongModel.Songs();
       this.songs.url = url;
-      this.songs.fetch({success: function(collection, response) {
-        if(response&&!response.error) {
+      this.songs.fetch();
+      var deferred = this.songs.fetch({ajaxSync: true});
+
+      if (this.songs.length > 0) {
+        app.showSongs();
+      } else {
+        deferred.done($.proxy(function () {
           app.showSongs();
-        }
-      }});
+          this.syncSongs();
+        }, this));
+      }
     },
-    
+
+    syncSongs: function () {
+      this.songs.each(function (song) {
+        song.save();
+      });
+    },
+
     showSongs: function() {
       var showSongView = new SongView.ShowSongView({collection: this.songs, app: this});
       var pagerView = new SongView.PagerView({collection: this.songs});
     },
-    
+
     initHashUrl: function() {
       $(document).on('click', '*[tag="hash_url"]', function(e) {
         e.preventDefault();
         router.navigate($(this).attr("href"), {trigger: true});
       });
     }
-    
+
   });
-  
+
   var Router = Backbone.Router.extend({
-  
+
     routes: {
       '': 'showSongs',
       'category_big/:categoryName': 'showSongs',
@@ -82,7 +94,7 @@ function($, Backbone, utils, SongModel, SongView, MeetingModel, MeetingView, hel
       'search/:keywords': 'search',
       'meeting': 'meeting'
     },
-    
+
     showSongs: function(categoryName) {
       if(!categoryName) {
         app.initSongs('/songs');
@@ -91,7 +103,7 @@ function($, Backbone, utils, SongModel, SongView, MeetingModel, MeetingView, hel
         app.categoryName = categoryName;
       }
     },
-    
+
     editSong: function(id) {
       if(id) {
         var song = new SongModel.Song({id: id});
@@ -106,14 +118,14 @@ function($, Backbone, utils, SongModel, SongView, MeetingModel, MeetingView, hel
         var editSongView = new SongView.EditSongView({model: new SongModel.Song()});
       }
     },
-    
+
     search: function(keywords) {
       if(keywords) {
         app.categoryName = '“' + keywords + '” 搜索结果';
         app.initSongs('/songs_search/'+encodeURIComponent(keywords));
       }
     },
-    
+
     meeting: function() {
       meetings = new MeetingModel.Meetings();
       meetings.url = '/meetings/' + $('#IndexContainer').attr('user_id');
@@ -123,19 +135,19 @@ function($, Backbone, utils, SongModel, SongView, MeetingModel, MeetingView, hel
         }
       }});
     }
-    
+
   });
-  
+
   var router = new Router();
   var app = new App();
-  
+
   Backbone.history.start({pushState: true});
-  
+
   var Main = {
     app: app,
     router: router
   };
-  
+
   return Main;
 
 });

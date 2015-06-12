@@ -265,6 +265,7 @@ var EditSongView = Backbone.View.extend({
     var isValid = song.save(obj, {
       wait: true,
       $btn: $(e.currentTarget),
+      ajaxSync: true,
       success: function(model, response) {
         if(response&&!response.error) {
           require(['app'], function(Main) {
