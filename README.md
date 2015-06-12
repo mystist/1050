@@ -16,7 +16,11 @@ Freely, quickly and simple.
 
 ====
 
-#### Todos:  
+#### Todo:  
+
+Tiny:
+1. Add pager at bottom.
+2. Add to my song list on the playing page.
 
 1. Hotfix of pager url.  
 2. Speed up home page.  

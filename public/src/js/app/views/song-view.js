@@ -106,8 +106,8 @@ var SongsView = Backbone.View.extend({
     this.$el.html(template());
     $("#SongsContainer").empty().html(this.el);
     
-    var songsTemplate = _.template($(SongTemplate).find('#bootstrap-waterfall-template').html());
-    this.$('.bootstrap-waterfall')
+    var songsTemplate = _.template($(SongTemplate).find('#waterfall-template').html());
+    this.$('.waterfall')
       .data('bootstrap-waterfall-template', songsTemplate(_.extend({}, this, {config: config}, {userId: $("#IndexContainer").attr("user_id")})))
       .waterfall();
   },

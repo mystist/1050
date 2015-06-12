@@ -71,14 +71,14 @@
 <script id="SongsTemplate" type="text/template">
 
   <div class="row">
-    <div class="col-md-12 col-sm-12 col-xs-12">
-      <div class="bootstrap-waterfall"></div>
+    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+      <div class="waterfall"></div>
     </div>
   </div>
 
 </script>
 
-<script id="bootstrap-waterfall-template" type="text/template">
+<script id="waterfall-template" type="text/template">
 
   <% var list = collection.toJSON(); %>
   
@@ -86,7 +86,7 @@
     <ul class="list-group" song_id="<%= m.id %>">
       <li class="list-group-item">
         <a href="<%= m.pic_src ? (config.bucketUrl + encodeURIComponent(m.pic_src)) : 'javascript:;' %>" target="_blank">
-          <img src="<%= m.pic_src ? (config.bucketUrl + encodeURIComponent(m.pic_src) + '?imageView2/2/w/272') : '' %>" />
+          <img src="<%= m.pic_src ? (config.bucketUrl + encodeURIComponent(m.pic_src) + '?imageView2/2/w/344') : '' %>" />
         </a>
       </li>
       <li class="list-group-item">
