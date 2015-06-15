@@ -42,7 +42,6 @@ var PagerView = Backbone.View.extend({
     this.initBaseUrl();
     this.filterSongs();
     this.render();
-    this.renderHtml();
   },
 
   initPager: function () {
@@ -88,37 +87,13 @@ var PagerView = Backbone.View.extend({
   },
 
   render: function () {
-    $("#PagerContainer").empty().html(this.el);
-  },
+    require(['app/models/song-model'], $.proxy(function (SongModel) {
+      var template = _.template($(SongTemplate).find(this.template).html());
+      this.$el.html(template(this));
+      $(".PagerContainer").html(this.$el.html());
 
-  renderHtml: function () {
-    var tThis = this;
-    require(['app/models/song-model'], function (SongModel) {
-      var template = _.template($(SongTemplate).find(tThis.template).html());
-      tThis.$el.html(template(tThis));
-
-      var songsView = new SongsView({collection: new SongModel.Songs(tThis.curSongsList)});
-    });
-  },
-
-  events: {
-    'click .pagination li:not(.disabled) a': 'goto'
-  },
-
-  goto: function (e) {
-    var $target = $(e.currentTarget);
-    switch($target.attr('tag')) {
-      case 'prev':
-        this.curPage -= 1;
-        break;
-      case 'next':
-        this.curPage += 1;
-        break;
-      default:
-        this.curPage = parseInt($target.text(), 10);
-    }
-    this.filterSongs();
-    this.renderHtml();
+      var songsView = new SongsView({collection: new SongModel.Songs(this.curSongsList)});
+    }, this));
   }
 
 });
@@ -167,9 +142,8 @@ var SongsView = Backbone.View.extend({
 
   add: function (e) {
     var songId = $(e.currentTarget).closest('*[song_id]').attr('song_id');
-    var song = this.collection.get(songId);
 
-    var meetingSong = new MeetingModel.MeetingSong({'song_id': song.id});
+    var meetingSong = new MeetingModel.MeetingSong({'song_id': songId});
     meetingSong.save(null, {
       wait: true,
       $btn: $(e.currentTarget)
@@ -222,12 +196,13 @@ var PlayerView = Backbone.View.extend({
 
   render: function () {
     var template = _.template($(SongTemplate).find(this.template).html());
-    this.$el.html(template(this));
+    this.$el.html(template(_.extend({}, {model: this.model}, {userId: $("#IndexContainer").attr("user_id")})));
     $('#PlayerContainer').empty().html(this.el);
   },
 
   events: {
-    'click *[tag="close"]': 'close'
+    'click *[tag="close"]': 'close',
+    'click *[tag="add"]': 'add'
   },
 
   close: function () {
@@ -246,6 +221,10 @@ var PlayerView = Backbone.View.extend({
     if (typeof CollectGarbage == "function") {
       CollectGarbage();
     }
+  },
+
+  add: function (e) {
+    SongView.SongsView.prototype.add(e);
   }
 
 });

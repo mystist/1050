@@ -20,8 +20,9 @@
 </div>
 
 <div class="container">
-  <div id="PagerContainer"></div>
+  <div class="PagerContainer"></div>
   <div id="SongsContainer"></div>
+  <div class="PagerContainer"></div>
 </div>
 
 </script>
@@ -444,9 +445,12 @@
           <iframe frameborder="0" scrolling="no" width="100%" height="100%" src="/pages/player.html?src=<%= encodeURIComponent(m.song_src) %>" ></iframe>
         </div>
       </div>
-      <div class="col-md-2 col-sm-2 col-xs-2">
+      <div class="col-md-2 col-sm-2 col-xs-2" song_id="<%= m.id %>">
         <div class="play-oper">
           <p class="oper">
+            <% if(userId) { %>
+              <a class="btn btn-default btn-xs" title="添加到「我的诗歌单」" href="javascript:;" tag="add"><span class="glyphicon glyphicon-plus"></span></a>
+            <% } %>
             <a class="btn btn-warning btn-xs" href="<%= m.pic_src ? (config.bucketUrl + encodeURIComponent(m.pic_src)) : "javascript:;" %>" target="_blank" <%= m.pic_src ? "" : "disabled='disabled'" %> >歌谱</a>
             <a class="btn btn-default btn-xs" href="javascript:;" tag="close">关闭</a>
           </p>
