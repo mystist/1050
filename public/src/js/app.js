@@ -26,7 +26,7 @@ require.config({
     'plupload/zh_CN': {
       deps: ['plupload/plupload'],
       exports: 'plupload',
-      init: function(plupload) {
+      init: function (plupload) {
         return plupload;
       }
     }
@@ -36,31 +36,32 @@ require.config({
 
 define(['jquery', 'backbone', 'utils/utils', 'app/models/song-model', 'app/views/song-view', 'app/models/meeting-model', 'app/views/meeting-view', 'helper', 'bootstrap'],
 
-function($, Backbone, utils, SongModel, SongView, MeetingModel, MeetingView, helper) {
+function ($, Backbone, utils, SongModel, SongView, MeetingModel, MeetingView, helper) {
 
   var App = Backbone.View.extend({
 
-    syncedSongs: null,
+    page: null,
     songs: null,
+    syncedSongs: null,
     categoryName: null,
 
-    initialize: function() {
+    initialize: function () {
       utils.setGlobalAjaxSettings();
       this.initHashUrl();
     },
 
-    initSongs: function(url) {
+    initSongs: function (url) {
       this.songs = this.syncedSongs.frontRestful(url);
       app.showSongs();
     },
 
-    showSongs: function() {
+    showSongs: function () {
       var showSongView = new SongView.ShowSongView({collection: this.songs, app: this});
-      var pagerView = new SongView.PagerView({collection: this.songs});
+      var pagerView = new SongView.PagerView({collection: this.songs, app: this});
     },
 
-    initHashUrl: function() {
-      $(document).on('click', '*[tag="hash_url"]', function(e) {
+    initHashUrl: function () {
+      $(document).on('click', '*[tag="hash_url"]', function (e) {
         e.preventDefault();
         router.navigate($(this).attr("href"), {trigger: true});
       });
@@ -72,11 +73,11 @@ function($, Backbone, utils, SongModel, SongView, MeetingModel, MeetingView, hel
 
     deferred: null,
     routes: {
-      '': 'showSongs',
-      'category_big/:categoryName': 'showSongs',
+      '(p:page)': 'showSongs',
+      'category_big/:categoryName(/p:page)': 'filterSongs',
       'modification': 'editSong',
       'modification/:id': 'editSong',
-      'search/:keywords': 'search',
+      'search/:keywords(/p:page)': 'search',
       'meeting': 'meeting'
     },
 
@@ -106,20 +107,22 @@ function($, Backbone, utils, SongModel, SongView, MeetingModel, MeetingView, hel
       });
     },
 
-    showSongs: function(categoryName) {
-      if(!categoryName) {
-        app.initSongs('/songs');
-      } else {
-        app.categoryName = categoryName;
-        app.initSongs('/songs_category/'+encodeURIComponent(categoryName));
-      }
+    showSongs: function (page) {
+      app.page = page ? parseInt(page, 10) : null;
+      app.initSongs('/songs');
     },
 
-    editSong: function(id) {
-      if(id) {
+    filterSongs: function (categoryName, page) {
+      app.categoryName = categoryName;
+      app.page = page ? parseInt(page, 10) : null;
+      app.initSongs('/songs_category/'+encodeURIComponent(categoryName));
+    },
+
+    editSong: function (id) {
+      if (id) {
         var song = new SongModel.Song({id: id});
-        song.fetch({success: function(model, response) {
-          if(response&&!response.error) {
+        song.fetch({success: function (model, response) {
+          if (response&&!response.error) {
             var editSongView = new SongView.EditSongView({model: song});
           } else {
             var editSongView = new SongView.EditSongView({model: new SongModel.Song()});
@@ -130,18 +133,17 @@ function($, Backbone, utils, SongModel, SongView, MeetingModel, MeetingView, hel
       }
     },
 
-    search: function(keywords) {
-      if(keywords) {
-        app.categoryName = '“' + keywords + '” 搜索结果';
-        app.initSongs('/songs_search/'+encodeURIComponent(keywords));
-      }
+    search: function (keywords, page) {
+      app.categoryName = '“' + keywords + '” 搜索结果';
+      app.page = page ? parseInt(page, 10) : null;
+      app.initSongs('/songs_search/'+encodeURIComponent(keywords));
     },
 
-    meeting: function() {
+    meeting: function () {
       meetings = new MeetingModel.Meetings();
       meetings.url = '/meetings/' + $('#IndexContainer').attr('user_id');
-      meetings.fetch({success: function(collection, response) {
-        if(response&&!response.error) {
+      meetings.fetch({success: function (collection, response) {
+        if (response&&!response.error) {
           var meetingsView = new MeetingView.MeetingsView({collection: meetings});
         }
       }});
