@@ -23,7 +23,46 @@ var Song = Backbone.Model.extend({
 
 var Songs = Backbone.Collection.extend({
   model: Song,
-  localStorage: new Backbone.LocalStorage('Songs')
+  url: '/songs',
+  localStorage: new Backbone.LocalStorage('Songs'),
+
+  frontRestful: function (url) {
+    var urlFragments = url.split('/');
+    var methodName = urlFragments[1];
+    var param = urlFragments[2];
+
+    return this[methodName](param);
+  },
+
+  songs: function () {
+    return this;
+  },
+
+  songs_category: function (param) {
+    var param = decodeURIComponent(param);
+    var models = this.where({'category_big': param});
+
+    return new SongModel.Songs(models);
+  },
+
+  songs_search: function (param) {
+    var param = decodeURIComponent(param);
+    var models = [];
+
+    if (isNaN(param)) {
+      var models1 = this.filter(function (song) {
+        return song.get('name').indexOf(param) > -1;
+      });
+      var models2 = this.filter(function (song) {
+        return song.get('first_sentence').indexOf(param) > -1;
+      });
+      models = models1.concat(models2);
+    } else {
+      models = this.where({'index': parseInt(param, 10)});
+    }
+
+    return new SongModel.Songs(models);
+  }
 });
 
 var SongModel = {

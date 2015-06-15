@@ -7,12 +7,12 @@ var ShowSongView = Backbone.View.extend({
   options: null,
 
   template: "#ShowSongTemplate",
-  
+
   initialize: function(options) {
     this.options = options || {};
     this.render();
   },
-  
+
   render: function() {
     var template = _.template($(SongTemplate).find(this.template).html());
     this.$el.html(template(_.extend({}, this, {app: this.options.app})));
@@ -26,18 +26,18 @@ var PagerView = Backbone.View.extend({
   curPage: 0,
   totalPage: 0,
   pageSize: 100,
-  
+
   curSongsList: null,
 
   template: "#PagerTemplate",
-  
+
   initialize: function() {
     this.initPager();
     this.filterSongs();
     this.render();
     this.renderHtml();
   },
-  
+
   initPager: function() {
     if(this.collection.length > 0) {
       this.curPage = 1;
@@ -49,32 +49,32 @@ var PagerView = Backbone.View.extend({
       }
     }
   },
-  
+
   filterSongs: function() {
     var t = (this.curPage - 1) * this.pageSize;
     this.curSongsList = _.filter(this.collection.toJSON(), function(obj, index) {
       return index >= t && index < t + this.pageSize;
     }, this);
   },
-  
+
   render: function() {
     $("#PagerContainer").empty().html(this.el);
   },
-  
+
   renderHtml: function() {
     var tThis = this;
     require(['app/models/song-model'], function(SongModel) {
       var template = _.template($(SongTemplate).find(tThis.template).html());
       tThis.$el.html(template(tThis));
-      
+
       var songsView = new SongsView({collection: new SongModel.Songs(tThis.curSongsList)});
     });
   },
-  
+
   events: {
     'click .pagination li:not(.disabled) a': 'goto'
   },
-  
+
   goto: function(e) {
     var $target = $(e.currentTarget);
     switch($target.attr('tag')) {
@@ -96,49 +96,49 @@ var PagerView = Backbone.View.extend({
 var SongsView = Backbone.View.extend({
 
   template: "#SongsTemplate",
-  
+
   initialize: function() {
     this.render();
   },
-  
+
   render: function() {
     var template = _.template($(SongTemplate).find(this.template).html());
     this.$el.html(template());
     $("#SongsContainer").empty().html(this.el);
-    
+
     var songsTemplate = _.template($(SongTemplate).find('#waterfall-template').html());
     this.$('.waterfall')
       .data('bootstrap-waterfall-template', songsTemplate(_.extend({}, this, {config: config}, {userId: $("#IndexContainer").attr("user_id")})))
       .waterfall();
   },
-  
+
   events: {
     'click *[tag="play"]': 'play',
     'click *[tag="add"]': 'add'
   },
-  
+
   play: function(e) {
     var songId = $(e.currentTarget).closest('*[song_id]').attr('song_id');
     var song = this.collection.get(songId);
-    
+
     if((this.viewInUse || (this.viewInUse = {})).playerView) {
       this.viewInUse.playerView.close();
     }
     this.viewInUse.playerView = new PlayerView({model: song});
-    
+
     this.renderNowPlaying($(e.currentTarget), 'btn-success');
   },
-  
+
   renderNowPlaying: function ($target, cssName) {
     var $context = $target.closest('#SongsContainer');
     $context.find('a.' + cssName).removeClass(cssName);
     $target.addClass(cssName);
   },
-  
+
   add: function(e) {
     var songId = $(e.currentTarget).closest('*[song_id]').attr('song_id');
     var song = this.collection.get(songId);
-    
+
     var meetingSong = new MeetingModel.MeetingSong({'song_id': song.id});
     meetingSong.save(null, {
       wait: true,
@@ -153,58 +153,58 @@ var SongView = Backbone.View.extend({
   options: null,
 
   tagName: 'tr',
-  
+
   template: "#SongTemplate",
-  
+
   initialize: function(options) {
     this.options = options || {};
     this.render();
   },
-  
+
   render: function() {
     var template = _.template($(SongTemplate).find(this.template).html());
     this.$el.empty().html(template(this));
     this.options.$target.append(this.el);
   },
-  
+
   events: {
     'click *[tag="play"]': 'play'
   },
-  
+
   play: function(e) {
     if((this.viewInUse || (this.viewInUse = {})).playerView) {
       this.viewInUse.playerView.close();
     }
     this.viewInUse.playerView = new PlayerView({model: this.model});
-    
+
     utils.renderNowPlaying($(e.currentTarget), 'success');
   }
-  
+
 });
 
 var PlayerView = Backbone.View.extend({
 
   template: '#PlayerTemplate',
-  
+
   initialize: function() {
     this.render();
   },
-  
+
   render: function() {
     var template = _.template($(SongTemplate).find(this.template).html());
     this.$el.html(template(this));
     $('#PlayerContainer').empty().html(this.el);
   },
-  
+
   events: {
     'click *[tag="close"]': 'close'
   },
-  
+
   close: function() {
     this.clean();
     this.remove();
   },
-  
+
   clean: function() {
     var $target = this.$('iframe');
     if($target.length != 0) {
@@ -227,37 +227,37 @@ var EditSongView = Backbone.View.extend({
   picResources: [],
 
   template: "#EditSongTemplate",
-  
+
   initialize: function() {
     this.render();
     if(this.model.id) {
       this.initResources();
     }
     var tThis = this;
-    setTimeout(function() {  
+    setTimeout(function() {
       if($("#IndexContainer").attr("user_id")) {
         tThis.$el.tooltip({
           selector: '*[data-toggle="tooltip"]'
         });
-        
+
         tThis.initUploader('song');
         tThis.initUploader('pic');
       }
     }, 80);
   },
-  
+
   render: function() {
     var template = _.template($(SongTemplate).find(this.template).html());
     this.$el.html(template(_.extend({}, {model: this.model}, {helper: helper}, {userId: $("#IndexContainer").attr("user_id")})));
     $("#IndexContainer").empty().html(this.el);
   },
-  
+
   events: {
     'click *[tag="submit"]': 'submit',
     'dblclick *[tag="del"]': 'del',
     'click *[tag="play"]': 'play'
   },
-  
+
   submit: function(e) {
     var obj = utils.getObjFromForm(this.$el);
     obj.resources = this.uploadedResources;
@@ -290,7 +290,7 @@ var EditSongView = Backbone.View.extend({
       }, this);
     }
   },
-  
+
   del: function(e) {
     this.model.destroy({
       wait: true,
@@ -304,9 +304,9 @@ var EditSongView = Backbone.View.extend({
       }
     });
   },
-  
+
   initUploader: function(type) {
-  
+
     var tThis = this;
     var $container = '', $btnTarget = '', $startTarget = '';
     var filters = {};
@@ -334,7 +334,7 @@ var EditSongView = Backbone.View.extend({
     } else {
       return ;
     }
-  
+
     var uploader = new plupload.Uploader({
       flash_swf_url : '/js/libs/plupload/Moxie.swf',
       runtimes : 'flash',
@@ -408,11 +408,11 @@ var EditSongView = Backbone.View.extend({
         }
       }
     });
-    
+
     uploader.init();
-    
+
   },
-  
+
   initResources: function() {
 
     var songResourcesList = _.filter(this.model.get('resources'), function(obj) {
@@ -422,7 +422,7 @@ var EditSongView = Backbone.View.extend({
     if(this.songResources.length > 0) {
       var songResourcesView = new ResourceView.ResourcesView({collection: this.songResources, el: this.$('#SongResourcesContainer')});
     }
-    
+
     var picResourcesList = _.filter(this.model.get('resources'), function(obj) {
       return obj.file_type == 'pic';
     });
@@ -430,18 +430,18 @@ var EditSongView = Backbone.View.extend({
     if(this.picResources.length > 0) {
       var picResourcesView = new ResourceView.ResourcesView({collection: this.picResources, el: this.$('#PicResourcesContainer')});
     }
-    
+
   },
-  
+
   play: function(e) {
     var resourceId = $(e.currentTarget).closest('*[resource_id]').attr('resource_id');
     this.model.set('song_src', this.songResources.get(resourceId).get('file_name'));
-    
+
     if((this.viewInUse || (this.viewInUse = {})).playerView) {
       this.viewInUse.playerView.close();
     }
     this.viewInUse.playerView = new PlayerView({model: this.model});
-    
+
     utils.renderNowPlaying($(e.currentTarget), 'success');
   }
 

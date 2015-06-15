@@ -120,21 +120,23 @@ get '/songs/:id' do
   end
 end
 
-get '/songs_category/:category_name' do
-  songs = Song.where('category_big = ?', params[:category_name]).order('`index`')
-  json encode_list(songs)
-end
+# Deprecated. Because we have frontRestful.
+# get '/songs_category/:category_name' do
+#   songs = Song.where('category_big = ?', params[:category_name]).order('`index`')
+#   json encode_list(songs)
+# end
 
-get '/songs_search/:keywords' do
-  keywords = params[:keywords].force_encoding('UTF-8')
-  if(keywords.to_i != 0)
-    song = Song.find_by_index(keywords.to_i)
-    json encode_object(song)
-  else
-    songs = Song.where('name like ? or first_sentence like ?', "%#{keywords}%", "%#{keywords}%").order('`index`')
-    json encode_list(songs)
-  end
-end
+# Deprecated. Because we have frontRestful.
+# get '/songs_search/:keywords' do
+#   keywords = params[:keywords].force_encoding('UTF-8')
+#   if(keywords.to_i != 0)
+#     song = Song.find_by_index(keywords.to_i)
+#     json encode_object(song)
+#   else
+#     songs = Song.where('name like ? or first_sentence like ?', "%#{keywords}%", "%#{keywords}%").order('`index`')
+#     json encode_list(songs)
+#   end
+# end
 
 get '/search' do
   redirect to("/search/#{URI.escape(params[:keywords])}")
@@ -144,7 +146,7 @@ def add_resources(resources, song_id)
   if(resources.length>0)
     resources.each do |obj|
       current_resource = Resource.where('song_id = ? and file_name = ?', song_id, obj['file_name'])
-      if(current_resource.count == 0) 
+      if(current_resource.count == 0)
         new_resource = Resource.new
         new_resource.attributes.each do |key, value|
           if key != 'id'
@@ -175,10 +177,10 @@ put '/songs/:id' do
   song = Song.find_by_id(params[:id].to_i)
   if(save_object(song, data))
     resources = add_resources(data['resources'], song.id)
-    
+
     src = get_most_starred_resource_src_by_song_id(song.id)
     update_song_src_by_song_id(src, song.id)
-    
+
     re = encode_object(song).attributes
     re['resources'] = get_resources_with_user_info(encode_list(resources))
     json re
@@ -194,10 +196,10 @@ post '/songs' do
   song = Song.new
   if(save_object(song, data))
     resources = add_resources(data['resources'], song.id)
-    
+
     src = get_most_starred_resource_src_by_song_id(song.id)
     update_song_src_by_song_id(src, song.id)
-    
+
     re = encode_object(song).attributes
     re['resources'] = get_resources_with_user_info(encode_list(resources))
     json re
@@ -245,10 +247,10 @@ patch '/resources/:id' do
       resource['stars'] += obj['plus'].to_i
     end
     resource.save
-    
+
     src = get_most_starred_resource_src_by_song_id(resource['song_id'])
     update_song_src_by_song_id(src, resource['song_id'])
-    
+
     re = encode_object(resource).attributes
     json re
   else
@@ -373,7 +375,7 @@ def import_songs_from_excel(path, extension)
   attr_array = ['index', 'name', 'first_sentence', 'category_big', 'category_small', 'song_src', 'pic_src']
   s = read_excel(path, extension)
   list = convert_excel_to_list(s, attr_array)
-  
+
   list.each do |obj|
     song = Song.find_by_index(obj['index'].to_i)
     if(!song)
@@ -394,7 +396,7 @@ def import_resources_from_excel(path, extension)
   attr_array = ['name', 'file_name', 'file_size', 'file_type']
   s = read_excel(path, extension)
   list = convert_excel_to_list(s, attr_array)
-  
+
   list.each do |obj|
     song = Song.find_by_name(obj['name'].force_encoding("UTF-8"))
     if(song)

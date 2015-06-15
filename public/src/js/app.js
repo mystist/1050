@@ -40,6 +40,7 @@ function($, Backbone, utils, SongModel, SongView, MeetingModel, MeetingView, hel
 
   var App = Backbone.View.extend({
 
+    syncedSongs: null,
     songs: null,
     categoryName: null,
 
@@ -49,25 +50,8 @@ function($, Backbone, utils, SongModel, SongView, MeetingModel, MeetingView, hel
     },
 
     initSongs: function(url) {
-      this.songs = new SongModel.Songs();
-      this.songs.url = url;
-      this.songs.fetch();
-      var deferred = this.songs.fetch({ajaxSync: true});
-
-      if (this.songs.length > 0) {
-        app.showSongs();
-      } else {
-        deferred.done($.proxy(function () {
-          app.showSongs();
-          this.syncSongs();
-        }, this));
-      }
-    },
-
-    syncSongs: function () {
-      this.songs.each(function (song) {
-        song.save();
-      });
+      this.songs = this.syncedSongs.frontRestful(url);
+      app.showSongs();
     },
 
     showSongs: function() {
@@ -86,6 +70,7 @@ function($, Backbone, utils, SongModel, SongView, MeetingModel, MeetingView, hel
 
   var Router = Backbone.Router.extend({
 
+    deferred: null,
     routes: {
       '': 'showSongs',
       'category_big/:categoryName': 'showSongs',
@@ -95,12 +80,38 @@ function($, Backbone, utils, SongModel, SongView, MeetingModel, MeetingView, hel
       'meeting': 'meeting'
     },
 
+    initialize: function () {
+      app.syncedSongs = new SongModel.Songs();
+      var ajaxDeferred = app.syncedSongs.fetch({ajaxSync: true});
+      var localDeferred = app.syncedSongs.fetch();
+      if (app.syncedSongs.length > 0) {
+        this.deferred = localDeferred;
+      } else {
+        this.deferred = ajaxDeferred;
+      }
+    },
+
+    execute: function (callback, args, name) {
+      this.deferred.done($.proxy(function () {
+        this.syncSongs();
+        if (callback) callback.apply(this, args);
+      }, this));
+
+      return false;
+    },
+
+    syncSongs: function () {
+      app.syncedSongs.each(function (song) {
+        song.save();
+      });
+    },
+
     showSongs: function(categoryName) {
       if(!categoryName) {
         app.initSongs('/songs');
       } else {
-        app.initSongs('/songs_category/'+encodeURIComponent(categoryName));
         app.categoryName = categoryName;
+        app.initSongs('/songs_category/'+encodeURIComponent(categoryName));
       }
     },
 
@@ -138,8 +149,8 @@ function($, Backbone, utils, SongModel, SongView, MeetingModel, MeetingView, hel
 
   });
 
-  var router = new Router();
   var app = new App();
+  var router = new Router();
 
   Backbone.history.start({pushState: true});
 
