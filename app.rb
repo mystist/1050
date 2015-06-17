@@ -159,7 +159,7 @@ get '/songs_filter/:type' do
       MeetingSong.where(meeting_id: meeting_ids).select('song_id').distinct.to_a.each { |obj| song_ids.push(obj.song_id) }
       Song.where(id: song_ids).select('category_small, count(*) as counts').group('category_small').order('counts DESC').to_a.each { |obj| song_hash[obj.category_small.force_encoding('UTF-8')] = obj.counts }
 
-      category_small_list = ((song_hash.sort_by { |k, v| v }.reverse.to_h).keys).take(5)
+      category_small_list = ((Hash[song_hash.sort_by { |k, v| v }.reverse]).keys).take(5)
 
       Song.where(category_small: category_small_list).select('id').limit(15).order('RAND()').to_a.each { |obj| id_list_from_user.push(obj.id) }
     end
@@ -181,7 +181,7 @@ get '/songs_filter/:type' do
       end
     end
 
-    id_list = ((hash.sort_by { |k, v| v }.reverse.to_h).keys).take(100)
+    id_list = ((Hash[hash.sort_by { |k, v| v }.reverse]).keys).take(100)
   end
 
   songs = Song.find(id_list)
