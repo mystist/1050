@@ -1,4 +1,4 @@
-﻿require 'sinatra'
+require 'sinatra'
 require 'sinatra/reloader' if development?
 require 'sinatra/activerecord'
 require 'redcarpet'
@@ -140,6 +140,50 @@ end
 
 get '/search' do
   redirect to("/search/#{URI.escape(params[:keywords])}")
+end
+
+get '/songs_filter/:type' do
+  id_list = []
+
+  if params[:type] == 'guess'
+    id_list_from_user = []
+    id_list_from_random = []
+
+    if !session[:user_id].nil?
+      meeting_ids = []
+      song_ids = []
+      song_hash = {}
+      Meeting.where('user_id = ?', session[:user_id].to_i).select('id').to_a.each { |obj| meeting_ids.push(obj.id) }
+      MeetingSong.where(meeting_id: meeting_ids).select('song_id').distinct.to_a.each { |obj| song_ids.push(obj.song_id) }
+      Song.where(id: song_ids).select('category_small, count(*) as counts').group('category_small').order('counts DESC').to_a.each { |obj| song_hash[obj.category_small.force_encoding('UTF-8')] = obj.counts }
+
+      category_small_list = ((song_hash.sort_by { |k, v| v }.reverse.to_h).keys).take(5)
+
+      Song.where(category_small: category_small_list).select('id').limit(15).order('RAND()').to_a.each { |obj| id_list_from_user.push(obj.id) }
+    end
+    Song.select('id').limit(20).order('RAND()').to_a.each { |obj| id_list_from_random.push(obj.id) }
+
+    id_list = (id_list_from_user + id_list_from_random).take(20)
+  elsif params[:type] == 'top'
+    resource_hash = {}
+    meeting_hash = {}
+    (Resource.where('file_type = "song" and stars > 0').select('song_id, sum(stars) as counts').group('song_id').order('counts DESC')).to_a.each { |obj| resource_hash[obj.song_id] = obj.counts }
+    (MeetingSong.select('song_id, count(*) as counts').group('song_id').order('counts DESC')).to_a.each { |obj| meeting_hash[obj.song_id] = obj.counts }
+
+    hash = resource_hash.clone
+    meeting_hash.each do |key, value|
+      if resource_hash.has_key? key
+        hash[key] += value
+      else
+        hash[key] = value
+      end
+    end
+
+    id_list = ((hash.sort_by { |k, v| v }.reverse.to_h).keys).take(100)
+  end
+
+  songs = Song.find(id_list)
+  json encode_list(songs)
 end
 
 def add_resources(resources, song_id)

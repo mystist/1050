@@ -50,9 +50,12 @@ function ($, Backbone, utils, SongModel, SongView, MeetingModel, MeetingView, he
       this.initHashUrl();
     },
 
-    initSongs: function (url) {
-      this.songs = this.syncedSongs.frontRestful(url);
-      app.showSongs();
+    initSongs: function (url, page) {
+      this.syncedSongs.frontRestful(url).done(function (songs) {
+        app.songs = songs;
+        app.page = page ? parseInt(page, 10) : null;
+        app.showSongs();
+      });
     },
 
     showSongs: function () {
@@ -78,6 +81,7 @@ function ($, Backbone, utils, SongModel, SongView, MeetingModel, MeetingView, he
       'modification': 'editSong',
       'modification/:id': 'editSong',
       'search/:keywords(/p:page)': 'search',
+      'filter/:type': 'filter',
       'meeting': 'meeting'
     },
 
@@ -108,14 +112,12 @@ function ($, Backbone, utils, SongModel, SongView, MeetingModel, MeetingView, he
     },
 
     showSongs: function (page) {
-      app.page = page ? parseInt(page, 10) : null;
-      app.initSongs('/songs');
+      app.initSongs('/songs', page);
     },
 
     filterSongs: function (categoryName, page) {
       app.categoryName = categoryName;
-      app.page = page ? parseInt(page, 10) : null;
-      app.initSongs('/songs_category/'+encodeURIComponent(categoryName));
+      app.initSongs('/songs_category/' + encodeURIComponent(categoryName), page);
     },
 
     editSong: function (id) {
@@ -135,8 +137,16 @@ function ($, Backbone, utils, SongModel, SongView, MeetingModel, MeetingView, he
 
     search: function (keywords, page) {
       app.categoryName = '“' + keywords + '” 搜索结果';
-      app.page = page ? parseInt(page, 10) : null;
-      app.initSongs('/songs_search/'+encodeURIComponent(keywords));
+      app.initSongs('/songs_search/' + encodeURIComponent(keywords), page);
+    },
+
+    filter: function (type) {
+      if (type == 'guess') {
+        app.categoryName = '猜你喜欢';
+      } else if (type == 'top') {
+        app.categoryName = '热门';
+      }
+      app.initSongs('/songs_filter/' + encodeURIComponent(type));
     },
 
     meeting: function () {

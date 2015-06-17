@@ -26,27 +26,33 @@ var Songs = Backbone.Collection.extend({
   url: '/songs',
   localStorage: new Backbone.LocalStorage('Songs'),
 
+  deferred: null,
+
   frontRestful: function (url) {
+    this.deferred = new $.Deferred();
+
     var urlFragments = url.split('/');
     var methodName = urlFragments[1];
     var param = urlFragments[2];
 
-    return this[methodName](param);
+    this[methodName](decodeURIComponent(param), url);
+
+    return this.deferred;
   },
 
   songs: function () {
-    return this;
+    var songs = this;
+    this.deferred.resolve(songs);
   },
 
   songs_category: function (param) {
-    var param = decodeURIComponent(param);
     var models = this.where({'category_big': param});
 
-    return new SongModel.Songs(models);
+    var songs = new SongModel.Songs(models);
+    this.deferred.resolve(songs);
   },
 
   songs_search: function (param) {
-    var param = decodeURIComponent(param);
     var models = [];
 
     if (isNaN(param)) {
@@ -61,7 +67,18 @@ var Songs = Backbone.Collection.extend({
       models = this.where({'index': parseInt(param, 10)});
     }
 
-    return new SongModel.Songs(models);
+    var songs = new SongModel.Songs(models);
+    this.deferred.resolve(songs);
+  },
+
+  songs_filter: function (param, url) {
+    var songs = new SongModel.Songs();
+    songs.url = url;
+    songs.fetch({success: $.proxy(function (collection, response) {
+      if(response&&!response.error) {
+        this.deferred.resolve(songs);
+      }
+    }, this), ajaxSync: true});
   }
 });
 
