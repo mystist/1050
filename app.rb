@@ -332,46 +332,47 @@ get '/interface' do
   erb :interface
 end
 
-post '/interface' do
-  msg = "请选择Excel文件！<a href='/interface'>返回重试</a>"
-  if(params[:song_file])
-    path = 'uploads/' + params[:song_file][:filename]
-    extension = path.slice(path.index('.'), path.length - path.index('.'))
-    if(extension == '.xlsx' || extension == '.xls')
-      File.open(path, "wb") do |f|
-        f.write(params[:song_file][:tempfile].read)
-      end
-      renamed_path = 'uploads/' + (Time.now.to_f * 1000).to_i.to_s + '_' + params[:song_file][:filename]
-      File.rename(path, renamed_path)
-      if import_songs_from_excel(renamed_path, extension)
-        msg = "恭喜，诗歌导入成功！<a href='/interface'>返回</a>"
-      else
-        "操作失败！<a href='/interface'>返回重试</a>"
-      end
-    else
-      msg = "只支持Excel文件！<a href='/interface'>返回重试</a>"
-    end
-  end
-  if(params[:resource_file])
-    path = 'uploads/' + params[:resource_file][:filename]
-    extension = path.slice(path.index('.'), path.length - path.index('.'))
-    if(extension == '.xlsx' || extension == '.xls')
-      File.open(path, "wb") do |f|
-        f.write(params[:resource_file][:tempfile].read)
-      end
-      renamed_path = 'uploads/' + (Time.now.to_f * 1000).to_i.to_s + '_' + params[:resource_file][:filename]
-      File.rename(path, renamed_path)
-      if import_resources_from_excel(renamed_path, extension)
-        msg = "恭喜，资源导入成功！<a href='/interface'>返回</a>"
-      else
-        "操作失败！<a href='/interface'>返回重试</a>"
-      end
-    else
-      msg = "只支持Excel文件！<a href='/interface'>返回重试</a>"
-    end
-  end
-  msg
-end
+# # TODO: Need to fix the utf-8 issue.
+# post '/interface' do
+#   msg = "请选择Excel文件！<a href='/interface'>返回重试</a>"
+#   if(params[:song_file])
+#     path = 'uploads/' + params[:song_file][:filename]
+#     extension = path.slice(path.index('.'), path.length - path.index('.'))
+#     if(extension == '.xlsx' || extension == '.xls')
+#       File.open(path, "wb") do |f|
+#         f.write(params[:song_file][:tempfile].read)
+#       end
+#       renamed_path = 'uploads/' + (Time.now.to_f * 1000).to_i.to_s + '_' + params[:song_file][:filename]
+#       File.rename(path, renamed_path)
+#       if import_songs_from_excel(renamed_path, extension)
+#         msg = "恭喜，诗歌导入成功！<a href='/interface'>返回</a>"
+#       else
+#         "操作失败！<a href='/interface'>返回重试</a>"
+#       end
+#     else
+#       msg = "只支持Excel文件！<a href='/interface'>返回重试</a>"
+#     end
+#   end
+#   if(params[:resource_file])
+#     path = 'uploads/' + params[:resource_file][:filename]
+#     extension = path.slice(path.index('.'), path.length - path.index('.'))
+#     if(extension == '.xlsx' || extension == '.xls')
+#       File.open(path, "wb") do |f|
+#         f.write(params[:resource_file][:tempfile].read)
+#       end
+#       renamed_path = 'uploads/' + (Time.now.to_f * 1000).to_i.to_s + '_' + params[:resource_file][:filename]
+#       File.rename(path, renamed_path)
+#       if import_resources_from_excel(renamed_path, extension)
+#         msg = "恭喜，资源导入成功！<a href='/interface'>返回</a>"
+#       else
+#         "操作失败！<a href='/interface'>返回重试</a>"
+#       end
+#     else
+#       msg = "只支持Excel文件！<a href='/interface'>返回重试</a>"
+#     end
+#   end
+#   msg
+# end
 
 def read_excel(path, extension)
   if(extension == '.xlsx')
