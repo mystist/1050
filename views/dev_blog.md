@@ -15,6 +15,15 @@
 
 ### 更新日志：  
 
+#### 2015-06-18  
+    Release: `1.0.0`
+      更新[bootstrap-waterfall](https://github.com/Mystist/bootstrap-waterfall)  
+      使用LocalStorage来获取歌曲基本信息。  
+      修复分页，使其支持url，并在底部添加分页按钮。  
+      在播放器上增加`添加到我的诗歌单`按钮。  
+      隐藏网站开发博客。  
+      增加筛选功能：猜你喜欢、热门。  
+
 #### 2014-12-14  
     Release: `0.5.0`
       更新[bootstrap-waterfall](https://github.com/Mystist/bootstrap-waterfall)

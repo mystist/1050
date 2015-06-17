@@ -4,8 +4,8 @@
 The 1050 Poetry of Christian.  
 [http://1050.14201420.com/](http://1050.14201420.com/)
 
-Version: 0.5.0  
-Last updated: 2014-12-14 21:10
+Version: 1.0.0  
+Last updated: 2015-06-18 1:48
 
 ====
 
@@ -18,15 +18,16 @@ Freely, quickly and simple.
 
 #### Todo:  
 
+1. Create main site: www.14201420.com with jekyll. (Using Yeoman)  
+
+#### Done:  
+
 Tiny:
 1. Add pager at bottom.
 2. Add to my song list on the playing page.
 
 1. Hotfix of pager url.  
 2. Speed up home page.  
-3. Create main site: www.14201420.com with jekyll. (Using Yeoman)  
-
-#### Done:  
 
 Waterfall.  
 

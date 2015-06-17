@@ -58,11 +58,11 @@ js/libs/underscore.js
 js/libs/backbone.js
 js/libs/nprogress/nprogress.js
 js/utils/utils.js
+js/libs/backbone.localstorage.js
 js/app/models/song-model.js
 js/libs/text.js
 text!app/templates/song-template.html
 js/libs/helper.js
-js/libs/backbone.localstorage.js
 js/app/models/resource-model.js
 text!app/templates/resource-template.html
 js/utils/config.js

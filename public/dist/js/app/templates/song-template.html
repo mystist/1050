@@ -1,4 +1,4 @@
-﻿<div>
+<div>
 
 <script id="ShowSongTemplate" type="text/template">
 
@@ -20,8 +20,9 @@
 </div>
 
 <div class="container">
-  <div id="PagerContainer"></div>
+  <div class="PagerContainer"></div>
   <div id="SongsContainer"></div>
+  <div class="PagerContainer"></div>
 </div>
 
 </script>
@@ -71,22 +72,22 @@
 <script id="SongsTemplate" type="text/template">
 
   <div class="row">
-    <div class="col-md-12 col-sm-12 col-xs-12">
-      <div class="bootstrap-waterfall"></div>
+    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+      <div class="waterfall"></div>
     </div>
   </div>
 
 </script>
 
-<script id="bootstrap-waterfall-template" type="text/template">
+<script id="waterfall-template" type="text/template">
 
   <% var list = collection.toJSON(); %>
-  
+
   <% _.each(list, function(m) { %>
     <ul class="list-group" song_id="<%= m.id %>">
       <li class="list-group-item">
         <a href="<%= m.pic_src ? (config.bucketUrl + encodeURIComponent(m.pic_src)) : 'javascript:;' %>" target="_blank">
-          <img src="<%= m.pic_src ? (config.bucketUrl + encodeURIComponent(m.pic_src) + '?imageView2/2/w/272') : '' %>" />
+          <img src="<%= m.pic_src ? (config.bucketUrl + encodeURIComponent(m.pic_src) + '?imageView2/2/w/344') : '' %>" />
         </a>
       </li>
       <li class="list-group-item">
@@ -113,21 +114,21 @@
     <a class="btn btn-success btn-xs" href="javascript:;" <%= m.song_src ? "" : "disabled='disabled'" %> tag="play">播放</a>
     <a class="btn btn-primary btn-xs" href="modification/<%= m.id %>" tag="hash_url">编辑</a>
   </td>
-  
+
 </script>
 
 <script id="PagerTemplate" type="text/template">
   <h1></h1>
   <ul class="pagination">
-    <li <% if(curPage == 1) print('class="disabled"') %> ><a href="javascript:;" tag="prev">&laquo;</a></li>
+    <li <% if(curPage == 1) print('class="disabled"') %> ><a href="<% if(curPage == 1) {print('javascript:;')} else {print(baseUrl + (curPage - 1))} %>" <% if(curPage != 1) print('tag="hash_url"') %> >&laquo;</a></li>
     <% for(var i = 1; i <= totalPage; i++) { %>
       <% if(i == curPage) { %>
-        <li class="active"><span><%= i %> <span class="sr-only">(current)</span></span></li>  
+        <li class="active"><span><%= i %> <span class="sr-only">(current)</span></span></li>
       <% } else { %>
-        <li><a href="javascript:;"><%= i %></a></li>
+        <li><a href="<%= baseUrl + i %>" tag="hash_url"><%= i %></a></li>
       <% } %>
     <% } %>
-    <li <% if(curPage == totalPage) print('class="disabled"') %> ><a href="javascript:;" tag="next">&raquo;</a></li>
+    <li <% if(curPage == totalPage) print('class="disabled"') %> ><a href="<% if(curPage == totalPage) {print('javascript:;')} else {print(baseUrl + (curPage + 1))} %>" <% if(curPage != totalPage) print('tag="hash_url"') %> >&raquo;</a></li>
   </ul>
 </script>
 
@@ -164,7 +165,7 @@
         </div>
       </div>
     </div>
-  
+
     <div class="row">
       <div class="col-md-6">
         <div class="form-group">
@@ -181,7 +182,7 @@
         </div>
       </div>
     </div>
-    
+
     <div class="row">
       <div class="col-md-6">
         <div class="form-group">
@@ -263,9 +264,9 @@
         </div>
       </div>
     </div>
-    
+
     <div tag="song">
-    
+
     <div class="row">
       <div class="col-md-12">
         <h4><label>歌曲文件：</label></h4>
@@ -291,9 +292,9 @@
         </div>
       </div>
     </div>
-    
+
     <% if(userId) { %>
-    
+
     <div class="row">
       <div class="col-md-12">
         <div class="btn btn-success" tag="upload">
@@ -304,7 +305,7 @@
         </span>
       </div>
     </div>
-    
+
     <div class="row">
       <div class="col-md-12">
         <table class="table" tag="upload_container">
@@ -313,21 +314,21 @@
         </table>
       </div>
     </div>
-    
+
     <div class="row">
       <div class="col-md-12">
         <button type="button" class="btn btn-primary" tag="start_upload" style="display: none;">开始上传</button>
       </div>
     </div>
-    
+
     <% } %>
-    
+
     </div>
-    
+
     <hr />
-    
+
     <div tag="pic">
-    
+
     <div class="row">
       <div class="col-md-12">
         <h4><label>歌谱文件：</label></h4>
@@ -353,9 +354,9 @@
         </div>
       </div>
     </div>
-    
+
     <% if(userId) { %>
-    
+
     <div class="row">
       <div class="col-md-12">
         <div class="btn btn-warning" tag="upload">
@@ -366,7 +367,7 @@
         </span>
       </div>
     </div>
-    
+
     <div class="row">
       <div class="col-md-12">
         <table class="table" tag="upload_container">
@@ -375,19 +376,19 @@
         </table>
       </div>
     </div>
-    
+
     <div class="row">
       <div class="col-md-12">
         <button type="button" class="btn btn-primary" tag="start_upload" style="display: none;">开始上传</button>
       </div>
     </div>
-    
+
     <% } %>
-    
+
     </div>
-    
+
     <hr />
-    
+
     <div class="row">
       <div class="col-md-3">
         <button tag="submit" type="button" class="btn btn-primary">确 定</button>
@@ -400,9 +401,9 @@
       </div>
     </div>
     <hr />
-    
+
   </form>
-    
+
 </div>
 
 </script>
@@ -430,7 +431,7 @@
 <script id="PlayerTemplate" type="text/template">
 
   <% var m = model.toJSON(); %>
-  
+
   <div class="audiojs panel panel-default player">
     <div class="row">
       <div class="col-md-2 col-ms-2 col-xs-2">
@@ -444,9 +445,12 @@
           <iframe frameborder="0" scrolling="no" width="100%" height="100%" src="/pages/player.html?src=<%= encodeURIComponent(m.song_src) %>" ></iframe>
         </div>
       </div>
-      <div class="col-md-2 col-sm-2 col-xs-2">
+      <div class="col-md-2 col-sm-2 col-xs-2" song_id="<%= m.id %>">
         <div class="play-oper">
           <p class="oper">
+            <% if(userId) { %>
+              <a class="btn btn-default btn-xs" title="添加到「我的诗歌单」" href="javascript:;" tag="add"><span class="glyphicon glyphicon-plus"></span></a>
+            <% } %>
             <a class="btn btn-warning btn-xs" href="<%= m.pic_src ? (config.bucketUrl + encodeURIComponent(m.pic_src)) : "javascript:;" %>" target="_blank" <%= m.pic_src ? "" : "disabled='disabled'" %> >歌谱</a>
             <a class="btn btn-default btn-xs" href="javascript:;" tag="close">关闭</a>
           </p>
