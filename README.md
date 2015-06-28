@@ -18,9 +18,10 @@ Freely, quickly and simple.
 
 #### Todo:  
 
-1. Create main site: www.14201420.com with jekyll. (Using Yeoman)  
-
 #### Done:  
+
+- Change Copyright year.
+- Change edit icon from `con` to `pencil`.
 
 Tiny:
 1. Add pager at bottom.
