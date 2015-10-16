@@ -15,6 +15,11 @@
 
 ### 更新日志：  
 
+#### 2015-10-16  
+    Release: `1.0.1`
+      修复当设备宽度太小的时候，图片不显示的问题。  
+      更换编辑歌曲的图标。  
+
 #### 2015-06-18  
     Release: `1.0.0`
       更新[bootstrap-waterfall](https://github.com/Mystist/bootstrap-waterfall)  
