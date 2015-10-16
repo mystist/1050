@@ -18,8 +18,11 @@ Freely, quickly and simple.
 
 #### Todo:  
 
+- Change search from back-end to front-end.
+
 #### Done:  
 
+- Change edit icon from `pencil` to `edit`.
 - Change Copyright year.
 - Change edit icon from `con` to `pencil`.
 
