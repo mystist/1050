@@ -599,6 +599,10 @@ end
 
 ### meeting end
 
+get '/announcement' do
+  erb :announcement
+end
+
 get '*' do
   @token = Qiniu::RS.generate_upload_token :scope => 'production-1050'
   erb :index, :layout => :app_layout
